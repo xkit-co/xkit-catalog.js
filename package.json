@@ -1,0 +1,41 @@
+{
+  "name": "@xkit-co/xkit-catalog.js",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/react-app.js",
+  "scripts": {
+    "dev": "parcel watch react-app.tsx",
+    "build": "npm test && parcel build --no-cache react-app.tsx",
+    "test": "tsc --noEmit",
+    "prepare": "npm link ../xkit-js && rm -rf dist && tsc --emitDeclarationOnly --declaration --declarationDir dist && parcel build --no-cache react-app.tsx"
+  },
+  "author": "Xkit <dev@xkit.co>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "~7.10.2",
+    "@babel/preset-env": "~7.10.2",
+    "@babel/preset-react": "~7.10.1",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/react-transition-group": "~4.4.0",
+    "@types/string-similarity": "^3.0.0",
+    "parcel-bundler": "~1.12.4",
+    "parcel-plugin-bundle-visualiser": "^1.2.0",
+    "typescript": "~3.9.5"
+  },
+  "dependencies": {
+    "@xkit-co/xkit.js": "file:../xkit-js",
+    "evergreen-ui": "~4.27.4",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-router-dom": "^5.2.0",
+    "remark-parse": "^8.0.2",
+    "remark-react": "^7.0.1",
+    "string-similarity": "^4.0.1",
+    "unified": "^9.0.0"
+  }
+}
