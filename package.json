@@ -10,6 +10,7 @@
     "dev": "parcel watch react-app.tsx",
     "build": "npm test && parcel build --no-cache react-app.tsx",
     "test": "tsc --noEmit",
+    "prepublishOnly": "npm test",
     "prepare": "npm link ../xkit-js && rm -rf dist && tsc --emitDeclarationOnly --declaration --declarationDir dist && parcel build --no-cache react-app.tsx"
   },
   "author": "Xkit <dev@xkit.co>",
