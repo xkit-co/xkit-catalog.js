@@ -1,6 +1,10 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xkit-co/xkit-catalog.js.git"
+  },
   "description": "",
   "files": [
     "dist"
@@ -11,7 +15,8 @@
     "build": "npm test && parcel build --no-cache react-app.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "npm test",
-    "prepare": "npm link ../xkit-js && rm -rf dist && tsc --emitDeclarationOnly --declaration --declarationDir dist && parcel build --no-cache react-app.tsx"
+    "prepare": "npm link ../xkit-js && rm -rf dist && tsc --emitDeclarationOnly --declaration --declarationDir dist && parcel build --no-cache react-app.tsx",
+    "repo": "echo $npm_package_repository_url",
   },
   "author": "Xkit <dev@xkit.co>",
   "license": "MIT",
