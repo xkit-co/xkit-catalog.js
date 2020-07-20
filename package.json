@@ -1,21 +1,21 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
   },
-  "description": "",
+  "description": "Integration Catalog for Xkit as a React App",
   "files": [
-    "dist"
+    "lib"
   ],
-  "main": "dist/react-app.js",
+  "main": "lib/react-app.js",
   "scripts": {
-    "dev": "parcel watch react-app.tsx",
-    "build": "npm test && parcel build --no-cache react-app.tsx",
+    "dev": "parcel watch src/react-app.tsx",
+    "build": "npm test && parcel build --no-cache src/react-app.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "npm test",
-    "prepare": "rm -rf dist && tsc --outDir dist --declaration",
+    "prepare": "rm -rf lib && tsc --outDir lib --declaration",
     "repo": "echo $npm_package_repository_url"
   },
   "author": "Xkit <dev@xkit.co>",

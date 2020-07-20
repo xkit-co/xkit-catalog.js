@@ -9,9 +9,13 @@
     "allowJs": false,
     "skipLibCheck": true
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "node_modules",
     ".cache",
-    "dist"
+    "dist",
+    "lib"
   ]
 }
