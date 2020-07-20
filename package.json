@@ -34,7 +34,7 @@
     "typescript": "~3.9.5"
   },
   "dependencies": {
-    "@xkit-co/xkit.js": "1.0.0",
+    "@xkit-co/xkit.js": "1.0.1",
     "evergreen-ui": "~4.27.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
