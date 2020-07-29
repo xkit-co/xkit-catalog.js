@@ -16,8 +16,7 @@ import {
 } from 'evergreen-ui'
 import {
   withConfig,
-  ConfigConsumer,
-  callWithConfig
+  ConfigConsumer
 } from './config-wrapper'
 import { Redirect } from 'react-router-dom'
 
@@ -48,7 +47,7 @@ class ConnectorDetailRoute extends React.Component<ConfigConsumer<ConnectorDetai
     const { slug } = this.props
     this.setState({ loading: true })
     try {
-      const connection = await callWithConfig(config => getConnectionOrConnector(config, slug))
+      const connection = await this.props.callWithConfig(config => getConnectionOrConnector(config, slug))
       if (isConnection(connection)) {
         this.setState({ connection: connection })
       }

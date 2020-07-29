@@ -2,8 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
   withConfig,
-  ConfigConsumer,
-  callWithConfig
+  ConfigConsumer
 } from './config-wrapper'
 import {
   Switch,
@@ -64,7 +63,7 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
   async loadPlatform (): Promise<void> {
     this.setState({ loading: true })
     try {
-      const platform = await callWithConfig(getPlatform)
+      const platform = await this.props.callWithConfig(getPlatform)
       this.setState({ platform })
       if (!this.props.hideTitle) {
         document.title = this.title()

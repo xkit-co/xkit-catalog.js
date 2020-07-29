@@ -25,8 +25,7 @@ import {
 import { toaster } from './toaster'
 import {
   ConfigConsumer,
-  withConfig,
-  callWithConfig
+  withConfig
 } from './config-wrapper'
 import { theme } from './theme'
 
@@ -60,7 +59,7 @@ class Catalog extends React.Component<ConfigConsumer<CatalogProps>, CatalogState
   async loadConnectors (): Promise<void> {
     this.setState({ loading: true })
     try {
-      const connectors = await callWithConfig(config => listConnectors(config))
+      const connectors = await this.props.callWithConfig(config => listConnectors(config))
       this.setState({ connectors })
     } catch (e) {
       toaster.danger(`Error while loading connectors: ${e.message}`)
