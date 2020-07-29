@@ -120,6 +120,7 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
           <Route path={['/', '/connectors']} exact={true}>
             <Catalog
               platform={platform}
+              hideBackButton={hideTitle}
             />
           </Route>
           <Route

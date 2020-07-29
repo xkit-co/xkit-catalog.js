@@ -31,7 +31,8 @@ import {
 import { theme } from './theme'
 
 interface CatalogProps {
-  platform: Platform
+  platform: Platform,
+  hideBackButton?: boolean
 }
 
 interface CatalogState {
@@ -69,8 +70,8 @@ class Catalog extends React.Component<ConfigConsumer<CatalogProps>, CatalogState
   }
 
   renderBackButton () {
-    const { platform } = this.props
-    if (!platform || !platform.website) return
+    const { platform, hideBackButton } = this.props
+    if (!platform || !platform.website || hideBackButton) return
 
     return (
       <Pane marginTop={majorScale(3)}>
