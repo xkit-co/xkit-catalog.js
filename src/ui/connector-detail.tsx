@@ -24,15 +24,13 @@ import {
   connect,
   reconnect
 } from '@xkit-co/xkit.js/lib/connect'
-import { prepareAuthWindow } from '@xkit-co/xkit.js/lib/authorize'
 import { toaster } from './toaster'
 import Markdown from './markdown'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import {
   withConfig,
-  ConfigConsumer,
-  callWithConfig
+  ConfigConsumer
 } from './config-wrapper'
 
 
@@ -65,9 +63,7 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   handleInstall = async (): Promise<void> => {
     try {
       this.setState({ loading: true })
-      const connection = await prepareAuthWindow(this.props.config, authWindow => {
-        return callWithConfig(config => connect(config, authWindow, this.props.connector))
-      })
+      const connection = await connect(this.props.callWithConfig, this.props.connector)
       this.setState({ connection })
       toaster.success(`Installed ${this.props.connector.name}`)
     } catch (e) {
@@ -80,7 +76,7 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   handleRemove = async (): Promise<void> => {
     try {
       this.setState({ loading: true })
-      await callWithConfig(config => removeConnection(config, this.props.connector.slug))
+      await this.props.callWithConfig(config => removeConnection(config, this.props.connector.slug))
       this.setState({ connection: undefined })
       toaster.success(`Removed ${this.props.connector.name}`)
     } catch (e) {
@@ -93,9 +89,7 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   handleReconnect = async (): Promise<void> => {
     try {
       this.setState({ reconnectLoading: true })
-      const connection = await prepareAuthWindow(this.props.config, authWindow => {
-        return callWithConfig(config => reconnect(config, authWindow, this.state.connection))
-      })
+      const connection = await reconnect(this.props.callWithConfig, this.state.connection)
       this.setState({ connection })
       toaster.success(`Reconnected to ${this.props.connector.name}`)
     } catch (e) {
