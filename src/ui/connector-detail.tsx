@@ -152,7 +152,11 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
       )
     }
     
-    return <Badge color="yellow">Not Connected</Badge>
+    return (
+      <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(2)}>
+        <Badge color="yellow">Not Connected</Badge>
+      </Pane>
+    )
   }
 
   renderAuthAlert (): React.ReactElement {
