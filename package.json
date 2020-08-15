@@ -10,7 +10,6 @@
     "lib"
   ],
   "main": "lib/index.js",
-  "browser": "lib/browser.js",
   "scripts": {
     "dev": "parcel watch src/browser.ts",
     "build": "npm test && parcel build --no-cache src/browser.tsx",
