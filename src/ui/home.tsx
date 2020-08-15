@@ -41,11 +41,15 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<HomeProps>): void {
+  componentDidUpdate (prevProps: XkitConsumer<HomeProps>, prevState: HomeState): void {
     if (prevProps.hideTitle !== this.props.hideTitle) {
       if (!this.props.hideTitle) {
         document.title = this.title()
       }
+    }
+
+    if (prevState.platform !== this.state.platform && !this.props.hideTitle) {
+      document.title = this.title()
     }
   }
 

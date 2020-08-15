@@ -24,17 +24,18 @@ function renderDom (xkitDomain?: string, elemId = 'xkit-app'): void {
     const xkitCatalog = createXkitCatalog(domain)
 
     // Attempt a login
-    if (token) {
-      const doLogin = async () => {
-        try {
+    const doLogin = async () => {
+      try {
+        if (token) {
           await xkitCatalog.login(token)
-        } catch (e) {
-          console.debug(`Login failed: ${e.message}`)
-          console.debug(e)
+        } else {
+          await xkitCatalog.getAccessToken()
         }
+      } catch (e) {
+        console.debug(`Login failed: ${e.message}`, e)
       }
-      doLogin()
     }
+    doLogin()
 
     // Only render the app if we are allowed to render from anywhere (no root path),
     // we're using a memory router, or if we are on the correct path. This allows
