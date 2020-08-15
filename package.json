@@ -9,10 +9,11 @@
   "files": [
     "lib"
   ],
-  "main": "lib/react-app.js",
+  "main": "lib/index.js",
+  "browser": "lib/browser.js",
   "scripts": {
-    "dev": "parcel watch src/react-app.tsx",
-    "build": "npm test && parcel build --no-cache src/react-app.tsx",
+    "dev": "parcel watch src/browser.ts",
+    "build": "npm test && parcel build --no-cache src/browser.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "npm test",
     "prepare": "rm -rf lib && tsc --outDir lib --declaration",

@@ -1,10 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
-  withConfig,
-  ConfigConsumer
-} from './config-wrapper'
-import {
   Switch,
   Route,
   RouteComponentProps
@@ -17,10 +13,11 @@ import {
 import { toaster } from './toaster'
 import Catalog from './catalog'
 import ConnectorDetailRoute from './connector-detail-route'
+import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import {
-  Platform,
-  getPlatform
-} from '@xkit-co/xkit.js/lib/api/platform'
+  XkitConsumer,
+  withXkit
+} from './with-xkit'
 
 interface HomeProps {
   title?: string,
@@ -32,8 +29,8 @@ interface HomeState {
   platform?: Platform
 }
 
-class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
-  constructor (props: ConfigConsumer<HomeProps>) {
+class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
+  constructor (props: XkitConsumer<HomeProps>) {
     super(props)
     this.state = {
       loading: true
@@ -49,7 +46,7 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
     }
   }
 
-  componentDidUpdate (prevProps: ConfigConsumer<HomeProps>): void {
+  componentDidUpdate (prevProps: XkitConsumer<HomeProps>): void {
     if ((!prevProps.config || !prevProps.config.domain) && (this.props.config && this.props.config.domain)) {
       this.loadPlatform()
     }
@@ -63,7 +60,7 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
   async loadPlatform (): Promise<void> {
     this.setState({ loading: true })
     try {
-      const platform = await this.props.callWithConfig(getPlatform)
+      const platform = await this.props.xkit.getPlatform()
       this.setState({ platform })
       if (!this.props.hideTitle) {
         document.title = this.title()
@@ -139,4 +136,4 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
   }
 }
 
-export default withConfig(Home)
+export default withXkit(Home)

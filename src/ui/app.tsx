@@ -15,8 +15,9 @@ import {
   theme,
   ThemeProvider
 } from './theme'
-import { ConfigWrapper } from './config-wrapper'
+import { Provider as XkitProvider } from './xkit-context'
 import Home from './home'
+import { XkitJs } from '@xkit-co/xkit.js'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
@@ -47,18 +48,21 @@ const Router: React.FC<RouterProps> = ({ type, basename, children }) => {
   )
 }
 
-interface AppProps {
-  domain: string,
+export interface AppProps {
+  xkit: XkitJs,
   hideTitle?: boolean,
   title?: string,
   rootPath?: string,
   routerType?: routerType,
   inheritRouter?: boolean,
-  token?: string,
-  loginRedirect?: string
 }
 
-class App extends React.Component<AppProps, {}> {
+interface AppState {
+  xkit: XkitJs,
+  unsubscribe?: Function
+}
+
+class App extends React.Component<AppProps, AppState> {
   static defaultProps = {
     rootPath: '/',
     routerType: 'browser'
@@ -66,26 +70,36 @@ class App extends React.Component<AppProps, {}> {
 
   constructor (props: AppProps) {
     super(props)
-    this.state = {}
+    this.state = {
+      xkit: props.xkit
+    }
   }
 
   componentDidMount (): void {
-    if (!this.props.domain) {
-      console.warn('Domain was not passed to the React App, it will fail to load.')
+    if (!this.props.xkit) {
+      console.error('Xkit was not passed to the React App, it will fail to load.')
+    }
+    const unsubscribe = xkit.onUpdate(() => this.setState({ xkit: this.props.xkit }))
+  }
+
+  componentWillUnmount (): void {
+    const { unsubscribe } = this.state
+    if (unsubscribe) {
+      unsubscribe()
     }
   }
  
   renderApp () {
     const {
-      domain,
-      token,
-      loginRedirect,
       title,
       hideTitle
     } = this.props
+    const {
+      xkit
+    } = this.state
 
     return (
-      <ConfigWrapper domain={domain} token={token} loginRedirect={loginRedirect}>
+      <XkitProvider value={xkit}>
         <Route path="/" strict={true}>
           <ThemeProvider value={theme}>
             <Pane margin="auto">
@@ -93,7 +107,7 @@ class App extends React.Component<AppProps, {}> {
             </Pane>
           </ThemeProvider>
         </Route>
-      </ConfigWrapper>
+      </XkitProvider>
     )
   }
 
