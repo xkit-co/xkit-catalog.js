@@ -48,13 +48,16 @@ const Router: React.FC<RouterProps> = ({ type, basename, children }) => {
   )
 }
 
-export interface AppProps {
-  xkit: XkitJs,
+export interface AppOptions {
   hideTitle?: boolean,
   title?: string,
   rootPath?: string,
   routerType?: routerType,
-  inheritRouter?: boolean,
+  inheritRouter?: boolean
+}
+
+interface AppProps extends AppOptions {
+  xkit: XkitJs
 }
 
 interface AppState {
@@ -76,10 +79,11 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentDidMount (): void {
-    if (!this.props.xkit) {
+    const { xkit } = this.props
+    if (!xkit) {
       console.error('Xkit was not passed to the React App, it will fail to load.')
     }
-    const unsubscribe = xkit.onUpdate(() => this.setState({ xkit: this.props.xkit }))
+    const unsubscribe = xkit.onUpdate(() => this.setState({ xkit }))
   }
 
   componentWillUnmount (): void {

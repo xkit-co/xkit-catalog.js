@@ -13,10 +13,7 @@ import {
   Pane,
   Spinner
 } from 'evergreen-ui'
-import {
-  withXkit,
-  XkitConsumer
-} from './with-xkit'
+import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
 
 interface ConnectorDetailRouteProps {

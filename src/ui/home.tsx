@@ -14,10 +14,7 @@ import { toaster } from './toaster'
 import Catalog from './catalog'
 import ConnectorDetailRoute from './connector-detail-route'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
-import {
-  XkitConsumer,
-  withXkit
-} from './with-xkit'
+import withXkit, { XkitConsumer } from './with-xkit'
 
 interface HomeProps {
   title?: string,
@@ -38,18 +35,13 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
   }
 
   componentDidMount (): void {
-    if (this.props.config && this.props.config.domain) {
-      this.loadPlatform()
-    }
+    this.loadPlatform()
     if (!this.props.hideTitle) {
       document.title = this.title()
     }
   }
 
   componentDidUpdate (prevProps: XkitConsumer<HomeProps>): void {
-    if ((!prevProps.config || !prevProps.config.domain) && (this.props.config && this.props.config.domain)) {
-      this.loadPlatform()
-    }
     if (prevProps.hideTitle !== this.props.hideTitle) {
       if (!this.props.hideTitle) {
         document.title = this.title()
@@ -58,13 +50,14 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
   }
 
   async loadPlatform (): Promise<void> {
+    const {
+      xkit,
+      hideTitle
+    } = this.props
     this.setState({ loading: true })
     try {
-      const platform = await this.props.xkit.getPlatform()
+      const platform = await xkit.getPlatform()
       this.setState({ platform })
-      if (!this.props.hideTitle) {
-        document.title = this.title()
-      }
     } catch (e) {
       toaster.danger(`Error while loading platform: ${e.message}`)
     } finally {
@@ -74,8 +67,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
 
   title (): string {
     const {
-      title,
-      configLoading,
+      title
     } = this.props
     const {
       platform,
@@ -97,15 +89,13 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     const {
       title,
       hideTitle,
-      config,
-      configLoading
     } = this.props
     const {
       platform,
       loading
     } = this.state
 
-    if (loading || configLoading) {
+    if (loading) {
       return <Spinner marginX="auto"  marginY={150} size={majorScale(6)} />
     }
 

@@ -22,9 +22,11 @@ export default function withXkit<Props extends {}>(WrappedComponent: React.Compo
     }
 
     render (): React.ReactElement {
-      <Consumer>
-        {xkit => <WrappedComponent xkit={xkit} {...this.props as Props} />}
-      </Consumer>
+      return (
+        <Consumer>
+          {xkit => <WrappedComponent xkit={xkit} {...this.props as Props} />}
+        </Consumer>
+      )
     }
   }
 

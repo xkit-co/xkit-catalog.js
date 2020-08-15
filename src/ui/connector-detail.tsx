@@ -21,10 +21,7 @@ import { toaster } from './toaster'
 import Markdown from './markdown'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
-import {
-  XkitConsumer,
-  withXkit
-} from './with-xkit'
+import withXkit, { XkitConsumer } from './with-xkit'
 
 
 interface ConnectorDetailProps {
