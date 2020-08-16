@@ -51,6 +51,10 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     if (prevState.platform !== this.state.platform && !this.props.hideTitle) {
       document.title = this.title()
     }
+
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadPlatform()
+    }
   }
 
   async loadPlatform (): Promise<void> {

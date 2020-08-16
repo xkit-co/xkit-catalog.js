@@ -46,6 +46,12 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     this.loadConnectors()
   }
 
+  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>) {
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadConnectors()
+    }
+  }
+
   async loadConnectors (): Promise<void> {
     this.setState({ loading: true })
     try {

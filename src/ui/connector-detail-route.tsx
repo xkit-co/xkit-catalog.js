@@ -39,6 +39,12 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     this.loadConnector()
   }
 
+  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailRouteProps>) {
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadConnector()
+    }
+  }
+
   async loadConnector (): Promise<void> {
     const {
       slug,
