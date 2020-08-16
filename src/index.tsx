@@ -8,7 +8,8 @@ export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'rout
 }
 
 export interface XkitCatalog extends XkitJs {
-  render: (el: HTMLElement, opts: CatalogOptions) => void
+  renderCatalog: (el: HTMLElement, opts: CatalogOptions) => void,
+  unmountCatalog: (el: HTMLElement) => boolean
 }
 
 function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions): void {
@@ -24,12 +25,17 @@ function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions): voi
   )
 }
 
-function createXkitCatalog (domain: string): XkitCatalog {
+function unmountCatalog(el: HTMLElement): boolean {
+  return ReactDOM.unmountComponentAtNode(el)
+}
+
+function createXkitWithCatalog (domain: string): XkitCatalog {
   const xkit = createXkit(domain)
   const xkitCatalog = Object.assign({}, xkit, {
-    render: renderCatalog.bind(null, xkit)
+    renderCatalog: renderCatalog.bind(null, xkit),
+    unmountCatalog
   })
   return xkitCatalog
 }
 
-export default createXkitCatalog
+export default createXkitWithCatalog

@@ -1,4 +1,4 @@
-import createXkitCatalog from './'
+import createXkitWithCatalog from './'
 import { domReady } from './util'
 
 function renderDom (xkitDomain?: string, elemId = 'xkit-app'): void {
@@ -21,15 +21,15 @@ function renderDom (xkitDomain?: string, elemId = 'xkit-app'): void {
     const hideTitle = domRoot.dataset.hideTitle === 'true'
 
     // Create our catalog
-    const xkitCatalog = createXkitCatalog(domain)
+    const xkit = createXkitWithCatalog(domain)
 
     // Attempt a login
     const doLogin = async () => {
       try {
         if (token) {
-          await xkitCatalog.login(token)
+          await xkit.login(token)
         } else {
-          await xkitCatalog.getAccessToken()
+          await xkit.getAccessToken()
         }
       } catch (e) {
         console.debug(`Login failed: ${e.message}`, e)
@@ -42,7 +42,7 @@ function renderDom (xkitDomain?: string, elemId = 'xkit-app'): void {
     // a developer to include this script in every page and only have it render on the
     // correct page.
     if (!rootPath || routerType === 'memory' || window.location.pathname.startsWith(rootPath)) {
-      xkitCatalog.render(domRoot, {
+      xkit.renderCatalog(domRoot, {
         rootPath,
         routerType,
         title,
