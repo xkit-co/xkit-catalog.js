@@ -5,8 +5,7 @@ import { IKitConfig } from '@xkit-co/xkit.js/lib/config'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
   Connection,
-  isConnection,
-  getConnectionOrConnector
+  isConnection
 } from '@xkit-co/xkit.js/lib/api/connection'
 import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 import { toaster } from './toaster'
@@ -14,10 +13,7 @@ import {
   Pane,
   Spinner
 } from 'evergreen-ui'
-import {
-  withConfig,
-  ConfigConsumer
-} from './config-wrapper'
+import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
 
 interface ConnectorDetailRouteProps {
@@ -31,8 +27,8 @@ interface ConnectorDetailRouteState {
   loading: boolean
 }
 
-class ConnectorDetailRoute extends React.Component<ConfigConsumer<ConnectorDetailRouteProps>, ConnectorDetailRouteState> {
-  constructor (props: ConfigConsumer<ConnectorDetailRouteProps>) {
+class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailRouteProps>, ConnectorDetailRouteState> {
+  constructor (props: XkitConsumer<ConnectorDetailRouteProps>) {
     super(props)
     this.state = {
       loading: true
@@ -43,11 +39,20 @@ class ConnectorDetailRoute extends React.Component<ConfigConsumer<ConnectorDetai
     this.loadConnector()
   }
 
+  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailRouteProps>) {
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadConnector()
+    }
+  }
+
   async loadConnector (): Promise<void> {
-    const { slug } = this.props
+    const {
+      slug,
+      xkit
+    } = this.props
     this.setState({ loading: true })
     try {
-      const connection = await this.props.callWithConfig(config => getConnectionOrConnector(config, slug))
+      const connection = await xkit.getConnectionOrConnector(slug)
       if (isConnection(connection)) {
         this.setState({ connection: connection })
       }
@@ -88,4 +93,4 @@ class ConnectorDetailRoute extends React.Component<ConfigConsumer<ConnectorDetai
   }
 }
 
-export default withConfig(ConnectorDetailRoute)
+export default withXkit(ConnectorDetailRoute)

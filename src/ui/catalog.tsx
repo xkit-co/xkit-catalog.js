@@ -13,21 +13,11 @@ import {
 } from 'evergreen-ui'
 import { compareTwoStrings } from 'string-similarity'
 import CatalogThumb from './catalog-thumb'
-import { IKitConfig } from '@xkit-co/xkit.js/lib/config'
-import {
-  listConnectors,
-  Connector
-} from '@xkit-co/xkit.js/lib/api/connector'
-import {
-  getPlatform,
-  Platform
-} from '@xkit-co/xkit.js/lib/api/platform'
+import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
-import {
-  ConfigConsumer,
-  withConfig
-} from './config-wrapper'
 import { theme } from './theme'
+import withXkit, { XkitConsumer } from './with-xkit'
 
 interface CatalogProps {
   platform: Platform,
@@ -42,8 +32,8 @@ interface CatalogState {
 
 const SIMILARITY_MIN = 0.75
 
-class Catalog extends React.Component<ConfigConsumer<CatalogProps>, CatalogState> {
-  constructor (props: ConfigConsumer<CatalogProps>) {
+class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> {
+  constructor (props: XkitConsumer<CatalogProps>) {
     super(props)
     this.state = {
       connectors: [],
@@ -56,10 +46,16 @@ class Catalog extends React.Component<ConfigConsumer<CatalogProps>, CatalogState
     this.loadConnectors()
   }
 
+  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>) {
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadConnectors()
+    }
+  }
+
   async loadConnectors (): Promise<void> {
     this.setState({ loading: true })
     try {
-      const connectors = await this.props.callWithConfig(config => listConnectors(config))
+      const connectors = await this.props.xkit.listConnectors()
       this.setState({ connectors })
     } catch (e) {
       toaster.danger(`Error while loading connectors: ${e.message}`)
@@ -168,4 +164,4 @@ const EmptyCatalog: React.FC<EmptyCatalogProps> = ({ background, children }): Re
   )
 }
 
-export default withConfig(Catalog)
+export default withXkit(Catalog)

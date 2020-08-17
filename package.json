@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -9,10 +9,10 @@
   "files": [
     "lib"
   ],
-  "main": "lib/react-app.js",
+  "main": "lib/index.js",
   "scripts": {
-    "dev": "parcel watch src/react-app.tsx",
-    "build": "npm test && parcel build --no-cache src/react-app.tsx",
+    "dev": "parcel watch src/browser.ts",
+    "build": "npm test && parcel build --no-cache src/browser.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "npm test",
     "prepare": "rm -rf lib && tsc --outDir lib --declaration",
@@ -34,7 +34,7 @@
     "typescript": "~3.9.5"
   },
   "dependencies": {
-    "@xkit-co/xkit.js": "1.2.1",
+    "@xkit-co/xkit.js": "../xkit-js",
     "evergreen-ui": "~4.27.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

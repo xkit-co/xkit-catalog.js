@@ -15,23 +15,13 @@ import {
 } from 'evergreen-ui'
 import { Link } from 'react-router-dom'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import {
-  Connection,
-  removeConnection
-} from '@xkit-co/xkit.js/lib/api/connection'
+import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 import { AuthorizationStatus } from '@xkit-co/xkit.js/lib/api/authorization'
-import {
-  connect,
-  reconnect
-} from '@xkit-co/xkit.js/lib/connect'
 import { toaster } from './toaster'
 import Markdown from './markdown'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
-import {
-  withConfig,
-  ConfigConsumer
-} from './config-wrapper'
+import withXkit, { XkitConsumer } from './with-xkit'
 
 
 interface ConnectorDetailProps {
@@ -45,8 +35,8 @@ interface ConnectorDetailState {
   connection?: Connection
 }
 
-class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProps>, ConnectorDetailState> {
-  constructor (props: ConfigConsumer<ConnectorDetailProps>) {
+class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>, ConnectorDetailState> {
+  constructor (props: XkitConsumer<ConnectorDetailProps>) {
     super(props)
 
     this.state = {
@@ -61,11 +51,15 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   }
 
   handleInstall = async (): Promise<void> => {
+    const {
+      connector,
+      xkit
+    } = this.props
     try {
       this.setState({ loading: true })
-      const connection = await connect(this.props.callWithConfig, this.props.connector)
+      const connection = await xkit.connect(connector)
       this.setState({ connection })
-      toaster.success(`Installed ${this.props.connector.name}`)
+      toaster.success(`Installed ${connector.name}`)
     } catch (e) {
       this.handleError(e)
     } finally {
@@ -74,11 +68,18 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   }
 
   handleRemove = async (): Promise<void> => {
+    const {
+      xkit,
+      connector: {
+        slug,
+        name
+      }
+    } = this.props
     try {
       this.setState({ loading: true })
-      await this.props.callWithConfig(config => removeConnection(config, this.props.connector.slug))
+      await xkit.removeConnection(slug)
       this.setState({ connection: undefined })
-      toaster.success(`Removed ${this.props.connector.name}`)
+      toaster.success(`Removed ${name}`)
     } catch (e) {
       this.handleError(e)
     } finally {
@@ -87,11 +88,17 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   }
 
   handleReconnect = async (): Promise<void> => {
+    const {
+      xkit,
+      connector: {
+        name
+      }
+    } = this.props
     try {
       this.setState({ reconnectLoading: true })
-      const connection = await reconnect(this.props.callWithConfig, this.state.connection)
+      const connection = await xkit.reconnect(this.state.connection)
       this.setState({ connection })
-      toaster.success(`Reconnected to ${this.props.connector.name}`)
+      toaster.success(`Reconnected to ${name}`)
     } catch (e) {
       this.handleError(e)
     } finally {
@@ -218,8 +225,13 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   }
 
   render (): React.ReactElement {
-    const { connector } = this.props
-    const { name, short_description, mark_url } = connector
+    const {
+      connector: {
+        name,
+        short_description,
+        mark_url
+      }
+    } = this.props
     const { connection } = this.state
     
     return (
@@ -252,4 +264,4 @@ class ConnectorDetail extends React.Component<ConfigConsumer<ConnectorDetailProp
   }
 }
 
-export default withConfig(ConnectorDetail)
+export default withXkit(ConnectorDetail)

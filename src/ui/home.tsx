@@ -1,10 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
-  withConfig,
-  ConfigConsumer
-} from './config-wrapper'
-import {
   Switch,
   Route,
   RouteComponentProps
@@ -17,10 +13,8 @@ import {
 import { toaster } from './toaster'
 import Catalog from './catalog'
 import ConnectorDetailRoute from './connector-detail-route'
-import {
-  Platform,
-  getPlatform
-} from '@xkit-co/xkit.js/lib/api/platform'
+import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
+import withXkit, { XkitConsumer } from './with-xkit'
 
 interface HomeProps {
   title?: string,
@@ -32,8 +26,8 @@ interface HomeState {
   platform?: Platform
 }
 
-class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
-  constructor (props: ConfigConsumer<HomeProps>) {
+class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
+  constructor (props: XkitConsumer<HomeProps>) {
     super(props)
     this.state = {
       loading: true
@@ -41,33 +35,37 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
   }
 
   componentDidMount (): void {
-    if (this.props.config && this.props.config.domain) {
-      this.loadPlatform()
-    }
+    this.loadPlatform()
     if (!this.props.hideTitle) {
       document.title = this.title()
     }
   }
 
-  componentDidUpdate (prevProps: ConfigConsumer<HomeProps>): void {
-    if ((!prevProps.config || !prevProps.config.domain) && (this.props.config && this.props.config.domain)) {
-      this.loadPlatform()
-    }
+  componentDidUpdate (prevProps: XkitConsumer<HomeProps>, prevState: HomeState): void {
     if (prevProps.hideTitle !== this.props.hideTitle) {
       if (!this.props.hideTitle) {
         document.title = this.title()
       }
     }
+
+    if (prevState.platform !== this.state.platform && !this.props.hideTitle) {
+      document.title = this.title()
+    }
+
+    if (prevProps.xkit !== this.props.xkit) {
+      this.loadPlatform()
+    }
   }
 
   async loadPlatform (): Promise<void> {
+    const {
+      xkit,
+      hideTitle
+    } = this.props
     this.setState({ loading: true })
     try {
-      const platform = await this.props.callWithConfig(getPlatform)
+      const platform = await xkit.getPlatform()
       this.setState({ platform })
-      if (!this.props.hideTitle) {
-        document.title = this.title()
-      }
     } catch (e) {
       toaster.danger(`Error while loading platform: ${e.message}`)
     } finally {
@@ -77,8 +75,7 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
 
   title (): string {
     const {
-      title,
-      configLoading,
+      title
     } = this.props
     const {
       platform,
@@ -100,15 +97,13 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
     const {
       title,
       hideTitle,
-      config,
-      configLoading
     } = this.props
     const {
       platform,
       loading
     } = this.state
 
-    if (loading || configLoading) {
+    if (loading) {
       return <Spinner marginX="auto"  marginY={150} size={majorScale(6)} />
     }
 
@@ -139,4 +134,4 @@ class Home extends React.Component<ConfigConsumer<HomeProps>, HomeState> {
   }
 }
 
-export default withConfig(Home)
+export default withXkit(Home)
