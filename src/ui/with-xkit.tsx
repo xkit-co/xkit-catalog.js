@@ -10,8 +10,6 @@ function getDisplayName(WrappedComponent: React.ComponentType) {
 export type XkitConsumer<T = {}> = T & {
   xkit: XkitJs
 }
-
-let xkit: XkitJs
  
 export default function withXkit<Props extends {}>(WrappedComponent: React.ComponentType<Props>): React.ComponentType<Omit<Props, keyof XkitConsumer>> {
   class WithXkit extends React.Component<Omit<Props, keyof XkitConsumer>, {}> {
