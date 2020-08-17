@@ -21,7 +21,7 @@ import withXkit, { XkitConsumer } from './with-xkit'
 
 interface CatalogProps {
   platform: Platform,
-  hideBackButton?: boolean
+  showBackButton?: boolean
 }
 
 interface CatalogState {
@@ -65,8 +65,8 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   renderBackButton () {
-    const { platform, hideBackButton } = this.props
-    if (!platform || !platform.website || hideBackButton) return
+    const { platform, showBackButton } = this.props
+    if (!platform || !platform.website || !showBackButton) return
 
     return (
       <Pane marginTop={majorScale(3)}>

@@ -114,7 +114,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
           <Route path={['/', '/connectors']} exact={true}>
             <Catalog
               platform={platform}
-              hideBackButton={hideTitle}
+              showBackButton={!hideTitle}
             />
           </Route>
           <Route
