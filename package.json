@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -12,7 +12,7 @@
   "main": "lib/index.js",
   "scripts": {
     "dev": "parcel watch src/browser.ts",
-    "build": "npm test && parcel build --no-cache src/browser.tsx",
+    "build": "npm test && parcel build --no-cache src/browser.ts",
     "test": "tsc --noEmit",
     "prepublishOnly": "npm test",
     "prepare": "rm -rf lib && tsc --outDir lib --declaration",
