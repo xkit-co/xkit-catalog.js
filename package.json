@@ -36,13 +36,15 @@
   },
   "dependencies": {
     "@xkit-co/xkit.js": "1.4.2",
-    "evergreen-ui": "~4.27.4",
+    "evergreen-ui": "^5.0.4",
+    "glamor": "^2.20.40",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-router-dom": "^5.2.0",
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
     "string-similarity": "^4.0.1",
+    "ui-box": "^4.1.0",
     "unified": "^9.0.0"
   }
 }

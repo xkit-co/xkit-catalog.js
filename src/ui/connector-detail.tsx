@@ -10,6 +10,9 @@ import {
   Paragraph,
   Text,
   Small,
+  AddIcon,
+  TrashIcon,
+  RefreshIcon,
   majorScale,
   minorScale
 } from 'evergreen-ui'
@@ -114,7 +117,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
       return (
         <Pane>
           <Button
-            iconBefore={loading ? null : "add"}
+            iconBefore={loading ? null : AddIcon}
             appearance="primary"
             marginTop={minorScale(1)}
             height={majorScale(5)}
@@ -130,7 +133,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     return (
       <Pane>
         <Button
-          iconBefore={loading ? null : "trash"}
+          iconBefore={loading ? null : TrashIcon}
           marginLeft={majorScale(1)}
           marginTop={minorScale(1)}
           height={majorScale(5)}
@@ -189,7 +192,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
             <Button
               float="right"
               appearance="primary"
-              iconBefore={reconnectLoading ? null : "refresh"}
+              iconBefore={reconnectLoading ? null : RefreshIcon}
               isLoading={reconnectLoading}
               height={majorScale(4)}
               onClick={this.handleReconnect}
