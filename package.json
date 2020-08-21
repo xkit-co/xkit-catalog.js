@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -24,6 +24,7 @@
     "@babel/core": "~7.10.2",
     "@babel/preset-env": "~7.10.2",
     "@babel/preset-react": "~7.10.1",
+    "@types/history": "^4.7.7",
     "@types/parcel-bundler": "^1.12.1",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@xkit-co/xkit.js": "1.4.2",
     "evergreen-ui": "~4.27.4",
+    "history": "^4.10.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-router-dom": "^5.2.0",

@@ -6,10 +6,14 @@ import {
 } from 'evergreen-ui'
 import {
   Route,
-  BrowserRouter,
-  HashRouter,
-  MemoryRouter
+  Router
 } from 'react-router-dom'
+import {
+  createBrowserHistory,
+  createMemoryHistory,
+  createHashHistory,
+  History
+} from 'history'
 import { toaster } from './toaster'
 import {
   theme,
@@ -25,35 +29,25 @@ export function isRouterType (type: string | undefined): type is routerType {
   return ['memory', 'hash', 'browser'].includes(type)
 }
 
-interface RouterProps {
-  type: routerType,
-  basename: string
-}
-
-const Router: React.FC<RouterProps> = ({ type, basename, children }) => {
+export function createHistory(type: routerType, basename: string): History {
   if (type === 'memory') {
-    return (
-      <MemoryRouter>{children}</MemoryRouter>
-    )
+    return createMemoryHistory()
   }
 
-  if (type === 'browser') {
-    return (
-      <BrowserRouter basename={basename}>{children}</BrowserRouter>
-    )
+  if (type === 'hash') {
+    return createHashHistory({ basename })
   }
 
-  return (
-    <HashRouter basename={basename}>{children}</HashRouter>
-  )
+  return createBrowserHistory({ basename })
 }
 
 export interface AppOptions {
   hideTitle?: boolean,
   title?: string,
+  inheritRouter?: boolean,
   rootPath?: string,
   routerType?: routerType,
-  inheritRouter?: boolean
+  history?: History
 }
 
 interface AppProps extends AppOptions {
@@ -62,6 +56,7 @@ interface AppProps extends AppOptions {
 
 interface AppState {
   xkit: XkitJs,
+  history: History,
   unsubscribe?: Function
 }
 
@@ -71,10 +66,22 @@ class App extends React.Component<AppProps, AppState> {
     routerType: 'browser'
   }
 
+  createHistory (): History {
+    if (this.props.history) {
+      return this.props.history
+    }
+    return createHistory(this.props.routerType, this.props.rootPath)
+  }
+
   constructor (props: AppProps) {
     super(props)
     this.state = {
-      xkit: props.xkit
+      xkit: props.xkit,
+      history: this.createHistory()
+    }
+
+    if (this.props.inheritRouter && this.props.history) {
+      console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
   }
 
@@ -120,14 +127,19 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   render () {
-    const { routerType, rootPath, inheritRouter } = this.props
+    const {
+      routerType,
+      rootPath,
+      inheritRouter,
+      history
+    } = this.props
 
     if (inheritRouter) {
       return this.renderApp()
     }
 
     return (
-      <Router basename={rootPath} type={routerType}>
+      <Router history={history}>
         {this.renderApp()}
       </Router>
     )
