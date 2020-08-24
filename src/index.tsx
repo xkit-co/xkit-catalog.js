@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { domReady } from './util'
-import App, { AppOptions, isRouterType } from './ui/app'
+import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 
 export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType'> {
-  routerType: string
+  routerType?: string
 }
 
 export interface XkitCatalog extends XkitJs {
@@ -13,17 +13,33 @@ export interface XkitCatalog extends XkitJs {
   unmountCatalog: (el: HTMLElement) => boolean
 }
 
-function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions): void {
+interface Catalog {
+  el: HTMLElement,
+  pushHistory: (path: string) => void
+}
+
+function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {}): Catalog {
+  const history = createHistory(
+                    isRouterType(opts.routerType) ? opts.routerType : undefined,
+                    opts.rootPath
+                  )
+
   ReactDOM.render(
     <App
       xkit={xkit}
-      rootPath={opts.rootPath}
-      routerType={isRouterType(opts.routerType) ? opts.routerType : undefined}
+      history={history}
       title={opts.title}
       hideTitle={opts.hideTitle}
     />,
     el
   )
+
+  return {
+    el,
+    pushHistory (path: string) {
+      history.push(path)
+    }
+  }
 }
 
 function unmountCatalog(el: HTMLElement): boolean {
