@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { SCOPE_ID } from './scope-styles'
 import {
   Pane,
   majorScale
@@ -114,15 +115,17 @@ class App extends React.Component<AppProps, AppState> {
     } = this.state
 
     return (
-      <XkitProvider value={xkit}>
-        <Route path="/" strict={true}>
-          <ThemeProvider value={theme}>
-            <Pane margin="auto">
-              <Home title={title} hideTitle={hideTitle} />
-            </Pane>
-          </ThemeProvider>
-        </Route>
-      </XkitProvider>
+      <div id={SCOPE_ID}>
+        <XkitProvider value={xkit}>
+          <Route path="/" strict={true}>
+            <ThemeProvider value={theme}>
+              <Pane margin="auto">
+                <Home title={title} hideTitle={hideTitle} />
+              </Pane>
+            </ThemeProvider>
+          </Route>
+        </XkitProvider>
+      </div>
     )
   }
 
