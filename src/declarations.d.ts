@@ -27,3 +27,17 @@ declare module 'remark-react' {
 
   export default remark2react
 }
+
+declare module 'glamor' {
+  interface StyleDefinition {
+    selector: string,
+    style: unknown
+  }
+  type PluginFn = (def: StyleDefinition) => StyleDefinition
+
+  interface PluginSet {
+    add: (fn: PluginFn) => void
+  }
+
+  export const plugins: PluginSet
+}

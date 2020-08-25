@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@xkit-co/xkit.js": "1.4.2",
-    "evergreen-ui": "^5.0.4",
+    "evergreen-ui": "treygriffith/evergreen#ui-box-plugins",
     "glamor": "^2.20.40",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -44,7 +44,7 @@
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
     "string-similarity": "^4.0.1",
-    "ui-box": "^4.1.0",
+    "ui-box": "treygriffith/ui-box#plugins-build",
     "unified": "^9.0.0"
   }
 }
