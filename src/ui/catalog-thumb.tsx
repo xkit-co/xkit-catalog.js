@@ -8,7 +8,7 @@ import {
   Pane,
   Badge,
   majorScale
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Link } from 'react-router-dom'
 import ConnectorMark from './connector-mark'

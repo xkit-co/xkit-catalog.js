@@ -9,7 +9,7 @@ import {
   Heading,
   Spinner,
   majorScale
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog from './catalog'
 import ConnectorDetailRoute from './connector-detail-route'

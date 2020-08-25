@@ -6,7 +6,7 @@ import {
   withTheme as untypedWithTheme,
   // @ts-ignore
   ThemeProvider as UntypedProvider
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 
 type CustomPalette = typeof defaultTheme.palette & {
   base: string

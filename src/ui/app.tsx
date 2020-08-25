@@ -4,7 +4,7 @@ import { SCOPE_ID } from './scope-styles'
 import {
   Pane,
   majorScale
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import {
   Route,
   Router

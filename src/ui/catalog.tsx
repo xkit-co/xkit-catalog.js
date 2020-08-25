@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
   Pane,
+  Text,
   Card,
   Heading,
   InboxIcon,
@@ -10,7 +11,7 @@ import {
   Spinner,
   Colors,
   majorScale
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import { compareTwoStrings } from 'string-similarity'
 import CatalogThumb from './catalog-thumb'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
@@ -97,7 +98,9 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       return (
         <EmptyCatalog background="tint1">
           <Heading size={600} textAlign="center">
-            <InboxIcon marginRight={majorScale(1)} />
+            <Text marginRight={majorScale(1)}>
+              <InboxIcon />
+            </Text>
             No Integrations Found
           </Heading>
         </EmptyCatalog>

@@ -15,7 +15,7 @@ import {
   RefreshIcon,
   majorScale,
   minorScale
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import { Link } from 'react-router-dom'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Connection } from '@xkit-co/xkit.js/lib/api/connection'

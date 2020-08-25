@@ -2,7 +2,7 @@ import { plugins as glamorPlugins } from 'glamor'
 import {
   setClassNamePrefix,
   usePlugin as useUIBoxPlugin
-} from 'ui-box'
+} from '@treygriffith/ui-box'
 
 // Need to heavily specify our styles to override anything set in the parent
 

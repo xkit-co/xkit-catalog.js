@@ -16,7 +16,7 @@ import {
   OrderedList,
   UnorderedList,
   ListItem
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 
 const mediumComponents: RemarkComponents = {
   code: Code,

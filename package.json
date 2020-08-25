@@ -35,8 +35,8 @@
     "typescript": "~3.9.5"
   },
   "dependencies": {
+    "@treygriffith/evergreen-ui": "^5.1.0",
     "@xkit-co/xkit.js": "1.4.2",
-    "evergreen-ui": "treygriffith/evergreen#52b371b7a7bb16eea41400eeca0549a11acaa887",
     "glamor": "^2.20.40",
     "history": "^4.10.1",
     "react": "~16.9.0",
@@ -45,7 +45,7 @@
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
     "string-similarity": "^4.0.1",
-    "ui-box": "treygriffith/ui-box#dde233f39cf788dd92cc9b6627fa8f95238a62b8",
+    "@treygriffith/ui-box": "^4.2.0",
     "unified": "^9.0.0"
   }
 }

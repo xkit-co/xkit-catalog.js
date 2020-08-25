@@ -12,7 +12,7 @@ import { toaster } from './toaster'
 import {
   Pane,
   Spinner
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
 
