@@ -70,7 +70,7 @@ class App extends React.Component<AppProps, AppState> {
     routerType: 'browser'
   }
 
-  ref: React.RefObject<HTMElement>
+  ref: React.RefObject<HTMLDivElement>
 
   createHistory (): History {
     if (this.props.history) {
@@ -90,7 +90,7 @@ class App extends React.Component<AppProps, AppState> {
       console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
 
-    this.ref = React.createRef()
+    this.ref = React.createRef<HTMLDivElement>()
   }
 
   reHomeToaster (): void {
