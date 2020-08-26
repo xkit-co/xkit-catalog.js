@@ -70,6 +70,8 @@ class App extends React.Component<AppProps, AppState> {
     routerType: 'browser'
   }
 
+  ref: React.RefObject<HTMElement>
+
   createHistory (): History {
     if (this.props.history) {
       return this.props.history
@@ -87,9 +89,18 @@ class App extends React.Component<AppProps, AppState> {
     if (this.props.inheritRouter && this.props.history) {
       console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
+
+    this.ref = React.createRef()
+  }
+
+  reHomeToaster (): void {
+    // Need to move the toaster inside our element so we can style it
+    const toasterEl = window.document.querySelector('[data-evergreen-toaster-container]')
+    this.ref.current.appendChild(toasterEl)
   }
 
   componentDidMount (): void {
+    this.reHomeToaster()
     const { xkit } = this.props
     if (!xkit) {
       console.error('Xkit was not passed to the React App, it will fail to load.')
@@ -122,7 +133,7 @@ class App extends React.Component<AppProps, AppState> {
     } = this.state
 
     return (
-      <div id={SCOPE_ID}>
+      <div id={SCOPE_ID} ref={this.ref}>
         <XkitProvider value={xkit}>
           <Route path="/" strict={true}>
             <ThemeProvider value={theme}>
