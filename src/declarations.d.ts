@@ -41,3 +41,8 @@ declare module 'glamor' {
 
   export const plugins: PluginSet
 }
+
+declare module "*.css" {
+  const styles: string;
+  export default classes;
+}

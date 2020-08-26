@@ -11,7 +11,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "dev": "parcel watch --no-hmr src/browser.ts",
+    "dev": "parcel watch src/browser.ts",
     "build": "npm test && parcel build --no-cache src/browser.ts",
     "test": "tsc --noEmit",
     "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration",
@@ -21,7 +21,6 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "~7.10.2",
-    "@babel/preset-env": "~7.10.2",
     "@babel/preset-react": "~7.10.1",
     "@types/history": "^4.7.7",
     "@types/parcel-bundler": "^1.12.1",
@@ -32,7 +31,7 @@
     "@types/string-similarity": "^3.0.0",
     "parcel-bundler": "~1.12.4",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
-    "postcss-modules": "^3.2.2",
+    "parcel-plugin-css-to-string": "^2.5.0",
     "typescript": "~3.9.5"
   },
   "dependencies": {

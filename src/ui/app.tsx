@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { injectCSS, removeCSS } from '../util'
 import { SCOPE_ID } from './scope-styles'
-import reset from './reset.css'
+import resetStyles from './reset.css'
 import {
   Pane,
   majorScale
@@ -24,8 +25,6 @@ import {
 import { Provider as XkitProvider } from './xkit-context'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
-
-console.log('reset.css', reset)
 
 type routerType = 'browser' | 'hash' | 'memory'
 
@@ -61,7 +60,8 @@ interface AppProps extends AppOptions {
 interface AppState {
   xkit: XkitJs,
   history: History,
-  unsubscribe?: Function
+  unsubscribe?: Function,
+  cssTag?: HTMLElement
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -99,12 +99,16 @@ class App extends React.Component<AppProps, AppState> {
       // object references
       this.setState({ xkit: Object.assign({}, xkit) })
     })
+    this.setState({ cssTag: injectCSS(window.document, resetStyles) })
   }
 
   componentWillUnmount (): void {
     const { unsubscribe } = this.state
     if (unsubscribe) {
       unsubscribe()
+    }
+    if (this.state.cssTag) {
+      removeCSS(window.document, this.state.cssTag)
     }
   }
  
