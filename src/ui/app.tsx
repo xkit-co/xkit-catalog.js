@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { SCOPE_ID } from './scope-styles'
+import reset from './reset.css'
 import {
   Pane,
   majorScale
@@ -23,6 +24,8 @@ import {
 import { Provider as XkitProvider } from './xkit-context'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
+
+console.log('reset.css', reset)
 
 type routerType = 'browser' | 'hash' | 'memory'
 

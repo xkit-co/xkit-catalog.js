@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
   toaster as defaultToaster
-} from 'evergreen-ui'
+} from '@treygriffith/evergreen-ui'
 // TODO: allow customization / BYOToaster
 
 interface ToasterSettings {
