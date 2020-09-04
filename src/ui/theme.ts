@@ -16,8 +16,27 @@ import {
 import { Themer as UntypedThemer } from '@treygriffith/evergreen-ui/commonjs/themer'
 
 declare module '@treygriffith/evergreen-ui' {
+  type TypographyStyle = Partial<{
+    color: string
+    fontFamily: string
+    fontSize: string
+    fontWeight: number
+    letterSpacing: string
+    lineHeight: string
+    marginTop: number
+    textTransform: string
+  }>
+
   interface Theme {
-    getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string
+    getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string,
+    getBackground: (background: string) => string,
+    getElevation: (elevation: number) => string,
+    getIconColor: (color: string) => string,
+    getHeadingStyle: (size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) => TypographyStyle,
+    getTextStyle: (size?: 300 | 400 | 500) => TypographyStyle,
+    getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle,
+    getFontFamily: (family: string) => string,
+    getTextColor: (color: string) => string
   }
 }
 
@@ -272,12 +291,47 @@ function defaultControlStyles (theme: CustomTheme): ButtonStateProps {
   }
 }
 
+function keyAsValue(obj: { [index: string]: string }, keyValue: string): string {
+  if (obj.hasOwnProperty(keyValue)) {
+    return obj[keyValue]
+  }
+  return keyValue
+}
+
+const ThemeHelpers: Partial<CustomTheme> = {
+  getBackground (background: string): string {
+    return keyAsValue(this.colors.background, background)
+  },
+  getElevation (elevation: number): string {
+    return this.elevations[elevation]
+  },
+  getIconColor (color: string): string {
+    return keyAsValue(this.colors.icon, color)
+  },
+  getHeadingStyle (size = 500) {
+    return this.typography.headings[String(size)]
+  },
+  getTextStyle (size = 400) {
+    return this.typography.text[String(size)]
+  },
+  getParagraphStyle (size = 400) {
+    return this.typography.paragraph[String(size)]
+  },
+  getFontFamily (family: string) {
+    return keyAsValue(this.typography.fontFamilies, family)
+  },
+  getTextColor (color: string) {
+    return keyAsValue(this.colors.text, color)
+  }
+}
+
 function buildTheme(props: CustomThemeProps): CustomTheme {
   if (!Object.keys(props).length)  {
     return defaultCustomTheme
   }
 
   const theme = cloneTheme(defaultCustomTheme)
+  Object.assign(theme, ThemeHelpers)
 
   if (props.card) {
     Object.assign(theme.card, props.card)

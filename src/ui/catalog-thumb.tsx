@@ -40,7 +40,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
 
     return (
       <Card
-        backgroundColor={theme.palette.base}
+        backgroundColor='base'
         elevation={theme.card.elevation}
         hoverElevation={theme.card.hoverElevation}
         marginRight={majorScale(3)}
