@@ -41,15 +41,15 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
     return (
       <Card
         backgroundColor={theme.palette.base}
-        elevation={1}
-        hoverElevation={3}
+        elevation={theme.card.elevation}
+        hoverElevation={theme.card.hoverElevation}
         marginRight={majorScale(3)}
         marginBottom={majorScale(3)}
         width={250}
-        height={150}
+        minHeight={150}
         display="flex"
         flexDirection="column"
-        padding={majorScale(2)}
+        padding={theme.card.padding}
         is={Link}
         textDecoration="none"
         to={`/connectors/${slug}`}

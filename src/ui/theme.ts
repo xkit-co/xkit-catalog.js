@@ -2,6 +2,7 @@ import * as React from 'react'
 import tinycolor from 'tinycolor2'
 import { css, StyleAttribute } from 'glamor'
 import {
+  majorScale,
   IntentTypes,
   ButtonAppearance,
   defaultTheme,
@@ -29,13 +30,25 @@ const palette: CustomPalette = {
   base: 'white'
 }
 
+interface CardProps {
+  padding: number,
+  elevation: 1 | 2 | 3,
+  hoverElevation: 1 | 2 | 3
+}
+
 export interface CustomTheme extends Omit<Theme, 'palette'> {
-  palette: CustomPalette
+  palette: CustomPalette,
+  card: CardProps
 }
 
 const defaultCustomTheme: CustomTheme = {
   ...defaultTheme,
-  palette
+  palette,
+  card: {
+    padding: majorScale(2),
+    elevation: 1,
+    hoverElevation: 3
+  }
 }
 
 export type ThemeConsumer<Props = {}> = Props & {
@@ -77,6 +90,7 @@ const withTheme: ThemeHOC = untypedWithTheme as ThemeHOC
 function cloneTheme(theme: CustomTheme): CustomTheme {
   return {
     ...theme,
+    card: { ...theme.card },
     colors: {
       background: { ...theme.colors.background },
       border: { ...theme.colors.border },
@@ -156,7 +170,13 @@ interface HasTextColor {
 }
 
 export interface CustomThemeProps {
-  primaryButton?: HasBackground & HasTextColor
+  buttons?: {
+    primary?: HasBackground & HasTextColor,
+    default?: HasBackground & HasTextColor,
+    // Note: we don't use minimal buttons
+    minimal?: HasBackground & HasTextColor
+  }
+  card?: Partial<CardProps>
 }
 
 function getLinearGradient(top: string, bottom: string): string {
@@ -169,21 +189,35 @@ interface LinearGradientState {
   active: string
 }
 
+function emphasize(colorStr: string, amount: number): string {
+  const color = tinycolor(colorStr)
+
+  if (color.isLight()) {
+    return color.darken(amount).toString()
+  }
+
+  return color.brighten(amount).toString()
+}
+
 function getLinearGradientStates(start: string, end: string): LinearGradientState {
-  const darkStart = tinycolor(start).darken(5).toString()
-  const darkEnd = tinycolor(end).darken(5).toString()
   return {
     base: getLinearGradient(start, end),
-    hover: getLinearGradient(darkStart, darkEnd),
-    active: getLinearGradient(darkEnd, darkEnd)
+    hover: getLinearGradient(emphasize(start), emphasize(end)),
+    active: getLinearGradient(emphasize(end), emphasize(end))
   }
 }
 
-function getBaseColor (prop: HasBackground): string | undefined {
-  const background = prop.background
-
+function getStartColor (background: Background): string | undefined {
   if (isGradient(background)) {
     return background.start
+  }
+
+  return background
+}
+
+function getEndColor (background: Background): string | undefined {
+  if (isGradient(background)) {
+    return background.end
   }
 
   return background
@@ -192,11 +226,47 @@ function getBaseColor (prop: HasBackground): string | undefined {
 function getBackgroundImage (prop: HasBackground, state: 'base' | 'hover' | 'active'): string {
   const background = prop.background
 
-  if (isGradient(background)) {
-    return getLinearGradientStates(background.start, background.end)[state]
-  }
+  return getLinearGradientStates(getStartColor(background), getEndColor(background))[state]
+}
 
-  return 'none'
+function defaultControlStyles (theme: CustomTheme): ButtonStateProps {
+  return {
+    disabled: {
+      opacity: 0.8,
+      backgroundImage: 'none',
+      backgroundColor: theme.scales.neutral.N2A,
+      boxShadow: 'none',
+      color: theme.scales.neutral.N7A,
+      pointerEvents: 'none'
+    },
+    base: {
+      backgroundColor: 'white',
+      backgroundImage: getLinearGradient('#FFFFFF', '#F4F5F7'),
+      boxShadow: `inset 0 0 0 1px ${theme.scales.neutral.N4A}, inset 0 -1px 1px 0 ${
+        theme.scales.neutral.N2A
+      }`
+    },
+    hover: {
+      backgroundImage: getLinearGradient('#FAFBFB', '#EAECEE')
+    },
+    focus: {
+      boxShadow: `0 0 0 3px ${theme.scales.blue.B4A}, inset 0 0 0 1px ${
+        theme.scales.neutral.N5A
+      }, inset 0 -1px 1px 0 ${theme.scales.neutral.N4A}`
+    },
+    active: {
+      backgroundImage: 'none',
+      backgroundColor: theme.scales.blue.B3A,
+      boxShadow: `inset 0 0 0 1px ${theme.scales.neutral.N4A}, inset 0 1px 1px 0 ${
+        theme.scales.neutral.N2A
+      }`
+    },
+    focusAndActive: {
+      boxShadow: `0 0 0 3px ${theme.scales.blue.B4A}, inset 0 0 0 1px ${
+        theme.scales.neutral.N5A
+      }, inset 0 1px 1px 0 ${theme.scales.neutral.N2A}`
+    }
+  }
 }
 
 function buildTheme(props: CustomThemeProps): CustomTheme {
@@ -206,48 +276,47 @@ function buildTheme(props: CustomThemeProps): CustomTheme {
 
   const theme = cloneTheme(defaultCustomTheme)
 
-  const primaryButton = props.primaryButton
+  if (props.card) {
+    Object.assign(theme.card, props.card)
+  }
 
-  if (primaryButton) {
+  const buttons = props.buttons
+
+  if (buttons) {
     theme.getButtonClassName = function (appearance: ButtonAppearance, intent: IntentTypes): string {
-      if (appearance !== 'primary' || (intent && intent !== 'none')) {
+      const buttonProps = buttons[appearance]
+
+      if (!buttonProps || (intent && intent !== 'none')) {
         return defaultCustomTheme.getButtonClassName(appearance, intent)
       }
 
-      const focusColor = tinycolor(getBaseColor(primaryButton)).setAlpha(0.4).toString()
+      const focusColor = tinycolor(getStartColor(buttonProps.background)).setAlpha(0.4).toString()
+      const defaults = defaultControlStyles(this)
 
       return css(Themer.createButtonAppearance({
-        disabled: {
-          opacity: 0.8,
-          backgroundImage: 'none',
-          backgroundColor: this.scales.neutral.N2A,
-          boxShadow: 'none',
-          color: this.scales.neutral.N7A,
-          pointerEvents: 'none'
-        },
+        ...defaults,
         base: {
-          color: primaryButton.textColor,
-          backgroundColor: getBaseColor(primaryButton),
-          backgroundImage: getBackgroundImage(primaryButton, 'base'),
-          boxShadow: `inset 0 0 0 1px ${
-            this.scales.neutral.N5A
-          }, inset 0 -1px 1px 0 ${this.scales.neutral.N2A}`
+          ...defaults.base,
+          color: buttonProps.textColor,
+          backgroundColor: getStartColor(buttonProps.background),
+          backgroundImage: getBackgroundImage(buttonProps, 'base')
         },
         hover: {
-          backgroundImage: getBackgroundImage(primaryButton, 'hover')
+          ...defaults.hover,
+          backgroundImage: getBackgroundImage(buttonProps, 'hover')
         },
         focus: {
+          ...defaults.focus,
           boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${
             this.scales.neutral.N4A
           }, inset 0 -1px 1px 0 ${this.scales.neutral.N5A}`
         },
         active: {
-          backgroundImage: getBackgroundImage(primaryButton, 'active'),
-          boxShadow: `inset 0 0 0 1px ${
-            this.scales.neutral.N4A
-          }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
+          ...defaults.active,
+          backgroundImage: getBackgroundImage(buttonProps, 'active')
         },
         focusAndActive: {
+          ...defaults.focusAndActive,
           boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${
             this.scales.neutral.N4A
           }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
