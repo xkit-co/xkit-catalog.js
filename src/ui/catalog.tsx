@@ -17,7 +17,6 @@ import CatalogThumb from './catalog-thumb'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
-import { theme } from './theme'
 import withXkit, { XkitConsumer } from './with-xkit'
 
 interface CatalogProps {

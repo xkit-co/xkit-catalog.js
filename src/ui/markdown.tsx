@@ -5,7 +5,6 @@ import * as ReactDOM from 'react-dom'
 import unified, { Processor, Plugin } from 'unified'
 import parse from 'remark-parse'
 import remark2react, { components as RemarkComponents } from 'remark-react'
-import { theme, ThemeProvider } from './theme'
 import {
   Pane,
   Heading,
