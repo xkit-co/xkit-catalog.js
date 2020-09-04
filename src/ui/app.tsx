@@ -19,7 +19,9 @@ import {
 } from 'history'
 import { toaster } from './toaster'
 import {
-  theme,
+  buildTheme,
+  CustomThemeProps,
+  CustomTheme,
   ThemeProvider
 } from './theme'
 import { Provider as XkitProvider } from './xkit-context'
@@ -50,7 +52,8 @@ export interface AppOptions {
   inheritRouter?: boolean,
   rootPath?: string,
   routerType?: routerType,
-  history?: History
+  history?: History,
+  theme?: CustomThemeProps
 }
 
 interface AppProps extends AppOptions {
@@ -61,13 +64,15 @@ interface AppState {
   xkit: XkitJs,
   history: History,
   unsubscribe?: Function,
-  cssTag?: HTMLElement
+  cssTag?: HTMLElement,
+  theme: CustomTheme
 }
 
 class App extends React.Component<AppProps, AppState> {
   static defaultProps = {
     rootPath: '/',
-    routerType: 'browser'
+    routerType: 'browser',
+    theme: {}
   }
 
   ref: React.RefObject<HTMLDivElement>
@@ -83,7 +88,8 @@ class App extends React.Component<AppProps, AppState> {
     super(props)
     this.state = {
       xkit: props.xkit,
-      history: this.createHistory()
+      history: this.createHistory(),
+      theme: buildTheme(this.props.theme)
     }
 
     if (this.props.inheritRouter && this.props.history) {
@@ -129,7 +135,8 @@ class App extends React.Component<AppProps, AppState> {
       hideTitle
     } = this.props
     const {
-      xkit
+      xkit,
+      theme
     } = this.state
 
     return (

@@ -21,9 +21,17 @@ interface CustomTheme extends Omit<Theme, 'palette'> {
   palette: CustomPalette
 }
 
-const theme: CustomTheme = {
+const defaultCustomtheme: CustomTheme = {
   ...defaultTheme,
   palette
+}
+
+export interface CustomThemeProps {
+  primaryButtonColor: string
+}
+
+function buildTheme({ primaryButtonColor }: CustomThemeProps): CustomTheme {
+  return defaultCustomtheme
 }
 
 export type ThemeConsumer<Props = {}> = Props & {
@@ -38,5 +46,5 @@ type ThemeHOC = <Props extends {}>(WrappedComponent: React.ComponentType<Props>)
 // withTheme is not in the index.d.ts for evergreen
 const withTheme: ThemeHOC = untypedWithTheme as ThemeHOC
 
-export { theme, ThemeProvider, withTheme }
+export { buildTheme, ThemeProvider, withTheme }
  
