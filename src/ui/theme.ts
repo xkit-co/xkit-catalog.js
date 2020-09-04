@@ -189,25 +189,28 @@ interface LinearGradientState {
   active: string
 }
 
-function emphasize(colorStr: string, amount: number): string {
-  const color = tinycolor(colorStr)
+function emphasizeLinearGradient(startStr: string, endStr: string, amount: number): string {
+  const start = tinycolor(startStr)
+  const end = tinycolor(endStr)
 
-  if (color.isLight()) {
-    return color.darken(amount).toString()
+  // we want to modify both colors in the same direction, so we choose one to be the
+  // one we'll use as a brightness guide
+  if (end.isLight()) {
+    return getLinearGradient(start.darken(amount).toString(), end.darken(amount).toString())
   }
 
-  return color.brighten(amount).toString()
+  return getLinearGradient(start.lighten(amount).toString(), end.lighten(amount).toString())
 }
 
 function getLinearGradientStates(start: string, end: string): LinearGradientState {
   return {
     base: getLinearGradient(start, end),
-    hover: getLinearGradient(emphasize(start), emphasize(end)),
-    active: getLinearGradient(emphasize(end), emphasize(end))
+    hover: emphasizeLinearGradient(start, end, 5),
+    active: emphasizeLinearGradient(end, end, 5)
   }
 }
 
-function getStartColor (background: Background): string | undefined {
+function getStartColor (background: Background): string {
   if (isGradient(background)) {
     return background.start
   }
@@ -215,7 +218,7 @@ function getStartColor (background: Background): string | undefined {
   return background
 }
 
-function getEndColor (background: Background): string | undefined {
+function getEndColor (background: Background): string {
   if (isGradient(background)) {
     return background.end
   }
