@@ -1,8 +1,25 @@
-import { plugins as glamorPlugins } from 'glamor'
+import {
+  // @ts-ignore
+  plugins as untypedGlamorPlugins
+} from 'glamor'
 import {
   setClassNamePrefix,
   usePlugin as useUIBoxPlugin
 } from '@treygriffith/ui-box'
+
+// Plugins aren't in Glamor's type definition
+interface StyleDefinition {
+  selector: string,
+  style: unknown
+}
+type PluginFn = (def: StyleDefinition) => StyleDefinition
+
+interface PluginSet {
+  add: (fn: PluginFn) => void
+}
+
+const glamorPlugins = untypedGlamorPlugins as PluginSet
+
 
 // Need to heavily specify our styles to override anything set in the parent
 
