@@ -97,6 +97,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     const {
       title,
       hideTitle,
+      hideSearch
     } = this.props
     const {
       platform,
@@ -115,6 +116,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
             <Catalog
               platform={platform}
               showBackButton={!hideTitle}
+              hideSearch={hideSearch}
             />
           </Route>
           <Route

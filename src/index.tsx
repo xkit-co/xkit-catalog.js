@@ -30,6 +30,7 @@ function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {})
       history={history}
       title={opts.title}
       hideTitle={opts.hideTitle}
+      hideSearch={opts.hideSearch}
     />,
     el
   )
@@ -61,7 +62,8 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
     const rootPath = domRoot.dataset.path
     const routerType = domRoot.dataset.router
     const title = domRoot.dataset.title
-    const hideTitle = domRoot.dataset.hideTitle === 'true'
+    const hideTitle = 'hideTitle' in domRoot.dataset
+    const hideSearch = 'hideSearch' in domRoot.dataset
 
     // Attempt a login
     if (token) {
@@ -84,7 +86,8 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
         rootPath,
         routerType,
         title,
-        hideTitle
+        hideTitle,
+        hideSearch
       })
     }
   })

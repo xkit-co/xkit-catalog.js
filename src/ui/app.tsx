@@ -48,6 +48,7 @@ export function createHistory(type: routerType, basename: string): History {
 
 export interface AppOptions {
   hideTitle?: boolean,
+  hideSearch?: boolean,
   title?: string,
   inheritRouter?: boolean,
   rootPath?: string,
@@ -132,7 +133,8 @@ class App extends React.Component<AppProps, AppState> {
   renderApp () {
     const {
       title,
-      hideTitle
+      hideTitle,
+      hideSearch
     } = this.props
     const {
       xkit,
@@ -145,7 +147,7 @@ class App extends React.Component<AppProps, AppState> {
           <Route path="/" strict={true}>
             <ThemeProvider value={theme}>
               <Pane margin="auto">
-                <Home title={title} hideTitle={hideTitle} />
+                <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
               </Pane>
             </ThemeProvider>
           </Route>
