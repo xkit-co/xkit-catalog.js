@@ -4,6 +4,7 @@ import { css, StyleAttribute } from 'glamor'
 import {
   majorScale,
   IntentTypes,
+  FontFamily,
   ButtonAppearance,
   defaultTheme,
   Theme,
@@ -60,8 +61,107 @@ export interface CustomTheme extends Omit<Theme, 'palette'> {
   card: CardProps
 }
 
+const ThemeHelpers: Partial<CustomTheme> = {
+  getBackground (background: string): string {
+    return keyAsValue(this.colors.background, background)
+  },
+  getElevation (elevation: number): string {
+    return this.elevations[elevation]
+  },
+  getIconColor (color: string): string {
+    return keyAsValue(this.colors.icon, color)
+  },
+  getHeadingStyle (size = 500) {
+    // Heading styles get passed straight through without
+    // using the helpers, so we fix that
+    const style = this.typography.headings[String(size)]
+    if (style.fontFamily) {
+      style.fontFamily = this.getFontFamily(style.fontFamily)
+    }
+    if (style.color) {
+      style.color = this.getTextColor(style.color)
+    }
+    return style
+  },
+  getTextStyle (size = 400) {
+    return this.typography.text[String(size)]
+  },
+  getParagraphStyle (size = 400) {
+    return this.typography.paragraph[String(size)]
+  },
+  getFontFamily (family: string) {
+    return keyAsValue(this.typography.fontFamilies, family)
+  },
+  getTextColor (color: string) {
+    return keyAsValue(this.colors.text, color)
+  }
+}
+
 const defaultCustomTheme: CustomTheme = {
   ...defaultTheme,
+  // We apply helpers that actually reference this object,
+  // rather than hardcoded references
+  ...ThemeHelpers,
+  // Evergreen hardcodes some of the typography properties,
+  // so we reset to the named properties
+  typography: {
+    ...defaultTheme.typography
+    text: {
+      ...defaultTheme.typography.text,
+      '600': {
+        ...defaultTheme.typography.text['600'],
+        fontFamily: 'display'
+      }
+    },
+    headings: {
+      ...defaultTheme.typography.headings,
+      '100': {
+        ...defaultTheme.typography.headings['100'],
+        fontFamily: 'ui',
+        color: 'muted'
+      },
+      '200': {
+        ...defaultTheme.typography.headings['200'],
+        fontFamily: 'ui',
+        color: 'muted'
+      },
+      '300': {
+        ...defaultTheme.typography.headings['300'],
+        fontFamily: 'ui',
+        color: 'dark'
+      },
+      '400': {
+        ...defaultTheme.typography.headings['400'],
+        fontFamily: 'ui',
+        color: 'dark'
+      },
+      '500': {
+        ...defaultTheme.typography.headings['500'],
+        fontFamily: 'ui',
+        color: 'dark'
+      },
+      '600': {
+        ...defaultTheme.typography.headings['600'],
+        fontFamily: 'display',
+        color: 'dark'
+      },
+      '700': {
+        ...defaultTheme.typography.headings['700'],
+        fontFamily: 'display',
+        color: 'dark'
+      },
+      '800': {
+        ...defaultTheme.typography.headings['800'],
+        fontFamily: 'display',
+        color: 'dark'
+      },
+      '900': {
+        ...defaultTheme.typography.headings['900'],
+        fontFamily: 'display',
+        color: 'dark'
+      }
+    }
+  }
   palette,
   card: {
     padding: majorScale(2),
@@ -188,15 +288,16 @@ interface HasTextColor {
   textColor: string
 }
 
-export interface CustomThemeProps {
-  buttons?: {
-    primary?: HasBackground & HasTextColor,
-    default?: HasBackground & HasTextColor,
+export type CustomThemeProps = Partial<{
+  fonts: Partial<Record<FontFamily, string>>,
+  buttons: Partial<{
+    primary: HasBackground & HasTextColor,
+    default: HasBackground & HasTextColor,
     // Note: we don't use minimal buttons
-    minimal?: HasBackground & HasTextColor
-  }
-  card?: Partial<CardProps>
-}
+    minimal: HasBackground & HasTextColor
+  }>
+  card: Partial<CardProps>
+}>
 
 function getLinearGradient(top: string, bottom: string): string {
   return `linear-gradient(to bottom, ${top}, ${bottom})`
@@ -298,43 +399,19 @@ function keyAsValue(obj: { [index: string]: string }, keyValue: string): string 
   return keyValue
 }
 
-const ThemeHelpers: Partial<CustomTheme> = {
-  getBackground (background: string): string {
-    return keyAsValue(this.colors.background, background)
-  },
-  getElevation (elevation: number): string {
-    return this.elevations[elevation]
-  },
-  getIconColor (color: string): string {
-    return keyAsValue(this.colors.icon, color)
-  },
-  getHeadingStyle (size = 500) {
-    return this.typography.headings[String(size)]
-  },
-  getTextStyle (size = 400) {
-    return this.typography.text[String(size)]
-  },
-  getParagraphStyle (size = 400) {
-    return this.typography.paragraph[String(size)]
-  },
-  getFontFamily (family: string) {
-    return keyAsValue(this.typography.fontFamilies, family)
-  },
-  getTextColor (color: string) {
-    return keyAsValue(this.colors.text, color)
-  }
-}
-
 function buildTheme(props: CustomThemeProps): CustomTheme {
   if (!Object.keys(props).length)  {
     return defaultCustomTheme
   }
 
   const theme = cloneTheme(defaultCustomTheme)
-  Object.assign(theme, ThemeHelpers)
 
   if (props.card) {
     Object.assign(theme.card, props.card)
+  }
+
+  if (props.fonts) {
+    Object.assign(theme.typography.fontFamilies, props.fonts)
   }
 
   const buttons = props.buttons
