@@ -289,7 +289,10 @@ interface HasTextColor {
 }
 
 export type CustomThemeProps = Partial<{
-  fonts: Partial<Record<FontFamily, string>>,
+  text: Partial<{
+    fonts: Partial<Record<FontFamily, string>>,
+    colors: Partial<Record<'muted' | 'default' | 'dark' | 'selected', string>>
+  }>
   buttons: Partial<{
     primary: HasBackground & HasTextColor,
     default: HasBackground & HasTextColor,
@@ -410,8 +413,15 @@ function buildTheme(props: CustomThemeProps): CustomTheme {
     Object.assign(theme.card, props.card)
   }
 
-  if (props.fonts) {
-    Object.assign(theme.typography.fontFamilies, props.fonts)
+  const textProps = props.text
+
+  if (textProps) {
+    if (textProps.fonts) {
+      Object.assign(theme.typography.fontFamilies, textProps.fonts)
+    }
+    if (textProps.colors) {
+      Object.assign(theme.colors.text, textProps.colors)
+    }
   }
 
   const buttons = props.buttons
