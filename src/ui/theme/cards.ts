@@ -5,7 +5,7 @@ import {
 
 export type CustomCardProps = Partial<CardProps>
 
-export default function customizeCards (theme: CatalogTheme, props: CustomCardProps) {
+export default function customizeCards (theme: CatalogTheme, props: CustomCardProps): CatalogTheme {
   return {
     ...theme,
     card: {
