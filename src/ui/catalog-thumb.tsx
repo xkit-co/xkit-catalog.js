@@ -61,8 +61,8 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           </Pane>
           {this.renderStatus()}
         </Pane>
-        <Heading size={600} marginTop={majorScale(1)}>{name}</Heading>
-        <Paragraph size={300} marginTop="default">
+        <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
+        <Paragraph size={300} marginTop={majorScale(1)}>
           {short_description}
         </Paragraph>
       </Card>
