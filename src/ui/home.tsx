@@ -18,7 +18,8 @@ import withXkit, { XkitConsumer } from './with-xkit'
 
 interface HomeProps {
   title?: string,
-  hideTitle?: boolean
+  hideTitle?: boolean,
+  hideSearch?: boolean
 }
 
 interface HomeState {

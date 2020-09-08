@@ -20,8 +20,8 @@ import {
 import { toaster } from './toaster'
 import {
   buildTheme,
-  CustomThemeProps,
-  CustomTheme,
+  CatalogThemeProps,
+  CatalogTheme,
   ThemeProvider
 } from './theme'
 import { Provider as XkitProvider } from './xkit-context'
@@ -54,7 +54,7 @@ export interface AppOptions {
   rootPath?: string,
   routerType?: routerType,
   history?: History,
-  theme?: CustomThemeProps
+  theme?: CatalogThemeProps
 }
 
 interface AppProps extends AppOptions {
@@ -66,7 +66,7 @@ interface AppState {
   history: History,
   unsubscribe?: Function,
   cssTag?: HTMLElement,
-  theme: CustomTheme
+  theme: CatalogTheme
 }
 
 class App extends React.Component<AppProps, AppState> {
