@@ -53,7 +53,8 @@ const palette: CustomPalette = {
 interface CardProps {
   padding: number,
   elevation: 1 | 2 | 3,
-  hoverElevation: 1 | 2 | 3
+  hoverElevation: 1 | 2 | 3,
+  borderRadius: number
 }
 
 export interface CustomTheme extends Omit<Theme, 'palette'> {
@@ -166,7 +167,8 @@ const defaultCustomTheme: CustomTheme = {
   card: {
     padding: majorScale(2),
     elevation: 1,
-    hoverElevation: 3
+    hoverElevation: 3,
+    borderRadius: 5
   }
 }
 
