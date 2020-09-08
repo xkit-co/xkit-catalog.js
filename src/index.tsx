@@ -4,7 +4,7 @@ import { domReady } from './util'
 import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 
-export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType'> {
+export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType' | 'history'> {
   routerType?: string
 }
 
@@ -24,13 +24,13 @@ function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {})
                     opts.rootPath
                   )
 
+  const { routerType, ...appOpts } = opts  
+
   ReactDOM.render(
     <App
+      {...appOpts}
       xkit={xkit}
       history={history}
-      title={opts.title}
-      hideTitle={opts.hideTitle}
-      hideSearch={opts.hideSearch}
     />,
     el
   )
@@ -87,7 +87,24 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
         routerType,
         title,
         hideTitle,
-        hideSearch
+        hideSearch,
+        theme: {
+          text: {
+            fonts: {  
+              ui: 'Open Sans',
+              display: 'Open Sans'
+            },
+            colors: {
+              dark: '#0E0922'
+            }
+          },
+          buttons: {
+            primary: {
+              background: '#A72693',
+              textColor: '#FCFBF0'
+            }
+          }
+        }
       })
     }
   })
