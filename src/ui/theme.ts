@@ -34,7 +34,7 @@ declare module '@treygriffith/evergreen-ui' {
     getElevation: (elevation: number) => string,
     getIconColor: (color: string) => string,
     getHeadingStyle: (size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) => TypographyStyle,
-    getTextStyle: (size?: 300 | 400 | 500) => TypographyStyle,
+    getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle,
     getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle,
     getFontFamily: (family: string) => string,
     getTextColor: (color: string) => string
@@ -117,7 +117,7 @@ const defaultCustomTheme: CustomTheme = {
     headings: {
       ...defaultTheme.typography.headings,
       '100': {
-        ...defaultTheme.typography.headings['100'],
+        ...defaultTheme.typography['100'],
         fontFamily: 'ui',
         color: 'muted'
       },
@@ -269,6 +269,19 @@ function cloneTheme(theme: CustomTheme): CustomTheme {
   }
 }
 
+type HeadingSizes = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+type TextSizes = 300 | 400 | 500 | 600
+type ParagraphSizes = 300 | 400 | 500
+type AllTextSizes = HeadingSizes | TextSizes | ParagraphSizes
+
+function isTextSize (size: AllTextSizes): size is TextSizes {
+  return size > 200 && size < 700
+}
+
+function isParagraphSize (size: AllTextSizes): size is ParagraphSizes {
+  return size > 200 && size < 600
+}
+
 interface Gradient {
   start: string,
   end: string
@@ -293,7 +306,8 @@ interface HasTextColor {
 export type CustomThemeProps = Partial<{
   text: Partial<{
     fonts: Partial<Record<FontFamily, string>>,
-    colors: Partial<Record<'muted' | 'default' | 'dark' | 'selected', string>>
+    colors: Partial<Record<'muted' | 'default' | 'dark' | 'selected', string>>,
+    sizes: Partial<Record<AllTextSizes, number>>
   }>
   buttons: Partial<{
     primary: HasBackground & HasTextColor,
@@ -423,6 +437,17 @@ function buildTheme(props: CustomThemeProps): CustomTheme {
     }
     if (textProps.colors) {
       Object.assign(theme.colors.text, textProps.colors)
+    }
+    if (textProps.sizes) {
+      for (const [size, fontSize] of Object.entries(textProps.sizes)) {
+        Object.assign(theme.typography.headings[size], { fontSize })
+        if (isTextSize(size)) {
+          Object.assign(theme.typography.text[size], { fontSize })
+        }
+        if (isParagraphSize(size)) {
+          Object.assign(theme.typography.paragraph[size], { fontSize })
+        }
+      }
     }
   }
 
