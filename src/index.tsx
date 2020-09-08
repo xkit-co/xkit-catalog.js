@@ -87,24 +87,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
         routerType,
         title,
         hideTitle,
-        hideSearch,
-        theme: {
-          text: {
-            fonts: {  
-              ui: 'Open Sans',
-              display: 'Open Sans'
-            },
-            colors: {
-              dark: '#0E0922'
-            }
-          },
-          buttons: {
-            primary: {
-              background: '#A72693',
-              textColor: '#FCFBF0'
-            }
-          }
-        }
+        hideSearch
       })
     }
   })
