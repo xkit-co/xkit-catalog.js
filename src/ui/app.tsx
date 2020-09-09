@@ -100,14 +100,17 @@ class App extends React.Component<AppProps, AppState> {
     this.ref = React.createRef<HTMLDivElement>()
   }
 
-  private moveToaster (toEl: HTMLElement): void {
-    const toasterEl = window.document.querySelector('[data-evergreen-toaster-container]')
+  private moveToaster (fromEl: HTMLElement, toEl: HTMLElement): void {
+    if (!fromEl) {
+      console.error('xkit: Cannot move notification toaster as its current container does not exist')
+    }
+    const toasterEl = fromEl.querySelector('[data-evergreen-toaster-container]')
     if (!toasterEl) {
       console.error('xkit: Cannot move notification toaster as it does not exist')
       return
     }
     if (!toEl) {
-      console.error('xkit: Cannot move notification toaster as its container does not exist')
+      console.error('xkit: Cannot move notification toaster as its future container does not exist')
       return
     }
     toEl.appendChild(toasterEl)
@@ -115,12 +118,12 @@ class App extends React.Component<AppProps, AppState> {
 
   moveToasterToApp (): void {
     // Need to move the toaster inside our element so we can style it
-    this.moveToaster(this.ref.current)
+    this.moveToaster(window.document.body, this.ref.current)
   }
 
   moveToasterToBody (): void {
     // Move the toaster back to the body so it is not destroyed on unmount
-    this.moveToaster(window.document.body)
+    this.moveToaster(this.ref.current, window.document.body)
   }
 
   componentDidMount (): void {
