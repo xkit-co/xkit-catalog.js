@@ -100,14 +100,31 @@ class App extends React.Component<AppProps, AppState> {
     this.ref = React.createRef<HTMLDivElement>()
   }
 
-  reHomeToaster (): void {
-    // Need to move the toaster inside our element so we can style it
+  private moveToaster (toEl: HTMLElement): void {
     const toasterEl = window.document.querySelector('[data-evergreen-toaster-container]')
-    this.ref.current.appendChild(toasterEl)
+    if (!toasterEl) {
+      console.error('xkit: Cannot move notification toaster as it does not exist')
+      return
+    }
+    if (!toEl) {
+      console.error('xkit: Cannot move notification toaster as its container does not exist')
+      return
+    }
+    toEl.appendChild(toasterEl)
+  }
+
+  moveToasterToApp (): void {
+    // Need to move the toaster inside our element so we can style it
+    this.moveToaster(this.ref.current)
+  }
+
+  moveToasterToBody (): void {
+    // Move the toaster back to the body so it is not destroyed on unmount
+    this.moveToaster(window.document.body)
   }
 
   componentDidMount (): void {
-    this.reHomeToaster()
+    this.moveToasterToApp()
     const { xkit } = this.props
     if (!xkit) {
       console.error('Xkit was not passed to the React App, it will fail to load.')
@@ -121,6 +138,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentWillUnmount (): void {
+    this.moveToasterToBody()
     const { unsubscribe } = this.state
     if (unsubscribe) {
       unsubscribe()
