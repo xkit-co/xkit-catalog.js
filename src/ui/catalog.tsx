@@ -54,6 +54,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   async loadConnectors (): Promise<void> {
+    console.log('reloading connectors')
     this.setState({ loading: true })
     try {
       const connectors = await this.props.xkit.listConnectors()
