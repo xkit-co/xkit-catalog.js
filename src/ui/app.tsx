@@ -132,10 +132,9 @@ class App extends React.Component<AppProps, AppState> {
     if (!xkit) {
       console.error('Xkit was not passed to the React App, it will fail to load.')
     }
-    const unsubscribe = xkit.onUpdate((payload) => {
+    const unsubscribe = xkit.onUpdate(() => {
       // need a fresh object to trigger the update with React context since it compares
       // object references
-      console.log('triggering state update', payload)
       this.setState({ xkit: Object.assign({}, xkit) })
     })
     this.setState({ cssTag: injectCSS(window.document, resetStyles) })
