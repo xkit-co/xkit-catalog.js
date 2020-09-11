@@ -2,14 +2,14 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Badge } from '@treygriffith/evergreen-ui'
 import {
-  Connection,
+  ConnectionOnly,
   ConnectionShell,
   connectionStatus,
   ConnectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 
 interface ConnectionStatusBadgeProps {
-  connection?: Connection | ConnectionShell
+  connection?: ConnectionOnly | ConnectionShell
 }
 
 class ConnectionStatusBadge extends React.Component<ConnectionStatusBadgeProps> {
