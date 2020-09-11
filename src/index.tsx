@@ -4,7 +4,7 @@ import { domReady } from './util'
 import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 
-export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType'> {
+export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType' | 'history'> {
   routerType?: string
 }
 
@@ -24,12 +24,13 @@ function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {})
                     opts.rootPath
                   )
 
+  const { routerType, ...appOpts } = opts  
+
   ReactDOM.render(
     <App
+      {...appOpts}
       xkit={xkit}
       history={history}
-      title={opts.title}
-      hideTitle={opts.hideTitle}
     />,
     el
   )
@@ -61,7 +62,8 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
     const rootPath = domRoot.dataset.path
     const routerType = domRoot.dataset.router
     const title = domRoot.dataset.title
-    const hideTitle = domRoot.dataset.hideTitle === 'true'
+    const hideTitle = 'hideTitle' in domRoot.dataset
+    const hideSearch = 'hideSearch' in domRoot.dataset
 
     // Attempt a login
     if (token) {
@@ -84,7 +86,8 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
         rootPath,
         routerType,
         title,
-        hideTitle
+        hideTitle,
+        hideSearch
       })
     }
   })

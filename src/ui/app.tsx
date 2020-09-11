@@ -19,7 +19,9 @@ import {
 } from 'history'
 import { toaster } from './toaster'
 import {
-  theme,
+  buildTheme,
+  CatalogThemeProps,
+  CatalogTheme,
   ThemeProvider
 } from './theme'
 import { Provider as XkitProvider } from './xkit-context'
@@ -46,11 +48,13 @@ export function createHistory(type: routerType, basename: string): History {
 
 export interface AppOptions {
   hideTitle?: boolean,
+  hideSearch?: boolean,
   title?: string,
   inheritRouter?: boolean,
   rootPath?: string,
   routerType?: routerType,
-  history?: History
+  history?: History,
+  theme?: CatalogThemeProps
 }
 
 interface AppProps extends AppOptions {
@@ -61,13 +65,15 @@ interface AppState {
   xkit: XkitJs,
   history: History,
   unsubscribe?: Function,
-  cssTag?: HTMLElement
+  cssTag?: HTMLElement,
+  theme: CatalogTheme
 }
 
 class App extends React.Component<AppProps, AppState> {
   static defaultProps = {
     rootPath: '/',
-    routerType: 'browser'
+    routerType: 'browser',
+    theme: {}
   }
 
   ref: React.RefObject<HTMLDivElement>
@@ -83,7 +89,8 @@ class App extends React.Component<AppProps, AppState> {
     super(props)
     this.state = {
       xkit: props.xkit,
-      history: this.createHistory()
+      history: this.createHistory(),
+      theme: buildTheme(this.props.theme)
     }
 
     if (this.props.inheritRouter && this.props.history) {
@@ -93,14 +100,34 @@ class App extends React.Component<AppProps, AppState> {
     this.ref = React.createRef<HTMLDivElement>()
   }
 
-  reHomeToaster (): void {
+  private moveToaster (fromEl: HTMLElement, toEl: HTMLElement): void {
+    if (!fromEl) {
+      console.error('xkit: Cannot move notification toaster as its current container does not exist')
+    }
+    const toasterEl = fromEl.querySelector('[data-evergreen-toaster-container]')
+    if (!toasterEl) {
+      console.error('xkit: Cannot move notification toaster as it does not exist')
+      return
+    }
+    if (!toEl) {
+      console.error('xkit: Cannot move notification toaster as its future container does not exist')
+      return
+    }
+    toEl.appendChild(toasterEl)
+  }
+
+  moveToasterToApp (): void {
     // Need to move the toaster inside our element so we can style it
-    const toasterEl = window.document.querySelector('[data-evergreen-toaster-container]')
-    this.ref.current.appendChild(toasterEl)
+    this.moveToaster(window.document.body, this.ref.current)
+  }
+
+  moveToasterToBody (): void {
+    // Move the toaster back to the body so it is not destroyed on unmount
+    this.moveToaster(this.ref.current, window.document.body)
   }
 
   componentDidMount (): void {
-    this.reHomeToaster()
+    this.moveToasterToApp()
     const { xkit } = this.props
     if (!xkit) {
       console.error('Xkit was not passed to the React App, it will fail to load.')
@@ -114,6 +141,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentWillUnmount (): void {
+    this.moveToasterToBody()
     const { unsubscribe } = this.state
     if (unsubscribe) {
       unsubscribe()
@@ -126,10 +154,12 @@ class App extends React.Component<AppProps, AppState> {
   renderApp () {
     const {
       title,
-      hideTitle
+      hideTitle,
+      hideSearch
     } = this.props
     const {
-      xkit
+      xkit,
+      theme
     } = this.state
 
     return (
@@ -138,7 +168,7 @@ class App extends React.Component<AppProps, AppState> {
           <Route path="/" strict={true}>
             <ThemeProvider value={theme}>
               <Pane margin="auto">
-                <Home title={title} hideTitle={hideTitle} />
+                <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
               </Pane>
             </ThemeProvider>
           </Route>

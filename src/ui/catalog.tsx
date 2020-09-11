@@ -17,12 +17,12 @@ import CatalogThumb from './catalog-thumb'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
-import { theme } from './theme'
 import withXkit, { XkitConsumer } from './with-xkit'
 
 interface CatalogProps {
   platform: Platform,
-  showBackButton?: boolean
+  showBackButton?: boolean,
+  hideSearch?: boolean
 }
 
 interface CatalogState {
@@ -118,17 +118,20 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   render () {
+    const { hideSearch } = this.props
     const { search } = this.state
     return (
       <Pane>
-        <SearchInput
-          marginTop={majorScale(2)}
-          placeholder="Search integrations..."
-          height={majorScale(6)}
-          width="100%"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ search: e.target.value })}
-          value={search}
-        />
+        {!hideSearch &&
+          <SearchInput
+            marginTop={majorScale(2)}
+            placeholder="Search integrations..."
+            height={majorScale(6)}
+            width="100%"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ search: e.target.value })}
+            value={search}
+          />
+        }
         <Pane
           clearfix
           marginTop={majorScale(3)}

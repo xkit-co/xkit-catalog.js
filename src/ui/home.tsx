@@ -18,7 +18,8 @@ import withXkit, { XkitConsumer } from './with-xkit'
 
 interface HomeProps {
   title?: string,
-  hideTitle?: boolean
+  hideTitle?: boolean,
+  hideSearch?: boolean
 }
 
 interface HomeState {
@@ -97,6 +98,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     const {
       title,
       hideTitle,
+      hideSearch
     } = this.props
     const {
       platform,
@@ -115,6 +117,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
             <Catalog
               platform={platform}
               showBackButton={!hideTitle}
+              hideSearch={hideSearch}
             />
           </Route>
           <Route

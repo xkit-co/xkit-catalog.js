@@ -40,16 +40,17 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
 
     return (
       <Card
-        backgroundColor={theme.palette.base}
-        elevation={1}
-        hoverElevation={3}
+        backgroundColor='base'
+        elevation={theme.card.elevation}
+        hoverElevation={theme.card.hoverElevation}
+        borderRadius={theme.card.borderRadius}
         marginRight={majorScale(3)}
         marginBottom={majorScale(3)}
         width={250}
-        height={150}
+        minHeight={150}
         display="flex"
         flexDirection="column"
-        padding={majorScale(2)}
+        padding={theme.card.padding}
         is={Link}
         textDecoration="none"
         to={`/connectors/${slug}`}
@@ -60,8 +61,8 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           </Pane>
           {this.renderStatus()}
         </Pane>
-        <Heading size={600} marginTop={majorScale(1)}>{name}</Heading>
-        <Paragraph size={300} marginTop="default">
+        <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
+        <Paragraph size={300} marginTop={majorScale(1)}>
           {short_description}
         </Paragraph>
       </Card>
