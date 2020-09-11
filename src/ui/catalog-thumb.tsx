@@ -6,11 +6,11 @@ import {
   Button,
   Paragraph,
   Pane,
-  Badge,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Link } from 'react-router-dom'
+import ConnectionStatus from './connection-status'
 import ConnectorMark from './connector-mark'
 import { ThemeConsumer, withTheme } from './theme'
 
@@ -19,21 +19,14 @@ interface CatalogThumbProps {
 }
 
 class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
-  renderStatus () {
-    const { connection } = this.props.connector
-
-    if (!connection) return
-
-    return <Badge color="green">Installed</Badge>
-  }
-
   render () {
     const {
       connector: {
         name,
         slug,
         short_description,
-        mark_url
+        mark_url,
+        connection
       },
       theme
     } = this.props
@@ -59,7 +52,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           <Pane flexGrow={1}>
             <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
           </Pane>
-          {this.renderStatus()}
+          <ConnectionStatus connection={connection} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>
