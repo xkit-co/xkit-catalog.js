@@ -62,9 +62,7 @@ interface AppProps extends AppOptions {
 }
 
 interface AppState {
-  xkit: XkitJs,
   history: History,
-  unsubscribe?: Function,
   cssTag?: HTMLElement,
   theme: CatalogTheme
 }
@@ -88,7 +86,6 @@ class App extends React.Component<AppProps, AppState> {
   constructor (props: AppProps) {
     super(props)
     this.state = {
-      xkit: props.xkit,
       history: this.createHistory(),
       theme: buildTheme(this.props.theme)
     }
@@ -128,24 +125,11 @@ class App extends React.Component<AppProps, AppState> {
 
   componentDidMount (): void {
     this.moveToasterToApp()
-    const { xkit } = this.props
-    if (!xkit) {
-      console.error('Xkit was not passed to the React App, it will fail to load.')
-    }
-    const unsubscribe = xkit.onUpdate(() => {
-      // need a fresh object to trigger the update with React context since it compares
-      // object references
-      this.setState({ xkit: Object.assign({}, xkit) })
-    })
     this.setState({ cssTag: injectCSS(window.document, resetStyles) })
   }
 
   componentWillUnmount (): void {
     this.moveToasterToBody()
-    const { unsubscribe } = this.state
-    if (unsubscribe) {
-      unsubscribe()
-    }
     if (this.state.cssTag) {
       removeCSS(window.document, this.state.cssTag)
     }
@@ -155,10 +139,10 @@ class App extends React.Component<AppProps, AppState> {
     const {
       title,
       hideTitle,
-      hideSearch
+      hideSearch,
+      xkit
     } = this.props
     const {
-      xkit,
       theme
     } = this.state
 
