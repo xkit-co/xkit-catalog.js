@@ -17,7 +17,7 @@ import {
   createHashHistory,
   History
 } from 'history'
-import { toaster } from './toaster'
+import { Toaster } from './toaster'
 import {
   buildTheme,
   CatalogThemeProps,
@@ -74,8 +74,6 @@ class App extends React.Component<AppProps, AppState> {
     theme: {}
   }
 
-  ref: React.RefObject<HTMLDivElement>
-
   createHistory (): History {
     if (this.props.history) {
       return this.props.history
@@ -93,43 +91,13 @@ class App extends React.Component<AppProps, AppState> {
     if (this.props.inheritRouter && this.props.history) {
       console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
-
-    this.ref = React.createRef<HTMLDivElement>()
-  }
-
-  private moveToaster (fromEl: HTMLElement, toEl: HTMLElement): void {
-    if (!fromEl) {
-      console.error('xkit: Cannot move notification toaster as its current container does not exist')
-    }
-    const toasterEl = fromEl.querySelector('[data-evergreen-toaster-container]')
-    if (!toasterEl) {
-      console.error('xkit: Cannot move notification toaster as it does not exist')
-      return
-    }
-    if (!toEl) {
-      console.error('xkit: Cannot move notification toaster as its future container does not exist')
-      return
-    }
-    toEl.appendChild(toasterEl)
-  }
-
-  moveToasterToApp (): void {
-    // Need to move the toaster inside our element so we can style it
-    this.moveToaster(window.document.body, this.ref.current)
-  }
-
-  moveToasterToBody (): void {
-    // Move the toaster back to the body so it is not destroyed on unmount
-    this.moveToaster(this.ref.current, window.document.body)
   }
 
   componentDidMount (): void {
-    this.moveToasterToApp()
     this.setState({ cssTag: injectCSS(window.document, resetStyles) })
   }
 
   componentWillUnmount (): void {
-    this.moveToasterToBody()
     if (this.state.cssTag) {
       removeCSS(window.document, this.state.cssTag)
     }
@@ -147,16 +115,18 @@ class App extends React.Component<AppProps, AppState> {
     } = this.state
 
     return (
-      <div id={SCOPE_ID} ref={this.ref}>
-        <XkitProvider value={xkit}>
-          <Route path="/" strict={true}>
-            <ThemeProvider value={theme}>
-              <Pane margin="auto">
-                <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
-              </Pane>
-            </ThemeProvider>
-          </Route>
-        </XkitProvider>
+      <div id={SCOPE_ID}>
+        <Toaster>
+          <XkitProvider value={xkit}>
+            <Route path="/" strict={true}>
+              <ThemeProvider value={theme}>
+                <Pane margin="auto">
+                  <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
+                </Pane>
+              </ThemeProvider>
+            </Route>
+          </XkitProvider>
+        </Toaster>
       </div>
     )
   }
