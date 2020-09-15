@@ -18,10 +18,14 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { Link } from 'react-router-dom'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
-import { AuthorizationStatus } from '@xkit-co/xkit.js/lib/api/authorization'
+import {
+  Connection,
+  ConnectionStatus,
+  connectionStatus
+} from '@xkit-co/xkit.js/lib/api/connection'
 import { toaster } from './toaster'
 import Markdown from './markdown'
+import ConnectionStatusBadge from './connection-status'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
@@ -146,38 +150,12 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     )
   }
 
-  renderBadge (): React.ReactElement {
-    const { connection } = this.state
-
-    if (!connection || !connection.enabled) {
-      return
-    }
-
-    const { authorization } = connection
-    if (authorization && authorization.status !== AuthorizationStatus.error) {
-      return (
-        <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(3)}>
-          <Badge color="green">Installed</Badge>
-        </Pane>
-      )
-    }
-    
-    return (
-      <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(2)}>
-        <Badge color="yellow">Not Connected</Badge>
-      </Pane>
-    )
-  }
-
   renderAuthAlert (): React.ReactElement {
     const { connector } = this.props
     const { connection, reconnectLoading } = this.state
-    if (!connection || !connection.enabled) {
-      return
-    }
+    const status = connectionStatus(connection)
 
-    const { authorization } = connection
-    if (authorization && authorization.status !== AuthorizationStatus.error) {
+    if (status !== ConnectionStatus.Error) {
       return
     }
 
@@ -248,7 +226,9 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
                 <Heading size={700}>
                   {name}
                 </Heading>
-                {this.renderBadge()}
+                <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(3)}>
+                  <ConnectionStatusBadge connection={connection} />
+                </Pane>
               </Pane>
               <Text color="muted">{short_description}</Text>
             </Pane>
