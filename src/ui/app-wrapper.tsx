@@ -34,13 +34,13 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     }
   }
 
-  // componentDidUpdate (prevProps: AppWrapperProps) {
-  //   if (this.props.theme !== prevProps.theme) {
-  //     this.setState({
-  //       theme: buildTheme(this.props.theme)
-  //     })
-  //   }
-  // }
+  componentDidUpdate (prevProps: AppWrapperProps) {
+    if (this.props.theme !== prevProps.theme) {
+      this.setState({
+        theme: buildTheme(this.props.theme)
+      })
+    }
+  }
 
   render () {
     const {
@@ -48,15 +48,6 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
       children
     } = this.props
     const { theme } = this.state
-
-      // <Styled>
-        // <Toaster>
-          // 
-            // 
-            // 
-          // </ThemeProvider>
-        // </Toaster>
-      // </Styled>
 
     return (
       <Styled>
