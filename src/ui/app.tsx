@@ -1,8 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { injectCSS, removeCSS } from '../util'
-import { SCOPE_ID } from './scope-styles'
-import resetStyles from './reset.css'
 import {
   Pane,
   majorScale
@@ -17,16 +14,10 @@ import {
   createHashHistory,
   History
 } from 'history'
-import { Toaster } from './toaster'
-import {
-  buildTheme,
-  CatalogThemeProps,
-  CatalogTheme,
-  ThemeProvider
-} from './theme'
-import { Provider as XkitProvider } from './xkit-context'
+import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
+import AppWrapper from './app-wrapper'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
@@ -63,8 +54,6 @@ interface AppProps extends AppOptions {
 
 interface AppState {
   history: History,
-  cssTag?: HTMLElement,
-  theme: CatalogTheme
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -84,8 +73,11 @@ class App extends React.Component<AppProps, AppState> {
   constructor (props: AppProps) {
     super(props)
     this.state = {
-      history: this.createHistory(),
-      theme: buildTheme(this.props.theme)
+      history: this.createHistory()
+    }
+
+    if (!this.props.xkit) {
+      console.error('Xkit was not passed to the React App, it will fail to load.')
     }
 
     if (this.props.inheritRouter && this.props.history) {
@@ -93,41 +85,23 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
-  componentDidMount (): void {
-    this.setState({ cssTag: injectCSS(window.document, resetStyles) })
-  }
-
-  componentWillUnmount (): void {
-    if (this.state.cssTag) {
-      removeCSS(window.document, this.state.cssTag)
-    }
-  }
- 
   renderApp () {
     const {
       title,
       hideTitle,
       hideSearch,
-      xkit
-    } = this.props
-    const {
+      xkit,
       theme
-    } = this.state
+    } = this.props
 
     return (
-      <div id={SCOPE_ID}>
-        <Toaster>
-          <XkitProvider value={xkit}>
-            <Route path="/" strict={true}>
-              <ThemeProvider value={theme}>
-                <Pane margin="auto">
-                  <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
-                </Pane>
-              </ThemeProvider>
-            </Route>
-          </XkitProvider>
-        </Toaster>
-      </div>
+      <AppWrapper xkit={xkit} theme={theme}>
+        <Route path="/" strict={true}>
+          <Pane margin="auto">
+            <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
+          </Pane>
+        </Route>
+      </AppWrapper>
     )
   }
 

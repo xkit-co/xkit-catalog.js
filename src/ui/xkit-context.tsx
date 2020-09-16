@@ -17,17 +17,18 @@ interface XkitState {
 
 // Wrap the Context Provider to provide custom listening behavior
 // for the Xkit library
-class XkitProvider extends React.Component<XkitProps, XkitState> {
+class SubscribedProvider extends React.Component<XkitProps, XkitState> {
   constructor (props: XkitProps) {
     super(props)
     this.state = { xkit: this.props.value }
   }
 
   componentDidMount (): void {
+    this.subscribe()
+  }
+
+  subscribe (): void {
     const { value: xkit } = this.props
-    if (!xkit) {
-      console.error('Xkit was not passed to the React App, it will fail to load.')
-    }
     const unsubscribe = xkit.onUpdate(() => {
       // need a fresh object to trigger the update with React context since it compares
       // object references
@@ -36,23 +37,37 @@ class XkitProvider extends React.Component<XkitProps, XkitState> {
     this.setState({ unsubscribe })
   }
 
-  componentWillUnmount (): void {
+  unsubscribe (): void {
     const { unsubscribe } = this.state
     if (unsubscribe) {
       unsubscribe()
     }
   }
 
+  componentDidUpdate (prevProps: XkitProps) {
+    if (prevProps.value !== this.props.value) {
+      this.unsubscribe()
+      this.subscribe()
+      this.setState({ xkit: this.props.value })
+    }
+  }
+
+  componentWillUnmount (): void {
+    this.unsubscribe()
+  }
+
   render () {
     const { children } = this.props
     const { xkit } = this.state
     return (
-      <XkitProvider value={xkit}>{children}</XkitProvider>
+      <Provider value={xkit}>
+        {children}
+      </Provider>
     )
   }
 }
 
 export {
-  XkitProvider as Provider,
+  SubscribedProvider as Provider,
   Consumer
 }
