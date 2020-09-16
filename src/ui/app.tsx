@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import AppWrapper from './app-wrapper'
 import {
   Pane,
   majorScale
@@ -17,7 +18,6 @@ import {
 import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
-import AppWrapper from './app-wrapper'
 
 type routerType = 'browser' | 'hash' | 'memory'
 

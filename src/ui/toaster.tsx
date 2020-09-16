@@ -12,7 +12,9 @@ interface ToasterSettings {
   hasCloseButton?: boolean
 }
 
-const toaster: typeof defaultToaster = {
+// TODO: use a context rather than importing the toaster from this file.
+// May help us enforce the one-Toaster-per-app rule
+export const toaster: typeof defaultToaster = {
   ...defaultToaster,
   danger: (title: string, settings?: ToasterSettings): void => {
     // @ts-ignore
@@ -32,7 +34,7 @@ const toaster: typeof defaultToaster = {
 
 // The Toaster component should only be used once per app.
 // TODO: enforce that somehow
-class Toaster extends React.Component {
+export class Toaster extends React.Component {
   ref: React.RefObject<HTMLDivElement>
 
   constructor (props: {}) {
@@ -74,11 +76,4 @@ class Toaster extends React.Component {
       </div>
     )
   }
-}
-
-export {
-  // TODO: use a context rather than importing the toaster from this file.
-  // May help us enforce the one-Toaster-per-app rule
-  toaster,
-  Toaster
 }
