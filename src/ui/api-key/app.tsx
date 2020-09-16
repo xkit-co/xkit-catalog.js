@@ -1,30 +1,19 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Text } from 'evergreen-ui'
-import {
-  buildTheme,
-  ThemeProvider,
-  CatalogTheme
-} from '../theme'
+import { XkitJs } from '@xkit-co/xkit.js'
+import AppWrapper from '../app-wrapper'
 
-interface AppState {
-  theme: CatalogTheme
+interface AppProps {
+  xkit: XkitJs
 }
 
-class App extends React.Component<{}, AppState> {
-  constructor (props: {}) {
-    super(props)
-    this.state = {
-      theme: buildTheme({})
-    }
-  }
-
+class App extends React.Component<AppProps> {
   render () {
-    const { theme } = this.state
     return (
-      <ThemeProvider value={theme}>
+      <AppWrapper xkit={this.props.xkit}>
         <Text>Hello world!</Text>
-      </ThemeProvider>
+      </AppWrapper>
     )
   }
 }
