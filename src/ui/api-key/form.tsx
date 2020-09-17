@@ -4,12 +4,12 @@ import {
   Button,
   TextInputField
 } from '@treygriffith/evergreen-ui'
+import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
 
 interface FormProps {
-  slug: string,
-  state: string,
+  authorizer: Authorization,
   label: string,
   description: string,
   placeholder?: string,
@@ -47,8 +47,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
     const {
       xkit,
       label,
-      slug,
-      state,
+      authorization,
       onComplete
     } = this.props
     const { key } = this.state
@@ -61,8 +60,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
     this.setState({ saving: true })
 
     try {
-      await xkit.setAuthorizationAPIKey(slug, state, key)
-      debugger
+      await xkit.setAuthorizationAPIKey(authorization.authorizer.prototype.slug, authorization.state, key)
       onComplete()
     } catch (e) {
       toaster.danger(`Error while saving ${label}: ${e.message}`)

@@ -8,18 +8,18 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { XkitJs } from '@xkit-co/xkit.js'
+import { Authorizer } from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
 import APIKeyForm from './form'
+import AuthorizationTitle from './authorization-title'
 
 export interface APIKeyAppOptions {
-  name: string,
+  authorization: Authorization,
   field: {
     label: string,
     description: string,
     placeholder?: string
   },
-  slug: string,
-  state: string,
   onComplete: Function
 }
 
@@ -30,9 +30,8 @@ interface AppProps extends APIKeyAppOptions {
 class App extends React.Component<AppProps> {
   render () {
     const {
-      name,
+      authorization,
       field,
-      slug,
       state,
       onComplete
     } = this.props
@@ -49,9 +48,7 @@ class App extends React.Component<AppProps> {
           position="absolute"
         >
           <Pane width="100%">
-            <Heading size={600}>
-              Connect to {name}
-            </Heading>
+            <AuthorizationTitle authorization={authorization} />
             <Card
               marginTop={majorScale(2)}
               padding={majorScale(3)}
@@ -59,7 +56,7 @@ class App extends React.Component<AppProps> {
               width="100%"
               background="base"
             >
-              <APIKeyForm {...field} slug={slug} state={state} onComplete={onComplete} />
+              <APIKeyForm {...field} authorization={authorization} onComplete={onComplete} />
             </Card>
           </Pane>
         </Pane>
