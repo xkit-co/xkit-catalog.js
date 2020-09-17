@@ -62,7 +62,7 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
             backgroundColor: "transparent"
           }}
           >
-          <video width="100%" controls>
+          <video width="100%" autoPlay={isOpen} muted controls>
             <source src={videoUrl} type="video/mp4" />
             Your browser does not support HTML5 video.
           </video>

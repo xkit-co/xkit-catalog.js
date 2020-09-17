@@ -38,7 +38,6 @@ export default class RehomeEvergreen extends React.Component<RehomeEvergreenProp
   }
 
   componentDidMount (): void {
-    console.log('calling component did mount', this.components())
     // Need to move the components inside our element so we can style it
     this.components().forEach(name => this.moveComponent(window.document.body, this.ref.current, name))
   }
