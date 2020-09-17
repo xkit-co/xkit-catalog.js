@@ -35,6 +35,8 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
     const { videoUrl } = this.props
     const { isOpen } = this.state
 
+    if (!videoUrl) return null
+
     return (
       <Paragraph
         color="muted"

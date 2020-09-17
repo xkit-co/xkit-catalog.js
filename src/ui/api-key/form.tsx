@@ -10,10 +10,7 @@ import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
 
 interface FormProps {
-  authorizer: Authorization,
-  label: string,
-  description?: string,
-  placeholder?: string,
+  authorization: Authorization,
   onComplete: Function
 }
 
@@ -32,6 +29,10 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
+  private label (): string {
+    return this.props.authorization.authorizer.prototype.api_key_label || 'API Key'
+  }
+
   private validateFields (): boolean {
     const { key } = this.state
 
@@ -47,7 +48,6 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
   handleSave = async (e: React.SyntheticEvent<HTMLElement>): Promise<void> => {
     const {
       xkit,
-      label,
       authorization,
       onComplete
     } = this.props
@@ -64,7 +64,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
       await xkit.setAuthorizationAPIKey(authorization.authorizer.prototype.slug, authorization.state, key)
       onComplete()
     } catch (e) {
-      toaster.danger(`Error while saving ${label}: ${e.message}`)
+      toaster.danger(`Error while saving ${this.label()}: ${e.message}`)
       this.setState({ saving: false })
     }
   }
@@ -74,22 +74,16 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
       saving,
       validationMessage
     } = this.state
-    const {
-      label,
-      description,
-      placeholder
-    } = this.props
 
     return (
       <form>
         <TextInputField
-          label={label}
-          description={description}
-          placeholder={placeholder || 'sample_api_key'}
+          label={this.label()}
+          placeholder={'sample_api_key'}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ key: e.target.value })}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
           isInvalid={Boolean(validationMessage)}
-          validationMessage={validationMessage ? `${label} ${validationMessage}` :  undefined}
+          validationMessage={validationMessage ? `${this.label()} ${validationMessage}` :  undefined}
           disabled={saving}
         />
         <Button

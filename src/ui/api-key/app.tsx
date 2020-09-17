@@ -17,12 +17,13 @@ import VideoLink from './video-link'
 
 export interface APIKeyAppOptions {
   authorization: Authorization,
-  field: {
-    label: string,
-    description?: string,
-    placeholder?: string
-  },
   onComplete: Function
+}
+
+const Instructions: React.FC<{text?: string}> = ({ text }) => {
+  if (!text) return null
+
+  return <Markdown marginBottom={majorScale(3)} text={text} />
 }
 
 interface AppProps extends APIKeyAppOptions {
@@ -37,6 +38,11 @@ class App extends React.Component<AppProps> {
       state,
       onComplete
     } = this.props
+
+    const {
+      api_key_video_url,
+      api_key_instructions
+    } = authorization.authorizer.prototype
 
     return (
       <AppWrapper xkit={this.props.xkit}>
@@ -59,13 +65,9 @@ class App extends React.Component<AppProps> {
               background="base"
             >
               <AuthorizationTitle authorization={authorization} />
-              <Markdown marginBottom={majorScale(3)}>{`
-1. Visit the [Settings Page](https://linear.app/settings/api) in Linear
-2. Click "Create Key", and name it "blah key"
-3. Copy the key, and paste it in the field below
-              `}</Markdown>
-              <APIKeyForm {...field} authorization={authorization} onComplete={onComplete} />
-              <VideoLink videoUrl="https://xkit-assets.s3-us-west-2.amazonaws.com/Website/Videos/Asana/Asana-1-Xkit.m4v" />
+              <Instructions text={api_key_instructions} />
+              <APIKeyForm authorization={authorization} onComplete={onComplete} />
+              <VideoLink videoUrl={api_key_video_url} />
             </Card>
           </Pane>
         </Pane>
