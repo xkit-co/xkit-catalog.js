@@ -2,7 +2,8 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
   Button,
-  TextInputField
+  TextInputField,
+  majorScale
 } from '@treygriffith/evergreen-ui'
 import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import withXkit, { XkitConsumer } from '../with-xkit'
@@ -95,6 +96,9 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
           appearance="primary"
           isLoading={saving}
           onClick={this.handleSave}
+          justifyContent="center"
+          height={majorScale(5)}
+          width="100%"
         >
           {saving ? 'Saving' : 'Save'}
         </Button>

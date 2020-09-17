@@ -7,6 +7,40 @@ import {
 } from '@treygriffith/evergreen-ui'
 import ConnectorMark from '../connector-mark'
 
+interface AuthorizationMarkProps {
+  markUrl?: string
+}
+
+class AuthorizationMark extends React.Component<AuthorizationMarkProps> {
+  render () {
+    if (!this.props.markUrl) {
+      return null
+    }
+
+    return (
+      <Pane
+        border="default"
+        borderRadius="100%"
+        borderTopColor="transparent"
+        borderLeftColor="transparent"
+        padding={majorScale(2)}
+        background="tint1"
+        position="absolute"
+        top={-1 * majorScale(9)}
+        display="flex"
+        justifyContent="center"
+        style={{transform: "rotate(45deg)"}}
+      >
+        <ConnectorMark
+          markUrl={this.props.markUrl}
+          size={majorScale(6)}
+          style={{transform: "rotate(-45deg)"}}
+        />
+      </Pane>
+    )
+  }
+}
+
 interface AuthorizationTitleProps {
   authorization: Authorization
 }
@@ -18,13 +52,16 @@ class AuthorizationTitle extends React.Component<TitleProps> {
     const name = authorization.initiating_connector?.name || authorization.authorizer.prototype.name
 
     return (
-      <Pane flexGrow={1} display="flex" alignItems="center">
-        {mark_url ? <ConnectorMark markUrl={mark_url} size={majorScale(6)} /> : ''}
-        <Pane marginLeft={majorScale(2)}>
-          <Heading size={700}>
-            Connect to {name}
-          </Heading>
-        </Pane>
+      <Pane
+        flexGrow={1}
+        display="flex"
+        justifyContent="center"
+        position="relative"
+      >
+        <AuthorizationMark markUrl={mark_url} />
+        <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(5)}>
+          Connect to {name}
+        </Heading>
       </Pane>
     )
   }

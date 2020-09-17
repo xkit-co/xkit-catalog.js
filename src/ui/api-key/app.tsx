@@ -47,15 +47,15 @@ class App extends React.Component<AppProps> {
           background="tint1"
           position="absolute"
         >
-          <Pane width="100%">
-            <AuthorizationTitle authorization={authorization} />
+          <Pane width="100%" maxWidth={majorScale(60)}>
             <Card
-              marginTop={majorScale(2)}
-              padding={majorScale(3)}
+              marginTop={majorScale(6)}
+              padding={majorScale(4)}
               elevation={1}
               width="100%"
               background="base"
             >
+              <AuthorizationTitle authorization={authorization} />
               <APIKeyForm {...field} authorization={authorization} onComplete={onComplete} />
             </Card>
           </Pane>
