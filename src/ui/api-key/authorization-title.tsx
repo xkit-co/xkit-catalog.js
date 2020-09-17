@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
   Pane,
+  PaneProps,
   Heading,
   majorScale
 } from '@treygriffith/evergreen-ui'
@@ -59,7 +60,7 @@ class AuthorizationTitle extends React.Component<TitleProps> {
         position="relative"
       >
         <AuthorizationMark markUrl={mark_url} />
-        <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(5)}>
+        <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(4)}>
           Connect to {name}
         </Heading>
       </Pane>

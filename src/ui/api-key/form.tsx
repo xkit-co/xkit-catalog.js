@@ -12,7 +12,7 @@ import { toaster } from '../toaster'
 interface FormProps {
   authorizer: Authorization,
   label: string,
-  description: string,
+  description?: string,
   placeholder?: string,
   onComplete: Function
 }
@@ -85,7 +85,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
         <TextInputField
           label={label}
           description={description}
-          placeholder={placeholder || 'sk_asdofij12987'}
+          placeholder={placeholder || 'sample_api_key'}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ key: e.target.value })}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
           isInvalid={Boolean(validationMessage)}

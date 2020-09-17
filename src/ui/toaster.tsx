@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import {
   toaster as defaultToaster
 } from '@treygriffith/evergreen-ui'
+import RehomeEvergreen from './rehome-evergreen'
 // TODO: allow customization / BYOToaster
 
 interface ToasterSettings {
@@ -32,48 +33,6 @@ export const toaster: typeof defaultToaster = {
   }
 }
 
-// The Toaster component should only be used once per app.
-// TODO: enforce that somehow
-export class Toaster extends React.Component {
-  ref: React.RefObject<HTMLDivElement>
-
-  constructor (props: {}) {
-    super(props)
-    this.ref = React.createRef<HTMLDivElement>()
-  }
-
-  private moveToaster (fromEl: HTMLElement, toEl: HTMLElement): void {
-    if (!fromEl) {
-      console.error('xkit: Cannot move notification toaster as its current container does not exist')
-    }
-    const toasterEl = fromEl.querySelector('[data-evergreen-toaster-container]')
-    if (!toasterEl) {
-      console.error('xkit: Cannot move notification toaster as it does not exist')
-      return
-    }
-    if (!toEl) {
-      console.error('xkit: Cannot move notification toaster as its future container does not exist')
-      return
-    }
-    toEl.appendChild(toasterEl)
-  }
-
-  componentDidMount (): void {
-    // Need to move the toaster inside our element so we can style it
-    this.moveToaster(window.document.body, this.ref.current)
-  }
-
-  componentWillUnmount (): void {
-    // Move the toaster back to the body so it is not destroyed on unmount
-    this.moveToaster(this.ref.current, window.document.body)
-  }
-
-  render () {
-    const { children } = this.props
-    return (
-      <div ref={this.ref}>
-        {children}
-      </div>
-    )
-  }
+export const Toaster: React.FC = ({ children }) => {
+  return <RehomeEvergreen components='data-evergreen-toaster-container'>{children}</RehomeEvergreen>
 }

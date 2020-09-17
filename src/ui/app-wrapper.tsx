@@ -9,6 +9,7 @@ import {
   ThemeProvider
 } from './theme'
 import { Toaster } from './toaster'
+import Portal from './portal'
 import { Provider as XkitProvider } from './xkit-context'
 
 interface AppWrapperProps {
@@ -52,11 +53,13 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     return (
       <Styled>
         <Toaster>
-          <ThemeProvider value={theme}>
-            <XkitProvider value={xkit}>
-              {children}
-            </XkitProvider>
-          </ThemeProvider>
+          <Portal>
+            <ThemeProvider value={theme}>
+              <XkitProvider value={xkit}>
+                {children}
+              </XkitProvider>
+            </ThemeProvider>
+          </Portal>
         </Toaster>
       </Styled>
     )
