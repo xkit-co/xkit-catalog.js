@@ -10,20 +10,14 @@ import {
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Authorizer } from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
-import Markdown from '../markdown'
 import APIKeyForm from './form'
 import AuthorizationTitle from './authorization-title'
+import Instructions from './instructions'
 import VideoLink from './video-link'
 
 export interface APIKeyAppOptions {
   authorization: Authorization,
   onComplete: Function
-}
-
-const Instructions: React.FC<{text?: string}> = ({ text }) => {
-  if (!text) return null
-
-  return <Markdown marginBottom={majorScale(3)} text={text} />
 }
 
 interface AppProps extends APIKeyAppOptions {
