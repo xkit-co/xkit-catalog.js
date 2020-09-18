@@ -7,7 +7,7 @@ import parse from 'remark-parse'
 import remark2react, { components as RemarkComponents } from 'remark-react'
 import {
   Pane,
-  PaneProps,
+  BoxProps,
   Heading,
   Paragraph,
   Link,
@@ -112,7 +112,7 @@ function childrenToText(children?: React.ReactNode): string {
   return stringChildren.join('\n')
 }
 
-interface MarkdownProps extends PaneProps {
+type MarkdownProps = Omit<BoxProps, 'size' | 'text'> & {
   text?: string,
   size?: keyof typeof Sizes
 }

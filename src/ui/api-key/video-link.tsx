@@ -10,6 +10,12 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 
+declare module '@treygriffith/evergreen-ui' {
+  interface SideSheetProps {
+    position?: Extract<PositionTypes, 'top' | 'bottom' | 'left' | 'right'>
+  }
+}
+
 interface VideoLinkProps {
   videoUrl: string
 }

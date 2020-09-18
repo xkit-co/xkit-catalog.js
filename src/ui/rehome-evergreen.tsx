@@ -10,7 +10,7 @@ interface RehomeEvergreenProps {
 export default class RehomeEvergreen extends React.Component<RehomeEvergreenProps> {
   ref: React.RefObject<HTMLDivElement>
 
-  constructor (props: {}) {
+  constructor (props: RehomeEvergreenProps) {
     super(props)
     this.ref = React.createRef<HTMLDivElement>()
   }

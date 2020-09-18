@@ -8,7 +8,7 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { XkitJs } from '@xkit-co/xkit.js'
-import { Authorizer } from '@xkit-co/xkit.js/lib/api/authorization'
+import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
 import APIKeyForm from './form'
 import AuthorizationTitle from './authorization-title'
@@ -28,8 +28,6 @@ class App extends React.Component<AppProps> {
   render () {
     const {
       authorization,
-      field,
-      state,
       onComplete
     } = this.props
 

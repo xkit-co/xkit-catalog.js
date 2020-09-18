@@ -6,6 +6,7 @@ import {
   Heading,
   majorScale
 } from '@treygriffith/evergreen-ui'
+import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import ConnectorMark from '../connector-mark'
 
 interface AuthorizationMarkProps {
@@ -46,7 +47,7 @@ interface AuthorizationTitleProps {
   authorization: Authorization
 }
 
-class AuthorizationTitle extends React.Component<TitleProps> {
+class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
   render () {
     const { authorization } = this.props
     const mark_url = authorization.initiating_connector?.mark_url
