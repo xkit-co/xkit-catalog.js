@@ -8,9 +8,10 @@ type CatalogPalette = typeof defaultTheme.palette & {
   base: string
 }
 
-const palette: CatalogPalette = {
-  ...defaultTheme.palette,
-  base: 'white'
+type CatalogColors = typeof defaultTheme.colors & {
+  background: typeof defaultTheme.colors.background & {
+    base: string
+  }
 }
 
 export interface CardProps {
@@ -20,8 +21,9 @@ export interface CardProps {
   borderRadius: number
 }
 
-export interface CatalogTheme extends Omit<Theme, 'palette'> {
+export interface CatalogTheme extends Omit<Theme, 'palette' | 'colors'> {
   palette: CatalogPalette,
+  colors: CatalogColors,
   card: CardProps
 }
 
@@ -133,7 +135,17 @@ export const defaultCatalogTheme: CatalogTheme = {
       }
     }
   },
-  palette,
+  colors: {
+    ...defaultTheme.colors,
+    background: {
+      ...defaultTheme.colors.background,
+      base: 'white'
+    }
+  },
+  palette: {
+    ...defaultTheme.palette,
+    base: 'white'
+  },
   card: {
     padding: majorScale(2),
     elevation: 1,

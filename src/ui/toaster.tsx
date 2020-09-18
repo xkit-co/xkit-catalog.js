@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import {
   toaster as defaultToaster
 } from '@treygriffith/evergreen-ui'
+import RehomeEvergreen from './rehome-evergreen'
 // TODO: allow customization / BYOToaster
 
 interface ToasterSettings {
@@ -11,7 +13,9 @@ interface ToasterSettings {
   hasCloseButton?: boolean
 }
 
-const toaster: typeof defaultToaster = {
+// TODO: use a context rather than importing the toaster from this file.
+// May help us enforce the one-Toaster-per-app rule
+export const toaster: typeof defaultToaster = {
   ...defaultToaster,
   danger: (title: string, settings?: ToasterSettings): void => {
     // @ts-ignore
@@ -29,4 +33,6 @@ const toaster: typeof defaultToaster = {
   }
 }
 
-export { toaster }
+export const Toaster: React.FC = ({ children }) => {
+  return <RehomeEvergreen components='data-evergreen-toaster-container'>{children}</RehomeEvergreen>
+}

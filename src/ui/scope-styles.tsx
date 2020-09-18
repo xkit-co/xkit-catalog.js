@@ -1,3 +1,5 @@
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import {
   // @ts-ignore
   plugins as untypedGlamorPlugins
@@ -6,6 +8,8 @@ import {
   setClassNamePrefix,
   usePlugin as useUIBoxPlugin
 } from '@treygriffith/ui-box'
+import { injectCSS, removeCSS } from '../util'
+import resetStyles from './reset.css'
 
 // Plugins aren't in Glamor's type definition
 interface StyleDefinition {
@@ -22,7 +26,6 @@ const glamorPlugins = untypedGlamorPlugins as PluginSet
 
 
 // Need to heavily specify our styles to override anything set in the parent
-
 const SCOPE_ID = 'xkit___embed'
 const PREFIX_CLASS = 'xkit-'
 
@@ -50,8 +53,36 @@ function addUIBoxScope<T> ({ selector, rules }: UIBoxDefinition<T>): UIBoxDefini
   return { selector: scopeSelector(selector), rules }
 }
 
+// These are applied globally
 glamorPlugins.add(addGlamorScope)
 useUIBoxPlugin(addUIBoxScope)
 setClassNamePrefix(PREFIX_CLASS)
 
-export { SCOPE_ID }
+interface StyledState {
+  cssTag?: HTMLElement,
+}
+
+// An App MUST include the Styled component **exactly once**, otherwise styles won't work
+// the way you expect them to. This component both resets styles for the its children
+// and applies the scoping ID for stronger style rules.
+export class Styled extends React.Component<{}, StyledState> {
+  componentDidMount (): void {
+    this.setState({ cssTag: injectCSS(window.document, resetStyles.replace(/\$\{SCOPE_ID\}/g, SCOPE_ID)) })
+  }
+
+  componentWillUnmount (): void {
+    const { cssTag } = this.state
+    if (cssTag) {
+      removeCSS(window.document, cssTag)
+    }
+  }
+
+  render () {
+    const { children } = this.props
+    return (
+      <div id={SCOPE_ID}>
+        {children}
+      </div>
+    )
+  }
+}

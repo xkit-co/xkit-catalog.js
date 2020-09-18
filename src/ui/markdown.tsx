@@ -7,6 +7,7 @@ import parse from 'remark-parse'
 import remark2react, { components as RemarkComponents } from 'remark-react'
 import {
   Pane,
+  BoxProps,
   Heading,
   Paragraph,
   Link,
@@ -111,7 +112,7 @@ function childrenToText(children?: React.ReactNode): string {
   return stringChildren.join('\n')
 }
 
-interface MarkdownProps {
+type MarkdownProps = Omit<BoxProps, 'size' | 'text'> & {
   text?: string,
   size?: keyof typeof Sizes
 }
@@ -132,7 +133,7 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
   }
 
   render(): React.ReactElement {
-    const { text, children, size } = this.props
+    const { text, children, size, ...paneProps } = this.props
     const markdownSrc = text ? text : childrenToText(children)
     const processor = PROCESSORS[size]
     // type waiting on https://github.com/vfile/vfile/pull/53
@@ -140,7 +141,7 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
     const contents = processor.processSync(markdownSrc).result
 
     return (
-      <Pane>
+      <Pane {...paneProps}>
         {contents}
       </Pane>
     )

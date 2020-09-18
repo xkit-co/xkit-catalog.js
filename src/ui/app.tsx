@@ -1,8 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { injectCSS, removeCSS } from '../util'
-import { SCOPE_ID } from './scope-styles'
-import resetStyles from './reset.css'
+import AppWrapper from './app-wrapper'
 import {
   Pane,
   majorScale
@@ -17,14 +15,7 @@ import {
   createHashHistory,
   History
 } from 'history'
-import { toaster } from './toaster'
-import {
-  buildTheme,
-  CatalogThemeProps,
-  CatalogTheme,
-  ThemeProvider
-} from './theme'
-import { Provider as XkitProvider } from './xkit-context'
+import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
 
@@ -62,11 +53,7 @@ interface AppProps extends AppOptions {
 }
 
 interface AppState {
-  xkit: XkitJs,
   history: History,
-  unsubscribe?: Function,
-  cssTag?: HTMLElement,
-  theme: CatalogTheme
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -75,8 +62,6 @@ class App extends React.Component<AppProps, AppState> {
     routerType: 'browser',
     theme: {}
   }
-
-  ref: React.RefObject<HTMLDivElement>
 
   createHistory (): History {
     if (this.props.history) {
@@ -88,92 +73,35 @@ class App extends React.Component<AppProps, AppState> {
   constructor (props: AppProps) {
     super(props)
     this.state = {
-      xkit: props.xkit,
-      history: this.createHistory(),
-      theme: buildTheme(this.props.theme)
+      history: this.createHistory()
+    }
+
+    if (!this.props.xkit) {
+      console.error('Xkit was not passed to the React App, it will fail to load.')
     }
 
     if (this.props.inheritRouter && this.props.history) {
       console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
-
-    this.ref = React.createRef<HTMLDivElement>()
   }
 
-  private moveToaster (fromEl: HTMLElement, toEl: HTMLElement): void {
-    if (!fromEl) {
-      console.error('xkit: Cannot move notification toaster as its current container does not exist')
-    }
-    const toasterEl = fromEl.querySelector('[data-evergreen-toaster-container]')
-    if (!toasterEl) {
-      console.error('xkit: Cannot move notification toaster as it does not exist')
-      return
-    }
-    if (!toEl) {
-      console.error('xkit: Cannot move notification toaster as its future container does not exist')
-      return
-    }
-    toEl.appendChild(toasterEl)
-  }
-
-  moveToasterToApp (): void {
-    // Need to move the toaster inside our element so we can style it
-    this.moveToaster(window.document.body, this.ref.current)
-  }
-
-  moveToasterToBody (): void {
-    // Move the toaster back to the body so it is not destroyed on unmount
-    this.moveToaster(this.ref.current, window.document.body)
-  }
-
-  componentDidMount (): void {
-    this.moveToasterToApp()
-    const { xkit } = this.props
-    if (!xkit) {
-      console.error('Xkit was not passed to the React App, it will fail to load.')
-    }
-    const unsubscribe = xkit.onUpdate(() => {
-      // need a fresh object to trigger the update with React context since it compares
-      // object references
-      this.setState({ xkit: Object.assign({}, xkit) })
-    })
-    this.setState({ cssTag: injectCSS(window.document, resetStyles) })
-  }
-
-  componentWillUnmount (): void {
-    this.moveToasterToBody()
-    const { unsubscribe } = this.state
-    if (unsubscribe) {
-      unsubscribe()
-    }
-    if (this.state.cssTag) {
-      removeCSS(window.document, this.state.cssTag)
-    }
-  }
- 
   renderApp () {
     const {
       title,
       hideTitle,
-      hideSearch
-    } = this.props
-    const {
+      hideSearch,
       xkit,
       theme
-    } = this.state
+    } = this.props
 
     return (
-      <div id={SCOPE_ID} ref={this.ref}>
-        <XkitProvider value={xkit}>
-          <Route path="/" strict={true}>
-            <ThemeProvider value={theme}>
-              <Pane margin="auto">
-                <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
-              </Pane>
-            </ThemeProvider>
-          </Route>
-        </XkitProvider>
-      </div>
+      <AppWrapper xkit={xkit} theme={theme}>
+        <Route path="/" strict={true}>
+          <Pane margin="auto">
+            <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
+          </Pane>
+        </Route>
+      </AppWrapper>
     )
   }
 

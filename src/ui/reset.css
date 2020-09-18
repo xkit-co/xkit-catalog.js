@@ -1,5 +1,5 @@
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-/* Original from Normalize.css. Modified for #xkit___embed */
+/* Original from Normalize.css. Modified for #${SCOPE_ID} */
 
 /* Document
    ========================================================================== */
@@ -9,7 +9,7 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
-#xkit___embed {
+#${SCOPE_ID} {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -21,7 +21,7 @@
  * Render the `main` element consistently in IE.
  */
 
-#xkit___embed main {
+#${SCOPE_ID} main {
   display: block;
 }
 
@@ -30,7 +30,7 @@
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
-#xkit___embed h1 {
+#${SCOPE_ID} h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
@@ -43,7 +43,7 @@
  * 2. Show the overflow in Edge and IE.
  */
 
-#xkit___embed hr {
+#${SCOPE_ID} hr {
   box-sizing: content-box; /* 1 */
   height: 0; /* 1 */
   overflow: visible; /* 2 */
@@ -54,7 +54,7 @@
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 
-#xkit___embed pre {
+#${SCOPE_ID} pre {
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
@@ -66,7 +66,7 @@
  * Remove the gray background on active links in IE 10.
  */
 
-#xkit___embed a {
+#${SCOPE_ID} a {
   background-color: transparent;
 }
 
@@ -75,7 +75,7 @@
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 
-#xkit___embed abbr[title] {
+#${SCOPE_ID} abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
   text-decoration: underline dotted; /* 2 */
@@ -85,8 +85,8 @@
  * Add the correct font weight in Chrome, Edge, and Safari.
  */
 
-#xkit___embed b,
-#xkit___embed strong {
+#${SCOPE_ID} b,
+#${SCOPE_ID} strong {
   font-weight: bolder;
 }
 
@@ -95,9 +95,9 @@
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 
-#xkit___embed code,
-#xkit___embed kbd,
-#xkit___embed samp {
+#${SCOPE_ID} code,
+#${SCOPE_ID} kbd,
+#${SCOPE_ID} samp {
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
@@ -106,7 +106,7 @@
  * Add the correct font size in all browsers.
  */
 
-#xkit___embed small {
+#${SCOPE_ID} small {
   font-size: 80%;
 }
 
@@ -115,19 +115,19 @@
  * all browsers.
  */
 
-#xkit___embed sub,
-#xkit___embed sup {
+#${SCOPE_ID} sub,
+#${SCOPE_ID} sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
 
-#xkit___embed sub {
+#${SCOPE_ID} sub {
   bottom: -0.25em;
 }
 
-#xkit___embed sup {
+#${SCOPE_ID} sup {
   top: -0.5em;
 }
 
@@ -138,7 +138,7 @@
  * Remove the border on images inside links in IE 10.
  */
 
-#xkit___embed img {
+#${SCOPE_ID} img {
   border-style: none;
 }
 
@@ -150,11 +150,11 @@
  * 2. Remove the margin in Firefox and Safari.
  */
 
-#xkit___embed button,
-#xkit___embed input,
-#xkit___embed optgroup,
-#xkit___embed select,
-#xkit___embed textarea {
+#${SCOPE_ID} button,
+#${SCOPE_ID} input,
+#${SCOPE_ID} optgroup,
+#${SCOPE_ID} select,
+#${SCOPE_ID} textarea {
   font-family: inherit; /* 1 */
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
@@ -166,8 +166,8 @@
  * 1. Show the overflow in Edge.
  */
 
-#xkit___embed button,
-#xkit___embed input { /* 1 */
+#${SCOPE_ID} button,
+#${SCOPE_ID} input { /* 1 */
   overflow: visible;
 }
 
@@ -176,8 +176,8 @@
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-#xkit___embed button,
-#xkit___embed select { /* 1 */
+#${SCOPE_ID} button,
+#${SCOPE_ID} select { /* 1 */
   text-transform: none;
 }
 
@@ -185,10 +185,10 @@
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
-#xkit___embed button,
-#xkit___embed [type="button"],
-#xkit___embed [type="reset"],
-#xkit___embed [type="submit"] {
+#${SCOPE_ID} button,
+#${SCOPE_ID} [type="button"],
+#${SCOPE_ID} [type="reset"],
+#${SCOPE_ID} [type="submit"] {
   -webkit-appearance: button;
 }
 
@@ -196,10 +196,10 @@
  * Remove the inner border and padding in Firefox.
  */
 
-#xkit___embed button::-moz-focus-inner,
-#xkit___embed [type="button"]::-moz-focus-inner,
-#xkit___embed [type="reset"]::-moz-focus-inner,
-#xkit___embed [type="submit"]::-moz-focus-inner {
+#${SCOPE_ID} button::-moz-focus-inner,
+#${SCOPE_ID} [type="button"]::-moz-focus-inner,
+#${SCOPE_ID} [type="reset"]::-moz-focus-inner,
+#${SCOPE_ID} [type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -208,10 +208,10 @@
  * Restore the focus styles unset by the previous rule.
  */
 
-#xkit___embed button:-moz-focusring,
-#xkit___embed [type="button"]:-moz-focusring,
-#xkit___embed [type="reset"]:-moz-focusring,
-#xkit___embed [type="submit"]:-moz-focusring {
+#${SCOPE_ID} button:-moz-focusring,
+#${SCOPE_ID} [type="button"]:-moz-focusring,
+#${SCOPE_ID} [type="reset"]:-moz-focusring,
+#${SCOPE_ID} [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -219,7 +219,7 @@
  * Correct the padding in Firefox.
  */
 
-#xkit___embed fieldset {
+#${SCOPE_ID} fieldset {
   padding: 0.35em 0.75em 0.625em;
 }
 
@@ -230,7 +230,7 @@
  *    `fieldset` elements in all browsers.
  */
 
-#xkit___embed legend {
+#${SCOPE_ID} legend {
   box-sizing: border-box; /* 1 */
   color: inherit; /* 2 */
   display: table; /* 1 */
@@ -243,7 +243,7 @@
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
 
-#xkit___embed progress {
+#${SCOPE_ID} progress {
   vertical-align: baseline;
 }
 
@@ -251,7 +251,7 @@
  * Remove the default vertical scrollbar in IE 10+.
  */
 
-#xkit___embed textarea {
+#${SCOPE_ID} textarea {
   overflow: auto;
 }
 
@@ -260,8 +260,8 @@
  * 2. Remove the padding in IE 10.
  */
 
-#xkit___embed [type="checkbox"],
-#xkit___embed [type="radio"] {
+#${SCOPE_ID} [type="checkbox"],
+#${SCOPE_ID} [type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
@@ -270,8 +270,8 @@
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
 
-#xkit___embed [type="number"]::-webkit-inner-spin-button,
-#xkit___embed [type="number"]::-webkit-outer-spin-button {
+#${SCOPE_ID} [type="number"]::-webkit-inner-spin-button,
+#${SCOPE_ID} [type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -280,7 +280,7 @@
  * 2. Correct the outline style in Safari.
  */
 
-#xkit___embed [type="search"] {
+#${SCOPE_ID} [type="search"] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
@@ -289,7 +289,7 @@
  * Remove the inner padding in Chrome and Safari on macOS.
  */
 
-#xkit___embed [type="search"]::-webkit-search-decoration {
+#${SCOPE_ID} [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -298,7 +298,7 @@
  * 2. Change font properties to `inherit` in Safari.
  */
 
-#xkit___embed ::-webkit-file-upload-button {
+#${SCOPE_ID} ::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
@@ -310,7 +310,7 @@
  * Add the correct display in Edge, IE 10+, and Firefox.
  */
 
-#xkit___embed details {
+#${SCOPE_ID} details {
   display: block;
 }
 
@@ -318,7 +318,7 @@
  * Add the correct display in all browsers.
  */
 
-#xkit___embed summary {
+#${SCOPE_ID} summary {
   display: list-item;
 }
 
@@ -329,7 +329,7 @@
  * Add the correct display in IE 10+.
  */
 
-#xkit___embed template {
+#${SCOPE_ID} template {
   display: none;
 }
 
@@ -337,6 +337,6 @@
  * Add the correct display in IE 10.
  */
 
-#xkit___embed [hidden] {
+#${SCOPE_ID} [hidden] {
   display: none;
 }
