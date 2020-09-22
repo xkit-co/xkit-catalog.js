@@ -18,6 +18,8 @@ import {
   ListItem
 } from '@treygriffith/evergreen-ui'
 
+const NewTabLink = (props: React.PropsWithChildren<{}>) => <Link target="_blank" {...props} />
+ 
 const mediumComponents: RemarkComponents = {
   code: Code,
   p: (props: React.PropsWithChildren<{}>) => <Paragraph marginTop="default" {...props} />,
@@ -74,11 +76,11 @@ type Processors = Record<Sizes, Processor>
 
 const ParentProcessor = unified().use(parse)
 
-const PROCESSORS: Processors = {
-  [Sizes.small]: ParentProcessor().use(remark2react, { remarkReactComponents: smallComponents}),
-  [Sizes.medium]: ParentProcessor().use(remark2react, { remarkReactComponents: mediumComponents}),
-  [Sizes.large]: ParentProcessor().use(remark2react, { remarkReactComponents: largeComponents})
-}
+const COMPONENTS: Record<Sizes, RemarkComponents> = Object.freeze({
+  [Sizes.small]: smallComponents,
+  [Sizes.medium]: mediumComponents,
+  [Sizes.large]: largeComponents
+})
 
 // Credit: https://github.com/fernandopasik/react-children-utilities/blob/master/src/lib/onlyText.ts
 function childToString(child?: React.ReactElement | boolean | {} | null): string {
@@ -115,6 +117,7 @@ function childrenToText(children?: React.ReactNode): string {
 type MarkdownProps = Omit<BoxProps, 'size' | 'text'> & {
   text?: string,
   size?: keyof typeof Sizes
+  newWindow?: boolean
 }
 
 export default class Markdown extends React.Component<MarkdownProps> {
@@ -132,10 +135,24 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
     }
   }
 
+  getProcessor (): Processor {
+    const { newWindow, size } = this.props
+    if (!newWindow) {
+      return ParentProcessor().use(remark2react, { remarkReactComponents: COMPONENTS[size]})
+    }
+
+    return ParentProcessor().use(remark2react, {
+      remarkReactComponents: {
+        ...COMPONENTS[size],
+        a: NewTabLink
+      }
+    })
+  }
+
   render(): React.ReactElement {
-    const { text, children, size, ...paneProps } = this.props
+    const { text, children, size, newWindow, ...paneProps } = this.props
     const markdownSrc = text ? text : childrenToText(children)
-    const processor = PROCESSORS[size]
+    const processor = this.getProcessor()
     // type waiting on https://github.com/vfile/vfile/pull/53
     // @ts-ignore
     const contents = processor.processSync(markdownSrc).result
