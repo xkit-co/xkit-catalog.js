@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { domReady } from './util'
 import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
+export { App, createXkit }
 
 export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType' | 'history'> {
   routerType?: string
