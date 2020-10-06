@@ -15,6 +15,7 @@
     "build": "npm test && parcel build --no-cache src/browser.ts src/api-key.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration",
+    "compile-css": "bin/css-to-js src/ lib/",
     "repo": "echo $npm_package_repository_url"
   },
   "author": "Xkit <dev@xkit.co>",
