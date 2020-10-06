@@ -11,8 +11,8 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "dev": "parcel watch src/browser.ts src/api-key.tsx",
-    "build": "npm test && parcel build --no-cache src/browser.ts src/api-key.tsx",
+    "dev": "parcel watch src/browser.ts src/collect.tsx",
+    "build": "npm test && parcel build --no-cache src/browser.ts src/collect.tsx",
     "test": "tsc --noEmit",
     "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration && npm run compile-css",
     "compile-css": "bin/css-to-js src/ lib/",

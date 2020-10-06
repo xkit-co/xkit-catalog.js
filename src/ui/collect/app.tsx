@@ -10,17 +10,17 @@ import {
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
-import APIKeyForm from './form'
+import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'
 import VideoLink from './video-link'
 
-export interface APIKeyAppOptions {
+export interface AppOptions {
   authorization: Authorization,
   onComplete: Function
 }
 
-interface AppProps extends APIKeyAppOptions {
+interface AppProps extends AppOptions {
   xkit: XkitJs
 }
 
@@ -58,7 +58,7 @@ class App extends React.Component<AppProps> {
             >
               <AuthorizationTitle authorization={authorization} />
               <Instructions text={api_key_instructions} />
-              <APIKeyForm authorization={authorization} onComplete={onComplete} />
+              <Form authorization={authorization} onComplete={onComplete} />
               <VideoLink videoUrl={api_key_video_url} />
             </Card>
           </Pane>

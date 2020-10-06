@@ -16,27 +16,27 @@ interface FormProps {
 
 interface FormState {
   saving: boolean,
-  key: string,
+  value: string,
   validationMessage?: string
 }
 
-class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
+class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
   constructor (props: XkitConsumer<FormProps>) {
     super(props)
     this.state = {
       saving: false,
-      key: ''
+      value: ''
     }
   }
 
   private label (): string {
-    return this.props.authorization.authorizer.prototype.api_key_label || 'API Key'
+    return this.props.authorization.authorizer.prototype.collect_label || ''
   }
 
   private validateFields (): boolean {
-    const { key } = this.state
+    const { value } = this.state
 
-    if (!key) {
+    if (!value) {
       this.setState({
         validationMessage: "cannot be blank"
       })
@@ -51,7 +51,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
       authorization,
       onComplete
     } = this.props
-    const { key } = this.state
+    const { value } = this.state
     e.preventDefault()
 
     if (!this.validateFields()) {
@@ -61,7 +61,20 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
     this.setState({ saving: true })
 
     try {
-      await xkit.setAuthorizationAPIKey(authorization.authorizer.prototype.slug, authorization.state, key)
+      const {
+        state,
+        authorizer: {
+          prototype: {
+            slug,
+            collect_field
+          }
+        }
+      } = authorization
+
+      if (!state || !collect_field) {
+        throw new Error(`Authorization not yet loaded`)
+      }
+      await xkit.setAuthorizationField(slug, state, { [collect_field]: value })
       onComplete()
     } catch (e) {
       toaster.danger(`Error while saving ${this.label()}: ${e.message}`)
@@ -79,8 +92,7 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
       <form>
         <TextInputField
           label={this.label()}
-          placeholder={'sample_api_key'}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ key: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value })}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
           isInvalid={Boolean(validationMessage)}
           validationMessage={validationMessage ? `${this.label()} ${validationMessage}` :  undefined}
@@ -101,4 +113,4 @@ class APIKeyForm extends React.Component<XkitConsumer<FormProps>, FormState> {
   }
 }
 
-export default withXkit(APIKeyForm)
+export default withXkit(Form)
