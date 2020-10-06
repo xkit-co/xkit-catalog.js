@@ -32,8 +32,8 @@ class App extends React.Component<AppProps> {
     } = this.props
 
     const {
-      api_key_video_url,
-      api_key_instructions
+      collect_video_url,
+      collect_instructions
     } = authorization.authorizer.prototype
 
     return (
@@ -57,9 +57,9 @@ class App extends React.Component<AppProps> {
               background="base"
             >
               <AuthorizationTitle authorization={authorization} />
-              <Instructions text={api_key_instructions} />
+              <Instructions text={collect_instructions} />
               <Form authorization={authorization} onComplete={onComplete} />
-              <VideoLink videoUrl={api_key_video_url} />
+              <VideoLink videoUrl={collect_video_url} />
             </Card>
           </Pane>
         </Pane>

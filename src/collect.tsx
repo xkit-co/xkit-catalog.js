@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { domReady } from './util'
-import CollectApp, { AppOptions } from './ui/api-key/app'
+import CollectApp, { AppOptions } from './ui/collect/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 
 const renderCollect = function (opts: AppOptions): void {
