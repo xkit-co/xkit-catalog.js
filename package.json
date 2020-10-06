@@ -14,7 +14,7 @@
     "dev": "parcel watch src/browser.ts src/api-key.tsx",
     "build": "npm test && parcel build --no-cache src/browser.ts src/api-key.tsx",
     "test": "tsc --noEmit",
-    "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration",
+    "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration && npm run compile-css",
     "compile-css": "bin/css-to-js src/ lib/",
     "repo": "echo $npm_package_repository_url"
   },
