@@ -8,7 +8,9 @@ import {
   // @ts-ignore
   withTheme as untypedWithTheme,
   // @ts-ignore
-  ThemeProvider as UntypedProvider
+  ThemeProvider as UntypedProvider,
+  // @ts-ignore
+  useTheme as UntypedUseTheme
 } from '@treygriffith/evergreen-ui'
 // @ts-ignore
 import { Themer as UntypedThemer } from '@treygriffith/evergreen-ui/commonjs/themer'
@@ -70,9 +72,14 @@ type ThemeHOC = <Props extends {}>(WrappedComponent: React.ComponentType<Props>)
 // withTheme is not in the index.d.ts for evergreen
 const withTheme: ThemeHOC = untypedWithTheme as ThemeHOC
 
+type themeHook = () => typeof defaultTheme
+
+const useTheme: themeHook = UntypedUseTheme as themeHook
+
 export {
   Theme,
   Themer,
   ThemeProvider,
-  withTheme
+  withTheme,
+  useTheme
 }

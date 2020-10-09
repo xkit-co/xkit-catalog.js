@@ -1,6 +1,7 @@
 import {
   ThemeProvider,
-  withTheme
+  withTheme,
+  useTheme
 } from './evergreen'
 import {
   defaultCatalogTheme,
@@ -41,6 +42,7 @@ export {
   CatalogThemeProps,
   ThemeProvider,
   withTheme,
+  useTheme,
   ThemeConsumer
 }
  

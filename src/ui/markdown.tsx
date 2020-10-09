@@ -17,8 +17,17 @@ import {
   UnorderedList,
   ListItem
 } from '@treygriffith/evergreen-ui'
+import { CopyableTextInput, CopyableTextarea } from './copyable-input'
 
 const NewTabLink = (props: React.PropsWithChildren<{}>) => <Link target="_blank" {...props} />
+
+const CopyCode = (props: React.PropsWithChildren<{}>) => {
+  const text = childrenToText(props.children)
+  if (text.length > 40) {
+    return <CopyableTextarea fontFamily="mono" value={text} />
+  }
+  return <CopyableTextInput fontFamily="mono" value={text} />
+}
  
 const mediumComponents: RemarkComponents = {
   code: Code,
@@ -116,8 +125,9 @@ function childrenToText(children?: React.ReactNode): string {
 
 type MarkdownProps = Omit<BoxProps, 'size' | 'text'> & {
   text?: string,
-  size?: keyof typeof Sizes
-  newWindow?: boolean
+  size?: keyof typeof Sizes,
+  newWindow?: boolean,
+  copyableCode?: boolean
 }
 
 export default class Markdown extends React.Component<MarkdownProps> {
@@ -136,21 +146,19 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
   }
 
   getProcessor (): Processor {
-    const { newWindow, size } = this.props
-    if (!newWindow) {
-      return ParentProcessor().use(remark2react, { remarkReactComponents: COMPONENTS[size]})
-    }
+    const { newWindow, copyableCode, size } = this.props
 
     return ParentProcessor().use(remark2react, {
       remarkReactComponents: {
         ...COMPONENTS[size],
-        a: NewTabLink
+        a: newWindow ? NewTabLink : COMPONENTS[size].a,
+        code: copyableCode ? CopyCode : COMPONENTS[size].code
       }
     })
   }
 
   render(): React.ReactElement {
-    const { text, children, size, newWindow, ...paneProps } = this.props
+    const { text, children, size, newWindow, copyableCode, ...paneProps } = this.props
     const markdownSrc = text ? text : childrenToText(children)
     const processor = this.getProcessor()
     // type waiting on https://github.com/vfile/vfile/pull/53
