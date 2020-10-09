@@ -23,7 +23,7 @@ export const CopyableTextInput: React.FunctionComponent<CopyableTextInputProps> 
       width="100%"
       readOnly
       value={value}
-      onFocus={(e) => e.target.select()}
+      onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.target.select()}
       style={{fontFamily: theme.getFontFamily(fontFamily)}}
       {...props}
     />
@@ -42,7 +42,7 @@ export const CopyableTextarea: React.FunctionComponent<CopyableTextareaProps> = 
       width="100%"
       readOnly
       value={value}
-      onFocus={(e) => e.target.select()}
+      onFocus={(e: React.FocusEvent<HTMLTextAreaElement>) => e.target.select()}
       style={{fontFamily: theme.getFontFamily(fontFamily)}}
       {...props}
     />

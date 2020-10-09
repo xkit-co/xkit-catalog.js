@@ -17,6 +17,7 @@ const Instructions: React.FC<InstructionProps> = ({ text }) => {
       newWindow={true}
       text={text}
     />
+  )
 }
 
 export default Instructions
