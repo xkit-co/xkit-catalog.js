@@ -24,7 +24,15 @@ const NewTabLink = (props: React.PropsWithChildren<{}>) => <Link target="_blank"
 const CopyCode = (props: React.PropsWithChildren<{}>) => {
   const text = childrenToText(props.children)
   if (text.length > 40) {
-    return <CopyableTextarea fontFamily="mono" value={text} />
+    return (
+      <CopyableTextarea
+        fontFamily="mono"
+        value={text}
+        fontSize={12}
+        minHeight={60}
+        height={60}
+        maxWidth="100%"
+      />
   }
   return <CopyableTextInput fontFamily="mono" value={text} />
 }

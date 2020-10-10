@@ -40,7 +40,7 @@ class App extends React.Component<AppProps> {
       <AppWrapper xkit={this.props.xkit}>
         <Pane
           padding={majorScale(4)}
-          height="100%"
+          minHeight="100%"
           width="100%"
           display="flex"
           justifyContent="center"
@@ -49,7 +49,7 @@ class App extends React.Component<AppProps> {
         >
           <Pane width="100%" maxWidth={majorScale(60)}>
             <Card
-              marginTop={majorScale(6)}
+              marginTop={majorScale(4)}
               marginBottom={majorScale(4)}
               padding={majorScale(4)}
               elevation={1}
