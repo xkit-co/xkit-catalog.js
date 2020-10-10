@@ -10,17 +10,17 @@ import {
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
-import APIKeyForm from './form'
+import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'
 import VideoLink from './video-link'
 
-export interface APIKeyAppOptions {
+export interface AppOptions {
   authorization: Authorization,
   onComplete: Function
 }
 
-interface AppProps extends APIKeyAppOptions {
+interface AppProps extends AppOptions {
   xkit: XkitJs
 }
 
@@ -32,15 +32,15 @@ class App extends React.Component<AppProps> {
     } = this.props
 
     const {
-      api_key_video_url,
-      api_key_instructions
+      collect_video_url,
+      collect_instructions
     } = authorization.authorizer.prototype
 
     return (
       <AppWrapper xkit={this.props.xkit}>
         <Pane
           padding={majorScale(4)}
-          height="100%"
+          minHeight="100%"
           width="100%"
           display="flex"
           justifyContent="center"
@@ -49,7 +49,7 @@ class App extends React.Component<AppProps> {
         >
           <Pane width="100%" maxWidth={majorScale(60)}>
             <Card
-              marginTop={majorScale(6)}
+              marginTop={majorScale(4)}
               marginBottom={majorScale(4)}
               padding={majorScale(4)}
               elevation={1}
@@ -57,9 +57,9 @@ class App extends React.Component<AppProps> {
               background="base"
             >
               <AuthorizationTitle authorization={authorization} />
-              <Instructions text={api_key_instructions} />
-              <APIKeyForm authorization={authorization} onComplete={onComplete} />
-              <VideoLink videoUrl={api_key_video_url} />
+              <Instructions text={collect_instructions} />
+              <Form authorization={authorization} onComplete={onComplete} />
+              <VideoLink videoUrl={collect_video_url} />
             </Card>
           </Pane>
         </Pane>

@@ -10,7 +10,14 @@ interface InstructionProps {
 const Instructions: React.FC<InstructionProps> = ({ text }) => {
   if (!text) return null
 
-  return <Markdown marginBottom={majorScale(3)} newWindow={true} text={text} />
+  return (
+    <Markdown
+      marginBottom={majorScale(3)}
+      copyableCode={true}
+      newWindow={true}
+      text={text}
+    />
+  )
 }
 
 export default Instructions
