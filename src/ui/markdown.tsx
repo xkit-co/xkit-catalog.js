@@ -33,6 +33,7 @@ const CopyCode = (props: React.PropsWithChildren<{}>) => {
         height={60}
         maxWidth="100%"
       />
+    )
   }
   return <CopyableTextInput fontFamily="mono" value={text} />
 }
