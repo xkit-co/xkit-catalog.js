@@ -22,7 +22,7 @@ class ConnectionStatusBadge extends React.Component<ConnectionStatusBadgeProps> 
     }
 
     if (status === ConnectionStatus.Error) {
-      return <Badge color="yellow">Not Connected</Badge>
+      return <Badge color="yellow">Disconnected</Badge>
     }
 
     return null
