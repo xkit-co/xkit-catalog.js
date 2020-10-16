@@ -52,7 +52,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           <Pane flexGrow={1}>
             <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
           </Pane>
-          <ConnectionStatus connection={connection} />
+          <ConnectionStatus useTooltip={true} connection={connection} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>
