@@ -22,7 +22,8 @@ import withXkit, { XkitConsumer } from './with-xkit'
 interface CatalogProps {
   platform: Platform,
   showBackButton?: boolean,
-  hideSearch?: boolean
+  hideSearch?: boolean,
+  connectorsPath: string
 }
 
 interface CatalogState {
@@ -77,6 +78,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   renderConnectors () {
+    const { connectorsPath } = this.props
     const { connectors, loading, search } = this.state
     if (loading) {
       return (
@@ -112,6 +114,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
         <CatalogThumb
           connector={connector}
           key={connector.slug}
+          connectorsPath={connectorsPath}
         />
       )
     })
