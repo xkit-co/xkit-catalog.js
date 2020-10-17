@@ -45,7 +45,8 @@ export interface AppOptions {
   rootPath?: string,
   routerType?: routerType,
   history?: History,
-  theme?: CatalogThemeProps
+  theme?: CatalogThemeProps,
+  connectorsPath?: string
 }
 
 interface AppProps extends AppOptions {
@@ -59,6 +60,7 @@ interface AppState {
 class App extends React.Component<AppProps, AppState> {
   static defaultProps = {
     rootPath: '/',
+    connectorsPath: '/connectors',
     routerType: 'browser',
     theme: {}
   }
@@ -90,6 +92,7 @@ class App extends React.Component<AppProps, AppState> {
       title,
       hideTitle,
       hideSearch,
+      connectorsPath,
       xkit,
       theme
     } = this.props
@@ -98,7 +101,12 @@ class App extends React.Component<AppProps, AppState> {
       <AppWrapper xkit={xkit} theme={theme}>
         <Route path="/" strict={true}>
           <Pane margin="auto">
-            <Home title={title} hideTitle={hideTitle} hideSearch={hideSearch} />
+            <Home
+              title={title}
+              hideTitle={hideTitle}
+              hideSearch={hideSearch}
+              connectorsPath={connectorsPath === '/' ? '' : connectorsPath}
+            />
           </Pane>
         </Route>
       </AppWrapper>
