@@ -61,6 +61,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
 
     // Catalog-specific config
     const rootPath = domRoot.dataset.path
+    const connectorsPath = domRoot.dataset.connectorsPath
     const routerType = domRoot.dataset.router
     const title = domRoot.dataset.title
     const hideTitle = 'hideTitle' in domRoot.dataset
@@ -86,6 +87,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
       renderCatalog(xkit, domRoot, {
         rootPath,
         routerType,
+        connectorsPath,
         title,
         hideTitle,
         hideSearch

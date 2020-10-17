@@ -19,7 +19,8 @@ import withXkit, { XkitConsumer } from './with-xkit'
 interface HomeProps {
   title?: string,
   hideTitle?: boolean,
-  hideSearch?: boolean
+  hideSearch?: boolean,
+  connectorsPath: string
 }
 
 interface HomeState {
@@ -98,7 +99,8 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     const {
       title,
       hideTitle,
-      hideSearch
+      hideSearch,
+      connectorsPath
     } = this.props
     const {
       platform,
@@ -109,19 +111,22 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       return <Spinner marginX="auto"  marginY={150} size={majorScale(6)} />
     }
 
+    const homePaths = connectorsPath === '' ? ['/'] : ['/', connectorsPath]
+
     return (
       <>
         {hideTitle ? '' : <Heading size={800} marginBottom={majorScale(2)}>{this.title()}</Heading>}
         <Switch>
-          <Route path={['/', '/connectors']} exact={true}>
+          <Route path={['/', connectorsPath]} exact={true}>
             <Catalog
               platform={platform}
               showBackButton={!hideTitle}
               hideSearch={hideSearch}
+              connectorsPath={connectorsPath}
             />
           </Route>
           <Route
-            path="/connectors/:slug"
+            path={`${connectorsPath}/:slug`}
             render={({ match }: RouteComponentProps<{slug: string}>) => {
               return (
                 <ConnectorDetailRoute

@@ -15,12 +15,14 @@ import ConnectorMark from './connector-mark'
 import { ThemeConsumer, withTheme } from './theme'
 
 interface CatalogThumbProps {
-  connector: Connector
+  connector: Connector,
+  connectorsPath: string
 }
 
 class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
   render () {
     const {
+      connectorsPath,
       connector: {
         name,
         slug,
@@ -46,7 +48,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
         padding={theme.card.padding}
         is={Link}
         textDecoration="none"
-        to={`/connectors/${slug}`}
+        to={`${connectorsPath}/${slug}`}
       >
         <Pane display="flex">
           <Pane flexGrow={1}>
