@@ -11,8 +11,7 @@ interface XkitProps {
 }
 
 interface XkitState {
-  xkit: XkitJs,
-  unsubscribe?: Function,
+  xkit: XkitJs
 }
 
 // Wrap the Context Provider to provide custom listening behavior
@@ -27,21 +26,23 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
     this.subscribe()
   }
 
+  onConfigUpdate = (): void => {
+    const { value: xkit } = this.props
+    // need a fresh object to trigger the update with React context since it compares
+    // object references
+    this.setState({ xkit: Object.assign({}, xkit) })
+  }
+
   subscribe (): void {
     const { value: xkit } = this.props
-    const unsubscribe = xkit.onUpdate(() => {
-      // need a fresh object to trigger the update with React context since it compares
-      // object references
-      this.setState({ xkit: Object.assign({}, xkit) })
-    })
-    this.setState({ unsubscribe })
+    xkit.on('config:update', this.onConfigUpdate)
   }
 
   unsubscribe (): void {
-    const { unsubscribe } = this.state
-    if (unsubscribe) {
-      unsubscribe()
-    }
+    const { value: xkit } = this.props
+    try {
+      xkit.off('config:update', this.onConfigUpdate)
+    } catch {}
   }
 
   componentDidUpdate (prevProps: XkitProps) {
