@@ -39,7 +39,7 @@ class App extends React.Component<AppProps> {
         authorization.authorize_url &&
         // Note: if the state parameter changes, this will always be true
         authorization.authorize_url !== window.location.href) {
-      window.location = authorization.authorize_url
+      window.location.href = authorization.authorize_url
       return
     }
     this.props.onComplete()
