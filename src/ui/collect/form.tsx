@@ -11,7 +11,7 @@ import { toaster } from '../toaster'
 
 interface FormProps {
   authorization: Authorization,
-  onComplete: Function
+  onComplete: (authorization: Authorization) => void
 }
 
 interface FormState {
@@ -74,8 +74,8 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       if (!state || !collect_field) {
         throw new Error(`Authorization not yet loaded`)
       }
-      await xkit.setAuthorizationField(slug, state, { [collect_field]: value })
-      onComplete()
+      const updatedAuthorization = await xkit.setAuthorizationField(slug, state, { [collect_field]: value })
+      onComplete(updatedAuthorization)
     } catch (e) {
       toaster.danger(`Error while saving ${this.label()}: ${e.message}`)
       this.setState({ saving: false })
