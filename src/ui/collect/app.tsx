@@ -30,7 +30,6 @@ interface AppProps extends AppOptions {
 class App extends React.Component<AppProps> {
   // TODO: should this be here? Or in the HTML template?
   onComplete = (authorization: Authorization): void => {
-    console.log(authorization)
     // In cases where the Authorize URL is updated after we
     // submit our collect data, we redirect the window there rather than
     // just finishing
@@ -43,7 +42,7 @@ class App extends React.Component<AppProps> {
       window.location = authorization.authorize_url
       return
     }
-    // this.props.onComplete()
+    this.props.onComplete()
   }
 
   render () {
