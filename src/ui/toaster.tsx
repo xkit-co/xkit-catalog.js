@@ -34,5 +34,5 @@ export const toaster: typeof defaultToaster = {
 }
 
 export const Toaster: React.FC = ({ children }) => {
-  return <RehomeEvergreen components='data-evergreen-toaster-container'>{children}</RehomeEvergreen>
+  return <RehomeEvergreen components='data-xkit-toaster-container'>{children}</RehomeEvergreen>
 }
