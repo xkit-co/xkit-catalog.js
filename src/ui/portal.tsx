@@ -9,7 +9,7 @@ const Portal: React.FC = ({ children }) => {
   // EvergreenPortal re-uses portals, so if we render it here,
   // we can move the container that all future portals will use
   return (
-    <RehomeEvergreen components='evergreen-portal-container'>
+    <RehomeEvergreen components='data-xkit-portal-container'>
       <EvergreenPortal>{' '}</EvergreenPortal>
       {children}
     </RehomeEvergreen>
