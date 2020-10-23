@@ -3,8 +3,10 @@ import * as ReactDOM from 'react-dom'
 import {
   Button,
   TextInputField,
+  TextInputFieldProps,
   majorScale
 } from '@treygriffith/evergreen-ui'
+import PrefixInputField from '../prefix-input-field'
 import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
@@ -31,6 +33,10 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
 
   private label (): string {
     return this.props.authorization.authorizer.prototype.collect_label || ''
+  }
+
+  private saveLabel (): string {
+    return this.props.authorization.authorizer.prototype.collect_save || 'Save'
   }
 
   private validateFields (): boolean {
@@ -82,22 +88,43 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
-  render () {
+  renderField () {
     const {
       saving,
+      value,
       validationMessage
     } = this.state
+    const { authorization } = this.props
+    const collect_suffix = authorization.authorizer.prototype.collect_suffix
+
+    const inputProps ={
+      label: this.label(),
+      value: value,
+      isInvalid: Boolean(validationMessage),
+      validationMessage: validationMessage ? `${this.label()} ${validationMessage}` :  undefined,
+      disabled: saving,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value }),
+      onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null
+    }
+
+    if (collect_suffix) {
+      return (
+        <PrefixInputField
+          suffix={collect_suffix}
+          {...inputProps}
+        />
+      )
+    }
+
+    return <TextInputField {...inputProps} />
+  }
+
+  render () {
+    const { saving } = this.state
 
     return (
       <form>
-        <TextInputField
-          label={this.label()}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value })}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
-          isInvalid={Boolean(validationMessage)}
-          validationMessage={validationMessage ? `${this.label()} ${validationMessage}` :  undefined}
-          disabled={saving}
-        />
+        {this.renderField()}
         <Button
           appearance="primary"
           isLoading={saving}
@@ -106,7 +133,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
           height={majorScale(5)}
           width="100%"
         >
-          {saving ? 'Saving' : 'Save'}
+          {saving ? 'Saving' : this.saveLabel()}
         </Button>
       </form>
     )
