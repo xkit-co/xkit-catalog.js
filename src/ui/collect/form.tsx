@@ -3,8 +3,10 @@ import * as ReactDOM from 'react-dom'
 import {
   Button,
   TextInputField,
+  TextInputFieldProps,
   majorScale
 } from '@treygriffith/evergreen-ui'
+import PrefixInputField from '../prefix-input-field'
 import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
@@ -87,10 +89,16 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       saving,
       validationMessage
     } = this.state
+    const { authorization } = this.props
+    const collect_suffix = authorization?.authorizer?.prototype?.collect_suffix
+
+    const Field = collect_suffix ?
+      (props: TextInputFieldProps) => <PrefixInputField suffix={collect_suffix} {...props} /> :
+      TextInputField
 
     return (
       <form>
-        <TextInputField
+        <Field
           label={this.label()}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value })}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
