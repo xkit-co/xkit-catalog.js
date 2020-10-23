@@ -8,7 +8,10 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { XkitJs } from '@xkit-co/xkit.js'
-import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
+import {
+  Authorization,
+  AuthorizationStatus
+} from '@xkit-co/xkit.js/lib/api/authorization'
 import { toaster } from '../toaster'
 import Form from './form'
 import AuthorizationTitle from './authorization-title'
@@ -17,7 +20,7 @@ import VideoLink from './video-link'
 
 export interface AppOptions {
   authorization: Authorization,
-  onComplete: Function
+  onComplete: () => void
 }
 
 interface AppProps extends AppOptions {
@@ -25,11 +28,25 @@ interface AppProps extends AppOptions {
 }
 
 class App extends React.Component<AppProps> {
+  // TODO: should this be here? Or in the HTML template?
+  onComplete = (authorization: Authorization): void => {
+    // In cases where the Authorize URL is updated after we
+    // submit our collect data, we redirect the window there rather than
+    // just finishing
+    // TODO: should we have a separate status indicating this instead
+    // of relying on a change in the authorize_url?
+    if (authorization.status !== AuthorizationStatus.error &&
+        authorization.authorize_url &&
+        // Note: if the state parameter changes, this will always be true
+        authorization.authorize_url !== window.location.href) {
+      window.location.href = authorization.authorize_url
+      return
+    }
+    this.props.onComplete()
+  }
+
   render () {
-    const {
-      authorization,
-      onComplete
-    } = this.props
+    const { authorization } = this.props
 
     const {
       collect_video_url,
@@ -58,7 +75,7 @@ class App extends React.Component<AppProps> {
             >
               <AuthorizationTitle authorization={authorization} />
               <Instructions text={collect_instructions} />
-              <Form authorization={authorization} onComplete={onComplete} />
+              <Form authorization={authorization} onComplete={this.onComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
           </Pane>
