@@ -21,8 +21,8 @@ class PrefixInputField extends React.Component<PrefixInputFieldProps> {
 
   render () {
     const { suffix, ...restProps } = this.props
-    const { value, isInvalid, onChange, placeholder, disabled, ...formFieldProps } = restProps
-    const inputProps = { value, isInvalid, onChange, placeholder, disabled }
+    const { value, isInvalid, onChange, onKeyDown, placeholder, disabled, ...formFieldProps } = restProps
+    const inputProps = { value, isInvalid, onChange, onKeyDown, placeholder, disabled }
 
     const width = this.suffixPane.current ? this.suffixPane.current.offsetWidth : 75
 

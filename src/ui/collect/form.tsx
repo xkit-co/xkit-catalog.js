@@ -35,6 +35,10 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     return this.props.authorization.authorizer.prototype.collect_label || ''
   }
 
+  private saveLabel (): string {
+    return this.props.authorization.authorizer.prototype.collect_save || 'Save'
+  }
+
   private validateFields (): boolean {
     const { value } = this.state
 
@@ -84,28 +88,43 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
-  render () {
+  renderField () {
     const {
       saving,
+      value,
       validationMessage
     } = this.state
     const { authorization } = this.props
-    const collect_suffix = authorization?.authorizer?.prototype?.collect_suffix
+    const collect_suffix = authorization.authorizer.prototype.collect_suffix
 
-    const Field = collect_suffix ?
-      (props: TextInputFieldProps) => <PrefixInputField suffix={collect_suffix} {...props} /> :
-      TextInputField
+    const inputProps ={
+      label: this.label(),
+      value: value,
+      isInvalid: Boolean(validationMessage),
+      validationMessage: validationMessage ? `${this.label()} ${validationMessage}` :  undefined,
+      disabled: saving,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value }),
+      onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null
+    }
+
+    if (collect_suffix) {
+      return (
+        <PrefixInputField
+          suffix={collect_suffix}
+          {...inputProps}
+        />
+      )
+    }
+
+    return <TextInputField {...inputProps} />
+  }
+
+  render () {
+    const { saving } = this.state
 
     return (
       <form>
-        <Field
-          label={this.label()}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ value: e.target.value })}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null}
-          isInvalid={Boolean(validationMessage)}
-          validationMessage={validationMessage ? `${this.label()} ${validationMessage}` :  undefined}
-          disabled={saving}
-        />
+        {this.renderField()}
         <Button
           appearance="primary"
           isLoading={saving}
@@ -114,7 +133,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
           height={majorScale(5)}
           width="100%"
         >
-          {saving ? 'Saving' : 'Save'}
+          {saving ? 'Saving' : this.saveLabel()}
         </Button>
       </form>
     )
