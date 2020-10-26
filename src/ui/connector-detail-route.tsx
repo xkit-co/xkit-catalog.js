@@ -11,7 +11,8 @@ import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 import { toaster } from './toaster'
 import {
   Pane,
-  Spinner
+  Spinner,
+  majorScale
 } from '@treygriffith/evergreen-ui'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
@@ -73,7 +74,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     if (loading) {
       return (
         <Pane display="flex" alignItems="center" justifyContent="center" height={150}>
-          <Spinner />
+          <Spinner size={majorScale(6)} />
         </Pane>
       )
     }
