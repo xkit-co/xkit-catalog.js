@@ -117,9 +117,9 @@ class App extends React.Component<AppProps, AppState> {
     const {
       routerType,
       rootPath,
-      inheritRouter,
-      history
+      inheritRouter
     } = this.props
+    const { history } = this.state
 
     if (inheritRouter) {
       return this.renderApp()
