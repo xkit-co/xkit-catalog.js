@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "8.3.0",
+  "version": "8.3.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -34,6 +34,7 @@
     "parcel-bundler": "~1.12.4",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "parcel-plugin-css-to-string": "^2.5.0",
+    "parcel-plugin-stdin": "^0.1.1",
     "typescript": "~3.9.5"
   },
   "dependencies": {
