@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { domReady } from './util'
+import { domReady, logger } from './util'
 import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 export { App, createXkit }
@@ -73,7 +73,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
         try {
           await xkit.login(token)
         } catch (e) {
-          console.debug(`Login failed: ${e.message}`, e)
+          logger.debug(`Login failed: ${e.message}`, e)
         }
       }
       doLogin()

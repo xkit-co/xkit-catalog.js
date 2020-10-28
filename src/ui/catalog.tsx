@@ -83,7 +83,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     if (loading) {
       return (
         <EmptyCatalog>
-          <Spinner margin="auto" />
+          <Spinner margin="auto" size={majorScale(6)} />
         </EmptyCatalog>
       )
     }
