@@ -17,6 +17,7 @@ import {
   UnorderedList,
   ListItem
 } from '@treygriffith/evergreen-ui'
+import { logger } from '../util'
 import { CopyableTextInput, CopyableTextarea } from './copyable-input'
 
 const NewTabLink = (props: React.PropsWithChildren<{}>) => <Link target="_blank" {...props} />
@@ -147,7 +148,7 @@ export default class Markdown extends React.Component<MarkdownProps> {
   constructor (props: React.PropsWithChildren<MarkdownProps>) {
     super(props)
     if (this.props.text && this.props.children) {
-      console.warn(
+      logger.warn(
 `The <Markdown> component accepts a \`text\` property, or \`children\` with text content to render.
 You have provided both. The \`children\` will be ignored and only the \`text\` will render.`
       )

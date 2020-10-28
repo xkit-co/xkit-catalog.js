@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { logger } from '../util'
 import AppWrapper from './app-wrapper'
 import {
   Pane,
@@ -79,11 +80,11 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     if (!this.props.xkit) {
-      console.error('Xkit was not passed to the React App, it will fail to load.')
+      logger.error('An Xkit instance was not passed to the React App, it will fail to load.')
     }
 
     if (this.props.inheritRouter && this.props.history) {
-      console.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
+      logger.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
     }
   }
 

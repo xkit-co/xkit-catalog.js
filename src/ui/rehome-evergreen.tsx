@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { logger } from '../util'
 
 interface RehomeEvergreenProps {
   components: string | string[]
@@ -17,15 +18,15 @@ export default class RehomeEvergreen extends React.Component<RehomeEvergreenProp
 
   private moveComponent (fromEl: HTMLElement, toEl: HTMLElement, name: string): void {
     if (!fromEl) {
-      console.error(`xkit: Cannot move ${name} as its current container does not exist`)
+      logger.error(`Cannot move ${name} as its current container does not exist`)
     }
     const toasterEl = fromEl.querySelector(`[${name}]`)
     if (!toasterEl) {
-      console.error(`xkit: Cannot move ${name} as it does not exist`)
+      logger.error(`Cannot move ${name} as it does not exist`)
       return
     }
     if (!toEl) {
-      console.error(`xkit: Cannot move ${name} as its future container does not exist`)
+      logger.error(`Cannot move ${name} as its future container does not exist`)
       return
     }
     toEl.appendChild(toasterEl)

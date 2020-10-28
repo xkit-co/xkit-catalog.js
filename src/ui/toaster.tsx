@@ -4,6 +4,7 @@ import {
   toaster as defaultToaster
 } from '@treygriffith/evergreen-ui'
 import RehomeEvergreen from './rehome-evergreen'
+import { logger } from '../util'
 // TODO: allow customization / BYOToaster
 
 interface ToasterSettings {
@@ -20,14 +21,14 @@ export const toaster: typeof defaultToaster = {
   danger: (title: string, settings?: ToasterSettings): void => {
     // @ts-ignore
     if (process.env.NODE_ENV === 'development') {
-      console.error(title)
+      logger.error(title)
     }
     defaultToaster.danger(title, settings)
   },
   warning: (title: string, settings?: ToasterSettings): void => {
     // @ts-ignore
     if (process.env.NODE_ENV === 'development') {
-      console.warn(title)
+      logger.warn(title)
     }
     defaultToaster.warning(title, settings)
   }
