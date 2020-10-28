@@ -1,3 +1,5 @@
+function noop () {}
+
 export function domReady (document: Document, fn: Function) {
   if (document.readyState !== 'loading') {
     fn()
