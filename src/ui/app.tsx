@@ -16,6 +16,7 @@ import {
   createHashHistory,
   History
 } from 'history'
+import { CatalogFilter } from './catalog'
 import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
@@ -47,7 +48,8 @@ export interface AppOptions {
   routerType?: routerType,
   history?: History,
   theme?: CatalogThemeProps,
-  connectorsPath?: string
+  connectorsPath?: string,
+  filter?: CatalogFilter
 }
 
 interface AppProps extends AppOptions {
@@ -63,7 +65,8 @@ class App extends React.Component<AppProps, AppState> {
     rootPath: '/',
     connectorsPath: '/connectors',
     routerType: 'browser',
-    theme: {}
+    theme: {},
+    filter: () => true
   }
 
   createHistory (): History {
@@ -94,6 +97,7 @@ class App extends React.Component<AppProps, AppState> {
       hideTitle,
       hideSearch,
       connectorsPath,
+      filter,
       xkit,
       theme
     } = this.props
@@ -107,6 +111,7 @@ class App extends React.Component<AppProps, AppState> {
               hideTitle={hideTitle}
               hideSearch={hideSearch}
               connectorsPath={connectorsPath === '/' ? '' : connectorsPath}
+              filter={filter}
             />
           </Pane>
         </Route>
