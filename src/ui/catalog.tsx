@@ -19,11 +19,14 @@ import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
 import withXkit, { XkitConsumer } from './with-xkit'
 
+export type CatalogFilter = (connector: Connector) => boolean
+
 interface CatalogProps {
   platform: Platform,
   showBackButton?: boolean,
   hideSearch?: boolean,
-  connectorsPath: string
+  connectorsPath: string,
+  filter: CatalogFilter
 }
 
 interface CatalogState {
@@ -77,9 +80,21 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     )
   }
 
+  searchFilter = (connector: Connector): boolean => {
+    const { connectors, search } = this.state
+    if (!search.length) {
+      return true
+    }
+    return connector.name.toLowerCase().includes(search.toLowerCase()) ||
+           (compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) > SIMILARITY_MIN)
+  }
+
   renderConnectors () {
-    const { connectorsPath } = this.props
-    const { connectors, loading, search } = this.state
+    const {
+      connectorsPath,
+      filter
+    } = this.props
+    const { connectors, loading} = this.state
     if (loading) {
       return (
         <EmptyCatalog>
@@ -88,13 +103,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       )
     }
 
-    const filteredConnectors = connectors.filter(connector => {
-      if (!search.length) {
-        return true
-      }
-      return connector.name.toLowerCase().includes(search.toLowerCase()) ||
-             (compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) > SIMILARITY_MIN)
-    })
+    const filteredConnectors = connectors.filter(filter).filter(this.searchFilter)
 
     if (!filteredConnectors.length) {
       return (

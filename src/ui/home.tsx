@@ -11,7 +11,7 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
-import Catalog from './catalog'
+import Catalog, { CatalogFilter } from './catalog'
 import ConnectorDetailRoute from './connector-detail-route'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
@@ -20,7 +20,8 @@ interface HomeProps {
   title?: string,
   hideTitle?: boolean,
   hideSearch?: boolean,
-  connectorsPath: string
+  connectorsPath: string,
+  filter: CatalogFilter
 }
 
 interface HomeState {
@@ -100,7 +101,8 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       title,
       hideTitle,
       hideSearch,
-      connectorsPath
+      connectorsPath,
+      filter
     } = this.props
     const {
       platform,
@@ -123,6 +125,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
               showBackButton={!hideTitle}
               hideSearch={hideSearch}
               connectorsPath={connectorsPath}
+              filter={filter}
             />
           </Route>
           <Route
