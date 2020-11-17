@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "8.5.0",
+  "version": "8.5.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -40,7 +40,7 @@
   "dependencies": {
     "@treygriffith/evergreen-ui": "^6.0.0",
     "@treygriffith/ui-box": "^4.2.0",
-    "@xkit-co/xkit.js": "3.3.0",
+    "@xkit-co/xkit.js": "3.3.1",
     "glamor": "^2.20.40",
     "history": "^4.10.1",
     "react": "~16.9.0",
