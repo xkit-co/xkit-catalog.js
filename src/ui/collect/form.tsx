@@ -106,7 +106,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       onComplete(updatedAuthorization)
     } catch (e) {
       const collectFields = this.collectFields()
-      const error = collectFields.length > 1 ? '' : ' ' + collectFields[0].label
+      const error = collectFields.length > 1 || !collectFields[0].label ? '' : ' ' + collectFields[0].label
       toaster.danger(`Error while saving${error}: ${e.message}`)
       this.setState({ saving: false })
     }
