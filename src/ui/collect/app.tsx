@@ -17,6 +17,7 @@ import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'
 import VideoLink from './video-link'
+import PoweredBy from '../powered-by'
 
 export interface AppOptions {
   authorization: Authorization
@@ -82,6 +83,7 @@ class App extends React.Component<AppProps> {
               <Form authorization={authorization} onComplete={this.onComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
+            <PoweredBy />
           </Pane>
         </Pane>
       </AppWrapper>
