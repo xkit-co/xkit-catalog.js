@@ -19,8 +19,7 @@ import Instructions from './instructions'
 import VideoLink from './video-link'
 
 export interface AppOptions {
-  authorization: Authorization,
-  onComplete: () => void
+  authorization: Authorization
 }
 
 interface AppProps extends AppOptions {
@@ -42,7 +41,12 @@ class App extends React.Component<AppProps> {
       window.location.href = authorization.authorize_url
       return
     }
-    this.props.onComplete()
+    
+    // Focus on the calling window, and close this window
+    if (window.opener && !window.opener.closed) {
+      window.opener.focus()
+    }
+    window.close()
   }
 
   render () {
