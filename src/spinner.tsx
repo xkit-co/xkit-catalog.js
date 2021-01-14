@@ -6,6 +6,7 @@ import {
   listenToOpener
 } from './util'
 import { Styled } from './ui/scope-styles'
+import PoweredBy from'./ui/powered-by'
 import {
   Pane,
   Spinner,
@@ -13,7 +14,7 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 
-const renderLoading = (id: string, title: string, openerOrigin: string, validOrigins: string[]) => {
+const renderLoading = (id: string, title: string, removeBranding: boolean, openerOrigin: string, validOrigins: string[]) => {
   domReady(window.document, () => {
     ReactDOM.render(
       (
@@ -29,6 +30,12 @@ const renderLoading = (id: string, title: string, openerOrigin: string, validOri
           >
             <Spinner />
             <Heading marginTop="default">{title ? `Connecting to ${title}` : 'Connecting'}...</Heading>
+            <Pane
+              position="absolute"
+              bottom={0}
+            >
+              <PoweredBy removeBranding={removeBranding} />
+            </Pane>
           </Pane>
         </Styled>
       ),
