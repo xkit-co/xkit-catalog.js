@@ -9,7 +9,15 @@ import {
 import monoLogo from './images/xkit-logo-mono-black.svg'
 import logo from './images/xkit-logo-black.svg'
 
-const PoweredBy: React.FC = () => {
+interface PoweredByProps {
+  removeBranding: boolean
+}
+
+const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding }) => {
+  if (removeBranding) {
+    return null
+  }
+
   const [hovered, setHovered] = React.useState(false)
 
   return (
