@@ -74,7 +74,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     const { platform, showBackButton } = this.props
     const shouldShowBack = platform && platform.website && showBackButton
 
-    if (!shouldShowBack && platform.removeBranding) return
+    if (!shouldShowBack && platform.remove_branding) return
 
     return (
       <Pane
