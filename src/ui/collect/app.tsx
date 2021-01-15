@@ -17,9 +17,11 @@ import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'
 import VideoLink from './video-link'
+import PoweredBy from '../powered-by'
 
 export interface AppOptions {
-  authorization: Authorization
+  authorization: Authorization,
+  removeBranding: boolean
 }
 
 interface AppProps extends AppOptions {
@@ -50,7 +52,10 @@ class App extends React.Component<AppProps> {
   }
 
   render () {
-    const { authorization } = this.props
+    const {
+      authorization,
+      removeBranding
+    } = this.props
 
     const {
       collect_video_url,
@@ -82,6 +87,7 @@ class App extends React.Component<AppProps> {
               <Form authorization={authorization} onComplete={this.onComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
+            <PoweredBy removeBranding={removeBranding} campaign="collect_popup" />
           </Pane>
         </Pane>
       </AppWrapper>

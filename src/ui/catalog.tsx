@@ -18,6 +18,7 @@ import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
 import withXkit, { XkitConsumer } from './with-xkit'
+import PoweredBy from './powered-by'
 
 export type CatalogFilter = (connector: Connector) => boolean
 
@@ -71,11 +72,24 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
 
   renderBackButton () {
     const { platform, showBackButton } = this.props
-    if (!platform || !platform.website || !showBackButton) return
+    const shouldShowBack = platform && platform.website && showBackButton
+
+    if (!shouldShowBack && platform.remove_branding) return
 
     return (
-      <Pane marginTop={majorScale(3)}>
-        <BackButton is="a" href={platform.website}>Back to {platform.name}</BackButton>
+      <Pane
+        marginTop={majorScale(3)}
+        marginBottom={majorScale(3)}
+        display="flex"
+        justifyContent="space-between"
+      >
+        {shouldShowBack && <BackButton is="a" href={platform.website}>Back to {platform.name}</BackButton>}
+        <PoweredBy
+          margin={0}
+          align="right"
+          removeBranding={platform.remove_branding}
+          campaign="catalog_footer"
+        />
       </Pane>
     )
   }

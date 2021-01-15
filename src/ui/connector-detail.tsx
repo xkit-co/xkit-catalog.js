@@ -29,9 +29,11 @@ import ConnectionStatusBadge from './connection-status'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
+import PoweredBy from './powered-by'
 
 
 interface ConnectorDetailProps {
+  removeBranding: boolean,
   connector: Connector,
   connection?: Connection
 }
@@ -207,6 +209,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
 
   render (): React.ReactElement {
     const {
+      removeBranding,
       connector: {
         name,
         short_description,
@@ -236,11 +239,21 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
           {this.renderAction()}
         </Pane>
         {this.renderDescription()}
-        <Pane marginTop={majorScale(3)}>
+        <Pane
+          marginTop={majorScale(3)}
+          display="flex"
+          justifyContent="space-between"
+        >
           <BackButton
             is={Link}
             to="/"
           >Back to Catalog</BackButton>
+          <PoweredBy
+            margin={0}
+            align="right"
+            removeBranding={removeBranding}
+            campaign="catalog_detail_footer"
+          />
         </Pane>
       </Pane>
     )
