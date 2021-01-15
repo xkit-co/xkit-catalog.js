@@ -87,7 +87,7 @@ class App extends React.Component<AppProps> {
               <Form authorization={authorization} onComplete={this.onComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
-            <PoweredBy removeBranding={removeBranding} />
+            <PoweredBy removeBranding={removeBranding} campaign="collect_popup" />
           </Pane>
         </Pane>
       </AppWrapper>

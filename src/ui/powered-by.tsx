@@ -10,10 +10,13 @@ import monoLogo from './images/xkit-logo-mono-black.svg'
 import logo from './images/xkit-logo-black.svg'
 
 interface PoweredByProps {
-  removeBranding: boolean
+  removeBranding?: boolean,
+  campaign?: string,
+  margin?: number,
+  align?: 'left' | 'right'
 }
 
-const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding }) => {
+const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = majorScale(4), align = 'left', campaign } = {}) => {
   if (removeBranding) {
     return null
   }
@@ -23,14 +26,15 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding }) => {
   return (
     <Pane
       is="a"
-      href="https://xkit.co?utm_source=app&utm_campaign=popup_branding"
+      href={`https://xkit.co?utm_source=app&utm_campaign=${campaign}`}
       style={{textDecoration: "none"}}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       display="flex"
       justifyContent="center"
-      marginBottom={majorScale(4)}
-      marginTop={majorScale(4)}
+      marginBottom={margin}
+      marginTop={margin}
+      marginLeft={align === 'right' ? 'auto' : undefined}
     >
       <Text
         color="black"

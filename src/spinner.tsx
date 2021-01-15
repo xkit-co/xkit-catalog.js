@@ -34,7 +34,7 @@ const renderLoading = (id: string, title: string, removeBranding: boolean, opene
               position="absolute"
               bottom={0}
             >
-              <PoweredBy removeBranding={removeBranding} />
+              <PoweredBy removeBranding={removeBranding} campaign="loading_popup" />
             </Pane>
           </Pane>
         </Styled>

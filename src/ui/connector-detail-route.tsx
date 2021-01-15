@@ -18,6 +18,7 @@ import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
 
 interface ConnectorDetailRouteProps {
+  removeBranding: boolean,
   slug: string,
   url: string
 }
@@ -66,6 +67,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
   }
 
   render (): React.ReactElement {
+    const { removeBranding } = this.props
     const {
       loading,
       connector,
@@ -87,6 +89,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     
     return (
       <ConnectorDetail
+        removeBranding={removeBranding}
         connection={connection}
         connector={connector}
       />
