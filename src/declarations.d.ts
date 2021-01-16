@@ -32,8 +32,3 @@ declare module "*.css" {
   const styles: string;
   export default classes;
 }
-
-declare module "*.svg" {
-  const src: string;
-  export default src;
-}
