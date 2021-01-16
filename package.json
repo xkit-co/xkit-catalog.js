@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "8.8.2",
+  "version": "8.8.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -16,7 +16,7 @@
     "test": "tsc --noEmit",
     "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration && npm run compile-css && npm run copy-images",
     "compile-css": "bin/css-to-js src/ lib/",
-    "copy-images": "parcel build --no-cache src/ui/images/index.ts --out-dir dist/ui/images",
+    "copy-images": "parcel build --no-cache src/ui/images/index.ts --out-dir lib/ui/images --no-source-maps && rm lib/ui/images/report.html",
     "repo": "echo $npm_package_repository_url"
   },
   "author": "Xkit <dev@xkit.co>",
