@@ -6,10 +6,7 @@ import {
   minorScale,
   majorScale
 } from '@treygriffith/evergreen-ui'
-// Don't worry, this node.js stuff gets inlined by Parcel
-import { readFileSync } from "fs";
-const logoSvg = readFileSync(__dirname + '/images/xkit-logo-black.svg', 'utf8')
-const monoLogoSvg = readFileSync(__dirname + '/images/xkit-logo-mono-black.svg', 'utf8')
+import { logo, monoLogo } from './images'
 
 interface PoweredByProps {
   removeBranding?: boolean,
@@ -48,7 +45,7 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = 
         powered by
       </Text>
       <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(monoLogoSvg)}`}
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(monoLogo)}`}
         width={55}
         style={{
           opacity: 0.5,
@@ -56,7 +53,7 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = 
         }}
       />
       <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(logoSvg)}`}
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(logo)}`}
         width={55}
         style={{display: hovered ? 'block' : 'none'}}
       />
