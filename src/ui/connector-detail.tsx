@@ -86,7 +86,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     } = this.props
     try {
       this.setState({ loading: true })
-      await xkit.removeConnection(slug)
+      await xkit.removeConnection({ slug })
       this.setState({ connection: undefined })
       toaster.success(`Removed ${name}`)
     } catch (e) {
