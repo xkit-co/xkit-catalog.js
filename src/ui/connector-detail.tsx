@@ -30,13 +30,16 @@ import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
-import Settings from './settings'
+import Settings, { SettingsField } from './settings'
 
+export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface ConnectorDetailProps {
   removeBranding: boolean,
   connector: Connector,
-  connection?: Connection
+  connection?: Connection,
+  settings?: SettingsField[],
+  updateSettings: SettingsUpdate
 }
 
 interface ConnectorDetailState {
@@ -191,10 +194,14 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
   }
 
   renderDescriptionOrConfiguration (): React.ReactElement {
-    const { connector } = this.props
+    const {
+      connector,
+      settings,
+      updateSettings
+    } = this.props
     const { connection } = this.state
 
-    if (connection && connection.enabled) {
+    if (settings && settings.length) {
       return (
         <>
           <Heading size={600} marginTop="default">
@@ -202,14 +209,8 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
           </Heading>
           <Pane marginTop={majorScale(2)}>
             <Settings
-              onUpdate={(ret) => {
-                console.log('updated', ret)
-                return ret
-              }}
-              fields={[
-                { type: 'text', name: 'input-1', label: 'Text Input' },
-                { type: 'select-multiple', name: 'input-2', label: 'Select Input', options: [ 'one', 'two' ]}
-              ]}
+              onUpdate={(fields) => updateSettings(connection, fields)}
+              fields={settings}
             />
           </Pane>
           <Heading size={600} marginTop="default">

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ConnectorDetail from './connector-detail'
+import ConnectorDetail, { SettingsUpdate } from './connector-detail'
 import { IKitConfig } from '@xkit-co/xkit.js/lib/config'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
@@ -16,8 +16,10 @@ import {
 } from '@treygriffith/evergreen-ui'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
+export { SettingsField } from './settings'
 
 interface ConnectorDetailRouteProps {
+  updateSettings?: SettingsUpdate,
   removeBranding: boolean,
   slug: string,
   url: string
@@ -26,6 +28,7 @@ interface ConnectorDetailRouteProps {
 interface ConnectorDetailRouteState {
   connector?: Connector,
   connection?: Connection,
+  connectionSettings?: SettingsField[],
   loading: boolean
 }
 
@@ -50,13 +53,18 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
   async loadConnector (): Promise<void> {
     const {
       slug,
-      xkit
+      xkit,
+      updateSettings
     } = this.props
     this.setState({ loading: true })
     try {
       const connection = await xkit.getConnectionOrConnector(slug)
       if (isConnection(connection)) {
-        this.setState({ connection: connection })
+        if (connection.enabled && updateSettings) {
+          const connectionSettings = await updateSettings(connection)
+          this.setState({ connectionSettings })
+        }
+        this.setState({ connection })
       }
       this.setState({ connector: connection.connector })
     } catch (e) {
@@ -67,11 +75,15 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
   }
 
   render (): React.ReactElement {
-    const { removeBranding } = this.props
+    const {
+      removeBranding,
+      updateSettings
+    } = this.props
     const {
       loading,
       connector,
-      connection
+      connection,
+      connectionSettings
     } = this.state
     if (loading) {
       return (
@@ -92,6 +104,8 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
         removeBranding={removeBranding}
         connection={connection}
         connector={connector}
+        settings={connectionSettings}
+        updateSettings={updateSettings}
       />
     )
   }

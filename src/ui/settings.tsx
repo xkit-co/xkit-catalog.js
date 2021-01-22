@@ -16,10 +16,11 @@ import SettingsSelect, {
 } from './settings-select'
 import { objsAreShallowEqual } from '../util'
 
-type SettingsField = SettingsTextField | SettingsSelectField
+export type SettingsField = SettingsTextField | SettingsSelectField
+export type SettingsUpdate =  (fields: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface SettingsProps {
-  onUpdate: (fields: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>,
+  onUpdate: SettingsUpdate,
   fields: SettingsField[],
   saveLabel?: string 
 }
@@ -90,12 +91,9 @@ class Settings extends React.Component {
           <SettingsFieldComponent
             key={field.name}
             field={field}
-            onChange={(val) => {
-              console.log('new val', val)
-              this.setState({
-                fields: changeValue(fields, field.name, val)
-              })
-            }
+            onChange={(val) => this.setState({
+              fields: changeValue(fields, field.name, val)
+            })}
           />
         ))}
         <Button onClick={this.handleSave}>{saveLabel || 'Save'}</Button>
