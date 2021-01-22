@@ -16,7 +16,6 @@ import {
 } from '@treygriffith/evergreen-ui'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { Redirect } from 'react-router-dom'
-export { SettingsField } from './settings'
 
 interface ConnectorDetailRouteProps {
   updateSettings?: SettingsUpdate,
@@ -28,7 +27,6 @@ interface ConnectorDetailRouteProps {
 interface ConnectorDetailRouteState {
   connector?: Connector,
   connection?: Connection,
-  connectionSettings?: SettingsField[],
   loading: boolean
 }
 
@@ -60,10 +58,6 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     try {
       const connection = await xkit.getConnectionOrConnector(slug)
       if (isConnection(connection)) {
-        if (connection.enabled && updateSettings) {
-          const connectionSettings = await updateSettings(connection)
-          this.setState({ connectionSettings })
-        }
         this.setState({ connection })
       }
       this.setState({ connector: connection.connector })
@@ -104,7 +98,6 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
         removeBranding={removeBranding}
         connection={connection}
         connector={connector}
-        settings={connectionSettings}
         updateSettings={updateSettings}
       />
     )

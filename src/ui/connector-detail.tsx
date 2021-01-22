@@ -31,6 +31,7 @@ import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
 import Settings, { SettingsField } from './settings'
+import { logger } from '../util'
 
 export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
@@ -38,14 +39,14 @@ interface ConnectorDetailProps {
   removeBranding: boolean,
   connector: Connector,
   connection?: Connection,
-  settings?: SettingsField[],
   updateSettings: SettingsUpdate
 }
 
 interface ConnectorDetailState {
   loading: boolean,
   reconnectLoading: boolean,
-  connection?: Connection
+  connection?: Connection,
+  settings: SettingsField[]
 }
 
 class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>, ConnectorDetailState> {
@@ -55,8 +56,29 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     this.state = {
       loading: false,
       reconnectLoading: false,
-      connection: this.props.connection
+      connection: this.props.connection,
+      settings: []
     }
+  }
+
+  componentDidMount () {
+    this.loadSettings()
+  }
+
+  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailProps>, prevState: ConnectorDetailState) {
+    if (prevState.connection !== this.state.connection) {
+      this.loadSettings(this.state.settings)
+    }
+  }
+
+  async loadSettings (prevSettings?: SettingsField[]): Promise<SettingsField[]> {
+    if (!this.state.connection) {
+      return this.state.settings
+    }
+
+    const settings = await this.props.updateSettings(this.state.connection, prevSettings)
+    this.setState({ settings })
+    return settings
   }
 
   handleError = (error: Error): void => {
@@ -196,12 +218,14 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
   renderDescriptionOrConfiguration (): React.ReactElement {
     const {
       connector,
-      settings,
       updateSettings
     } = this.props
-    const { connection } = this.state
+    const {
+      connection,
+      settings
+    } = this.state
 
-    if (settings && settings.length) {
+    if (connection && connection.enabled && settings && settings.length) {
       return (
         <>
           <Heading size={600} marginTop="default">
@@ -209,7 +233,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
           </Heading>
           <Pane marginTop={majorScale(2)}>
             <Settings
-              onUpdate={(fields) => updateSettings(connection, fields)}
+              onUpdate={(fields) => this.loadSettings(fields)}
               fields={settings}
             />
           </Pane>
