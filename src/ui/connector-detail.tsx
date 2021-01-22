@@ -30,6 +30,7 @@ import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
+import Settings from './settings'
 
 
 interface ConnectorDetailProps {
@@ -189,8 +190,35 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     )
   }
 
-  renderDescription (): React.ReactElement {
+  renderDescriptionOrConfiguration (): React.ReactElement {
     const { connector } = this.props
+    const { connection } = this.state
+
+    if (connection && connection.enabled) {
+      return (
+        <>
+          <Heading size={600} marginTop="default">
+            {connector.name} Settings
+          </Heading>
+          <Pane marginTop={majorScale(2)}>
+            <Settings
+              onUpdate={(ret) => {
+                console.log('updated', ret)
+                return ret
+              }}
+              fields={[
+                { type: 'text', name: 'input-1', label: 'Text Input' },
+                { type: 'select-multiple', name: 'input-2', label: 'Select Input', options: [ 'one', 'two' ]}
+              ]}
+            />
+          </Pane>
+          <Heading size={600} marginTop="default">
+            About {connector.name}
+          </Heading>
+          <Markdown size="medium" text={connector.about} />
+        </>
+      )
+    }
 
     if (!connector.description) {
       return <Markdown size="large" text={connector.about} />
@@ -199,10 +227,10 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     return (
       <>
         <Markdown size="large" text={connector.description} />
-        <Heading size={500} marginTop="default">
+        <Heading size={600} marginTop="default">
           About {connector.name}
         </Heading>
-        <Markdown size="large" text={connector.about} />
+        <Markdown size="medium" text={connector.about} />
       </>
     )
   }
@@ -238,7 +266,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
           </Pane>
           {this.renderAction()}
         </Pane>
-        {this.renderDescription()}
+        {this.renderDescriptionOrConfiguration()}
         <Pane
           marginTop={majorScale(3)}
           display="flex"

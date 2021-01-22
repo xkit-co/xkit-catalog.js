@@ -1,0 +1,40 @@
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import { TextInputField } from '@treygriffith/evergreen-ui'
+import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
+
+export interface SettingsTextField {
+  type: 'text',
+  name: string,
+  label?: string,
+  value?: string
+  description?: string,
+  placeholder?: string,
+  hint?: string,
+  validationMessage?: string
+}
+
+export function isSettingsTextField (field: Record<string, unknown>): field is SettingsTextField {
+  return hasOwnProperty(field, 'type') && field.type === 'text'
+}
+
+interface SettingsTextProps {
+  field: SettingsTextField
+  onChange: (value: string) => void,
+}
+
+const SettingsText: React.FC<SettingsTextProps> = ({ onChange, field }) => {
+  const { name, type, value, label, ...fieldProps } = field
+
+  return (
+    <TextInputField
+      {...fieldProps}
+      onChange={e => onChange(e.target.value)}
+      isInvalid={Boolean(fieldProps.validationMessage)}
+      value={value == null ? '' : value}
+      label={label ? label : name}
+    />
+  )
+}
+
+export default SettingsText
