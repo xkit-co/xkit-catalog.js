@@ -76,8 +76,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     const {
       loading,
       connector,
-      connection,
-      connectionSettings
+      connection
     } = this.state
     if (loading) {
       return (

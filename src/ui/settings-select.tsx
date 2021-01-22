@@ -26,7 +26,8 @@ interface SettingsSelectProto {
   description?: string,
   placeholder?: string,
   hint?: string,
-  validationMessage?: string
+  validationMessage?: string,
+  [key: string]: string | string[] | SelectOption[]
 }
 
 interface SettingsSelectSingleField extends SettingsSelectProto {
@@ -41,7 +42,7 @@ interface SettingsSelectMultipleField extends SettingsSelectProto {
 
 export type SettingsSelectField = SettingsSelectSingleField | SettingsSelectMultipleField
 
-export function isSettingsSelectField (field: Record<string, unknown>): field is SettingsSelectField {
+export function isSettingsSelectField (field: { [key: string]: unknown }): field is SettingsSelectField {
   return hasOwnProperty(field, 'type') && (field.type === 'select' || field.type === 'select-multiple')
 }
 
@@ -71,7 +72,7 @@ function fillOptions(opts: SelectOption[]): EvergreenSelectOption[] {
 
 interface SettingsSelectProps {
   field: SettingsSelectField,
-  onChange: (value: string) => void
+  onChange: (value: string | string[]) => void
 }
 
 function multiSelectButtonText (placeholder?: string, value?: string[]): string {
@@ -111,7 +112,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
         label={label ? label : name}
         selected={value}
         options={fillOptions(options)}
-        onSelect={opt => onChange(opt.value)}
+        onSelect={(opt: EvergreenSelectOption) => onChange(opt.value)}
         closeOnSelect
       >
         <Button
@@ -135,8 +136,8 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
         label={label ? label : name}
         selected={value}
         options={fillOptions(options)}
-        onSelect={opt => onChange(value ? value.concat(opt.value) : [opt.value])}
-        onDeselect={opt => onChange(value ? value.filter(val => val !== opt.value) : [])}
+        onSelect={(opt: EvergreenSelectOption) => onChange(value ? value.concat(opt.value) : [opt.value])}
+        onDeselect={(opt: EvergreenSelectOption) => onChange(value ? value.filter(val => val !== opt.value) : [])}
       >
         <Button
           intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}

@@ -12,7 +12,8 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
-import ConnectorDetailRoute, { SettingsUpdate } from './connector-detail-route'
+import ConnectorDetailRoute from './connector-detail-route'
+import { SettingsUpdate } from './connector-detail'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
 

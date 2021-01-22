@@ -14,7 +14,7 @@ import SettingsSelect, {
   SettingsSelectField,
   isSettingsSelectField
 } from './settings-select'
-import { objsAreShallowEqual } from '../util'
+import { logger } from '../util'
 
 export type SettingsField = SettingsTextField | SettingsSelectField
 export type SettingsUpdate =  (fields: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
@@ -53,12 +53,10 @@ const SettingsFieldComponent: React.FC<SettingsFieldComponentProps> = ({ field, 
   if (isSettingsSelectField(field)) {
     return <SettingsSelect field={field} onChange={onChange} />
   }
-
-  logger.warn(`Settings page does not support field with type '${field.type}'`)
 }
 
-class Settings extends React.Component {
-  constructor (props) {
+class Settings extends React.Component<SettingsProps, SettingsState> {
+  constructor (props: SettingsProps) {
     super(props)
     this.state = {
       fields: props.fields.slice(),
@@ -67,7 +65,7 @@ class Settings extends React.Component {
   }
 
   componentDidUpdate (prevProps: SettingsProps) {
-    if (prevProps !== this.props && prevProps.fields !== this.props.fields && !objsAreShallowEqual(prevProps.fields, this.props.fields)) {
+    if (prevProps !== this.props && prevProps.fields !== this.props.fields) {
       this.setState({
         fields: this.props.fields.slice()
       })
