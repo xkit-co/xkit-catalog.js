@@ -46,7 +46,7 @@ interface ConnectorDetailState {
   loading: boolean,
   reconnectLoading: boolean,
   connection?: Connection,
-  settings: SettingsField[]
+  settings?: SettingsField[]
 }
 
 class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>, ConnectorDetailState> {
@@ -56,8 +56,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     this.state = {
       loading: false,
       reconnectLoading: false,
-      connection: this.props.connection,
-      settings: []
+      connection: this.props.connection
     }
   }
 

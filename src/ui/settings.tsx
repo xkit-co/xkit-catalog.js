@@ -26,6 +26,7 @@ interface SettingsProps {
 }
 
 interface SettingsState {
+  isLoading: boolean,
   fields: SettingsField[]
 }
 
@@ -60,7 +61,8 @@ class Settings extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fields: props.fields.slice()
+      fields: props.fields.slice(),
+      isLoading: false
     }
   }
 
@@ -73,17 +75,23 @@ class Settings extends React.Component {
   }
 
   handleSave = async (): Promise<void> => {
+    this.setState({ isLoading: true })
     try {
       const fields = await this.props.onUpdate(this.state.fields)
       this.setState({ fields })
     } catch (e) {
       logger.error(`Error while saving configuration settings: ${e}`)
+    } finally {
+      this.setState({ isLoading: false })
     }
   }
 
   render () {
     const { saveLabel } = this.props
-    const { fields } = this.state
+    const {
+      fields,
+      isLoading
+    } = this.state
 
     return (
       <Pane maxWidth={400}>
@@ -96,7 +104,12 @@ class Settings extends React.Component {
             })}
           />
         ))}
-        <Button onClick={this.handleSave}>{saveLabel || 'Save'}</Button>
+        <Button
+          onClick={this.handleSave}
+          isLoading={isLoading}
+        >
+          {saveLabel || 'Save'}
+        </Button>
       </Pane>
     )
   }
