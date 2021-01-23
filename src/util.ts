@@ -1,4 +1,3 @@
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 function noop () {}
 
 export function domReady (document: Document, fn: Function) {
