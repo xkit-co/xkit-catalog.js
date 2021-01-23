@@ -73,23 +73,3 @@ export const logger = {
   warn: console.warn.bind(console, 'Xkit:'),
   debug: process.env.NODE_ENV === 'development' ? console.debug.bind(console, 'Xkit:') : noop
 }
-
-interface UnknownShallowObject {
-  [index: string]: string | number | null | undefined
-}
-
-export function objsAreShallowEqual(a: UnknownShallowObject, b: UnknownShallowObject): boolean {
-  for (const [keyA, valueA] of Object.entries(a)) {
-    if (!hasOwnProperty(b, keyA) || b[keyA] !== valueA) {
-      return false
-    }
-  }
-
-  for (const [keyB, valueB] of Object.entries(b)) {
-    if (!hasOwnProperty(a, keyB) || a[keyB] !== valueB) {
-      return false
-    }
-  }
-
-  return true
-}

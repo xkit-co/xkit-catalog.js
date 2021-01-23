@@ -12,8 +12,7 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
-import ConnectorDetailRoute from './connector-detail-route'
-import { SettingsUpdate } from './connector-detail'
+import ConnectorDetailRoute, { SettingsUpdate } from './connector-detail-route'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
 
@@ -137,6 +136,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
               return (
                 <ConnectorDetailRoute
                   removeBranding={platform && platform.remove_branding}
+                  path={match.path}
                   url={match.url}
                   slug={match.params.slug}
                   updateSettings={updateSettings}

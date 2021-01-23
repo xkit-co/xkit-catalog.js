@@ -6,15 +6,9 @@ import {
   Heading,
   Button,
   BackButton,
-  Badge,
-  Paragraph,
   Text,
-  Small,
-  AddIcon,
-  TrashIcon,
   RefreshIcon,
-  majorScale,
-  minorScale
+  majorScale
 } from '@treygriffith/evergreen-ui'
 import { Link } from 'react-router-dom'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
@@ -24,7 +18,6 @@ import {
   connectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 import { toaster } from './toaster'
-import Markdown from './markdown'
 import ConnectionStatusBadge from './connection-status'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
@@ -33,20 +26,18 @@ import PoweredBy from './powered-by'
 import Settings, { SettingsField } from './settings'
 import { logger } from '../util'
 
-export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
-
 interface ConnectorDetailProps {
   removeBranding: boolean,
+  title: string,
+  subtitle: string,
+  actions: React.ReactElement,
   connector: Connector,
   connection?: Connection,
-  updateSettings: SettingsUpdate
+  updateConnection: (connection: Connection) => void
 }
 
 interface ConnectorDetailState {
-  loading: boolean,
   reconnectLoading: boolean,
-  connection?: Connection,
-  settings?: SettingsField[]
 }
 
 class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>, ConnectorDetailState> {
@@ -54,70 +45,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     super(props)
 
     this.state = {
-      loading: false,
-      reconnectLoading: false,
-      connection: this.props.connection
-    }
-  }
-
-  componentDidMount () {
-    this.loadSettings()
-  }
-
-  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailProps>, prevState: ConnectorDetailState) {
-    if (prevState.connection !== this.state.connection) {
-      this.loadSettings(this.state.settings)
-    }
-  }
-
-  async loadSettings (prevSettings?: SettingsField[]): Promise<SettingsField[]> {
-    if (!this.state.connection) {
-      return this.state.settings
-    }
-
-    const settings = await this.props.updateSettings(this.state.connection, prevSettings)
-    this.setState({ settings })
-    return settings
-  }
-
-  handleError = (error: Error): void => {
-    toaster.danger(friendlyMessage(error.message))
-  }
-
-  handleInstall = async (): Promise<void> => {
-    const {
-      connector,
-      xkit
-    } = this.props
-    try {
-      this.setState({ loading: true })
-      const connection = await xkit.connect(connector)
-      this.setState({ connection })
-      toaster.success(`Installed ${connector.name}`)
-    } catch (e) {
-      this.handleError(e)
-    } finally {
-      this.setState({ loading: false })
-    }
-  }
-
-  handleRemove = async (): Promise<void> => {
-    const {
-      xkit,
-      connector: {
-        slug,
-        name
-      }
-    } = this.props
-    try {
-      this.setState({ loading: true })
-      await xkit.removeConnection({ slug })
-      this.setState({ connection: undefined })
-      toaster.success(`Removed ${name}`)
-    } catch (e) {
-      this.handleError(e)
-    } finally {
-      this.setState({ loading: false })
+      reconnectLoading: false
     }
   }
 
@@ -126,60 +54,27 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
       xkit,
       connector: {
         name
-      }
+      },
+      connection
     } = this.props
     try {
       this.setState({ reconnectLoading: true })
-      const connection = await xkit.reconnect(this.state.connection)
-      this.setState({ connection })
+      const newConnection = await xkit.reconnect(connection)
+      this.props.updateConnection(newConnection)
       toaster.success(`Reconnected to ${name}`)
     } catch (e) {
-      this.handleError(e)
+      toaster.danger(friendlyMessage(e.message))
     } finally {
       this.setState({ reconnectLoading: false })
     }
   }
 
-
-  renderAction (): React.ReactElement {
-    const { loading, connection } = this.state
-
-    if (!connection || !connection.enabled) {
-      return (
-        <Pane>
-          <Button
-            iconBefore={loading ? null : AddIcon}
-            appearance="primary"
-            marginTop={minorScale(1)}
-            height={majorScale(5)}
-            isLoading={loading}
-            onClick={this.handleInstall}
-          >
-            Install
-          </Button>
-        </Pane>
-      )
-    }
-
-    return (
-      <Pane>
-        <Button
-          iconBefore={loading ? null : TrashIcon}
-          marginLeft={majorScale(1)}
-          marginTop={minorScale(1)}
-          height={majorScale(5)}
-          isLoading={loading}
-          onClick={this.handleRemove}
-        >
-          Remove
-        </Button>
-      </Pane>
-    )
-  }
-
   renderAuthAlert (): React.ReactElement {
-    const { connector } = this.props
-    const { connection, reconnectLoading } = this.state
+    const {
+      connector,
+      connection
+    } = this.props
+    const { reconnectLoading } = this.state
     const status = connectionStatus(connection)
 
     if (status !== ConnectionStatus.Error) {
@@ -214,61 +109,18 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
     )
   }
 
-  renderDescriptionOrConfiguration (): React.ReactElement {
-    const {
-      connector,
-      updateSettings
-    } = this.props
-    const {
-      connection,
-      settings
-    } = this.state
-
-    if (connection && connection.enabled && settings && settings.length) {
-      return (
-        <>
-          <Heading size={600} marginTop="default">
-            {connector.name} Settings
-          </Heading>
-          <Pane marginTop={majorScale(2)}>
-            <Settings
-              onUpdate={(fields) => this.loadSettings(fields)}
-              fields={settings}
-            />
-          </Pane>
-          <Heading size={600} marginTop="default">
-            About {connector.name}
-          </Heading>
-          <Markdown size="medium" text={connector.about} />
-        </>
-      )
-    }
-
-    if (!connector.description) {
-      return <Markdown size="large" text={connector.about} />
-    }
-
-    return (
-      <>
-        <Markdown size="large" text={connector.description} />
-        <Heading size={600} marginTop="default">
-          About {connector.name}
-        </Heading>
-        <Markdown size="medium" text={connector.about} />
-      </>
-    )
-  }
-
   render (): React.ReactElement {
     const {
       removeBranding,
       connector: {
-        name,
-        short_description,
         mark_url
-      }
+      },
+      connection,
+      title,
+      subtitle,
+      children,
+      actions
     } = this.props
-    const { connection } = this.state
     
     return (
       <Pane>
@@ -279,18 +131,20 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
             <Pane marginLeft={majorScale(2)}>
               <Pane display="flex">
                 <Heading size={700}>
-                  {name}
+                  {title}
                 </Heading>
                 <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(3)}>
                   <ConnectionStatusBadge connection={connection} />
                 </Pane>
               </Pane>
-              <Text color="muted">{short_description}</Text>
+              <Text color="muted">{subtitle}</Text>
             </Pane>
           </Pane>
-          {this.renderAction()}
+          <Pane>
+            {actions}
+          </Pane>
         </Pane>
-        {this.renderDescriptionOrConfiguration()}
+        {children}
         <Pane
           marginTop={majorScale(3)}
           display="flex"

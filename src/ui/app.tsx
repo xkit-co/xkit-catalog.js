@@ -20,7 +20,7 @@ import { CatalogFilter } from './catalog'
 import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
-import { SettingsUpdate } from './connector-detail'
+import { SettingsUpdate } from './connector-detail-route'
 import { SettingsField } from './settings'
 
 type routerType = 'browser' | 'hash' | 'memory'
