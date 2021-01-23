@@ -17,7 +17,9 @@ import withXkit, { XkitConsumer } from './with-xkit'
 import {
   Redirect,
   Switch,
-  Route
+  Route,
+  withRouter,
+  RouteComponentProps
 } from 'react-router-dom'
 import Settings, { SettingsField } from './settings'
 import Install from './install'
@@ -39,7 +41,7 @@ interface ConnectorDetailRouteState {
   loading: boolean
 }
 
-class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailRouteProps>, ConnectorDetailRouteState> {
+class ConnectorDetailRoute extends React.Component<XkitConsumer<RouteComponentProps<ConnectorDetailRouteProps>>, ConnectorDetailRouteState> {
   constructor (props: XkitConsumer<ConnectorDetailRouteProps>) {
     super(props)
     this.state = {
@@ -99,6 +101,12 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     }
   }
 
+  handleInstall = async (connection: Connection): Promise<void> => {
+    const { history, url } = this.props
+    await this.updateConnection(connection)
+    history.push(`${url}/settings`)
+  }
+
   render (): React.ReactElement {
     const {
       removeBranding,
@@ -148,7 +156,8 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
             removeBranding={removeBranding}
             connection={connection}
             connector={connector}
-            updateConnection={c => this.updateConnection(c)}
+            onInstall={this.handleInstall}
+            onRemove={() => this.updateConnection(undefined)}
             showSettings={showSettings}
             url={url}
           />
@@ -158,4 +167,4 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
   }
 }
 
-export default withXkit(ConnectorDetailRoute)
+export default withXkit(withRouter(ConnectorDetailRoute))

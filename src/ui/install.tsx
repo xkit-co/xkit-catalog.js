@@ -22,7 +22,8 @@ import withXkit, { XkitConsumer } from './with-xkit'
 interface InstallProps {
   removeBranding: boolean,
   connector: Connector,
-  updateConnection: (connection: Connection) => void,
+  onInstall: (connection: Connection) => void,
+  onRemove: () => void,
   connection?: Connection,
   showSettings: boolean,
   url: string
@@ -48,12 +49,13 @@ class Install extends React.Component<XkitConsumer<InstallProps>, InstallState> 
     const {
       connector,
       xkit,
-      updateConnection
+      updateConnection,
+      onInstall
     } = this.props
     try {
       this.setState({ loading: true })
       const connection = await xkit.connect(connector)
-      updateConnection(connection)
+      onInstall(connection)
       toaster.success(`Installed ${connector.name}`)
     } catch (e) {
       this.handleError(e)
@@ -69,12 +71,12 @@ class Install extends React.Component<XkitConsumer<InstallProps>, InstallState> 
         slug,
         name
       },
-      updateConnection
+      onRemove
     } = this.props
     try {
       this.setState({ loading: true })
       await xkit.removeConnection({ slug })
-      updateConnection(undefined)
+      onRemove()
       toaster.success(`Removed ${name}`)
     } catch (e) {
       this.handleError(e)
