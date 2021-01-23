@@ -92,8 +92,16 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<RouteComponentPr
 
   async updateSettings (connection: Connection, settingsToSave: SettingsField[]): Promise<SettingsField[]> {
     try {
-      const settings = await this.props.updateSettings(connection, settingsToSave)
+      const { connector } = this.state
+      const {
+        updateSettings,
+        history,
+        url
+      } = this.props
+      const settings = await updateSettings(connection, settingsToSave)
       this.setState({ settings })
+      toaster.success(`Saved settings for ${connector.name}`)
+      history.push(url)
       return settings
     } catch (e) {
       toaster.danger(`Error while saving settings: ${e.message}`)
