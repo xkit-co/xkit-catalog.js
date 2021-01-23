@@ -49,7 +49,6 @@ class Install extends React.Component<XkitConsumer<InstallProps>, InstallState> 
     const {
       connector,
       xkit,
-      updateConnection,
       onInstall
     } = this.props
     try {
@@ -160,12 +159,12 @@ class Install extends React.Component<XkitConsumer<InstallProps>, InstallState> 
       removeBranding,
       connector,
       connection,
-      updateConnection
+      onInstall
     } = this.props
 
     return (
       <ConnectorDetail
-        updateConnection={updateConnection}
+        updateConnection={onInstall}
         removeBranding={removeBranding}
         connection={connection}
         connector={connector}

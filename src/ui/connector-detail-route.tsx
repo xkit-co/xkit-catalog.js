@@ -27,7 +27,7 @@ import Install from './install'
 export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface ConnectorDetailRouteProps {
-  updateSettings?: SettingsUpdate,
+  updateSettings: SettingsUpdate,
   removeBranding: boolean,
   slug: string,
   url: string,
@@ -41,8 +41,10 @@ interface ConnectorDetailRouteState {
   loading: boolean
 }
 
-class ConnectorDetailRoute extends React.Component<XkitConsumer<RouteComponentProps<ConnectorDetailRouteProps>>, ConnectorDetailRouteState> {
-  constructor (props: XkitConsumer<ConnectorDetailRouteProps>) {
+type ConnectorDetailRouteComponentProps = RouteComponentProps & XkitConsumer<ConnectorDetailRouteProps>
+
+class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponentProps, ConnectorDetailRouteState> {
+  constructor (props: ConnectorDetailRouteComponentProps) {
     super(props)
     this.state = {
       loading: true
@@ -53,7 +55,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<RouteComponentPr
     this.loadConnector()
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailRouteProps>) {
+  componentDidUpdate (prevProps: ConnectorDetailRouteComponentProps) {
     if (prevProps.xkit !== this.props.xkit) {
       this.loadConnector()
     }
