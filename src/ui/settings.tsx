@@ -20,6 +20,7 @@ import SettingsSelect, {
 } from './settings-select'
 import { logger } from '../util'
 import ConnectorDetail from './connector-detail'
+import { toaster } from './toaster'
 
 export type SettingsField = SettingsTextField | SettingsSelectField
 export type SettingsUpdate =  (fields: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
@@ -83,12 +84,17 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
   }
 
   handleSave = async (): Promise<void> => {
+    const {
+      onUpdate,
+      connector
+    } = this.props
     this.setState({ isLoading: true })
     try {
-      const fields = await this.props.onUpdate(this.state.fields)
+      const fields = await onUpdate(this.state.fields)
       this.setState({ fields })
+      toaster.success(`Saved settings for ${connector.name}`)
     } catch (e) {
-      logger.error(`Error while saving configuration settings: ${e}`)
+      toaster.danger(`Error while saving settings: ${e.message}`)
     } finally {
       this.setState({ isLoading: false })
     }
