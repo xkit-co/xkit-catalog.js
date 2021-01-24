@@ -20,6 +20,8 @@ import { CatalogFilter } from './catalog'
 import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { XkitJs } from '@xkit-co/xkit.js'
+import { SettingsUpdate } from './connector-detail-route'
+import { SettingsField } from './settings'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
@@ -49,7 +51,8 @@ export interface AppOptions {
   history?: History,
   theme?: CatalogThemeProps,
   connectorsPath?: string,
-  filter?: CatalogFilter
+  filter?: CatalogFilter,
+  settings?: SettingsUpdate
 }
 
 interface AppProps extends AppOptions {
@@ -66,7 +69,8 @@ class App extends React.Component<AppProps, AppState> {
     connectorsPath: '/connectors',
     routerType: 'browser',
     theme: {},
-    filter: () => true
+    filter: () => true,
+    settings: (): SettingsField[] => []
   }
 
   createHistory (): History {
@@ -98,6 +102,7 @@ class App extends React.Component<AppProps, AppState> {
       hideSearch,
       connectorsPath,
       filter,
+      settings,
       xkit,
       theme
     } = this.props
@@ -112,6 +117,7 @@ class App extends React.Component<AppProps, AppState> {
               hideSearch={hideSearch}
               connectorsPath={connectorsPath === '/' ? '' : connectorsPath}
               filter={filter}
+              updateSettings={settings}
             />
           </Pane>
         </Route>

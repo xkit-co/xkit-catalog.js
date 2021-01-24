@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ConnectorDetail from './connector-detail'
 import { IKitConfig } from '@xkit-co/xkit.js/lib/config'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
@@ -15,22 +14,37 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import withXkit, { XkitConsumer } from './with-xkit'
-import { Redirect } from 'react-router-dom'
+import {
+  Redirect,
+  Switch,
+  Route,
+  withRouter,
+  RouteComponentProps
+} from 'react-router-dom'
+import Settings, { SettingsField } from './settings'
+import Install from './install'
+
+export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface ConnectorDetailRouteProps {
+  updateSettings: SettingsUpdate,
   removeBranding: boolean,
   slug: string,
-  url: string
+  url: string,
+  path: string
 }
 
 interface ConnectorDetailRouteState {
   connector?: Connector,
   connection?: Connection,
+  settings?: SettingsField[]
   loading: boolean
 }
 
-class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailRouteProps>, ConnectorDetailRouteState> {
-  constructor (props: XkitConsumer<ConnectorDetailRouteProps>) {
+type ConnectorDetailRouteComponentProps = RouteComponentProps & XkitConsumer<ConnectorDetailRouteProps>
+
+class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponentProps, ConnectorDetailRouteState> {
+  constructor (props: ConnectorDetailRouteComponentProps) {
     super(props)
     this.state = {
       loading: true
@@ -41,7 +55,7 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     this.loadConnector()
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<ConnectorDetailRouteProps>) {
+  componentDidUpdate (prevProps: ConnectorDetailRouteComponentProps) {
     if (prevProps.xkit !== this.props.xkit) {
       this.loadConnector()
     }
@@ -50,13 +64,14 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
   async loadConnector (): Promise<void> {
     const {
       slug,
-      xkit
+      xkit,
+      updateSettings
     } = this.props
     this.setState({ loading: true })
     try {
       const connection = await xkit.getConnectionOrConnector(slug)
       if (isConnection(connection)) {
-        this.setState({ connection: connection })
+        await this.updateConnection(connection)
       }
       this.setState({ connector: connection.connector })
     } catch (e) {
@@ -66,12 +81,49 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     }
   }
 
+  async updateConnection (connection?: Connection): Promise<void> {
+    this.setState({ connection })
+    if (!this.props.updateSettings || !connection) return
+    try {
+      const settings = await this.props.updateSettings(connection)
+      this.setState({ settings })
+    } catch (e) {
+      toaster.danger(`Error while loading settings: ${e.message}`)
+    }
+  }
+
+  async updateSettings (connection: Connection, settingsToSave: SettingsField[]): Promise<SettingsField[]> {
+    const { connector } = this.state
+    const {
+      updateSettings,
+      history,
+      url
+    } = this.props
+    const settings = await updateSettings(connection, settingsToSave)
+    this.setState({ settings })
+    history.push(url)
+    return settings
+  }
+
+  handleInstall = async (connection: Connection): Promise<void> => {
+    const { history, url } = this.props
+    await this.updateConnection(connection)
+    history.push(`${url}/settings`)
+  }
+
   render (): React.ReactElement {
-    const { removeBranding } = this.props
+    const {
+      removeBranding,
+      updateSettings,
+      path,
+      url,
+      slug
+    } = this.props
     const {
       loading,
       connector,
-      connection
+      connection,
+      settings
     } = this.state
     if (loading) {
       return (
@@ -82,19 +134,41 @@ class ConnectorDetailRoute extends React.Component<XkitConsumer<ConnectorDetailR
     }
 
     if (!connector) {
-      const { url, slug } = this.props
       const parentUrl = url.slice(0, -1 * slug.length)
       return <Redirect to={parentUrl} />
     }
-    
+
+    const showSettings = connection && connection.enabled && settings && settings.length > 0
+
     return (
-      <ConnectorDetail
-        removeBranding={removeBranding}
-        connection={connection}
-        connector={connector}
-      />
+      <Switch>
+        {showSettings && (
+          <Route path={`${path}/settings`}>
+            <Settings
+              removeBranding={removeBranding}
+              connection={connection}
+              connector={connector}
+              updateConnection={c => this.updateConnection(c)}
+              fields={settings}
+              onUpdate={fields => this.updateSettings(connection, fields)}
+              url={url}
+            />
+          </Route>
+        )}
+        <Route>
+          <Install
+            removeBranding={removeBranding}
+            connection={connection}
+            connector={connector}
+            onInstall={this.handleInstall}
+            onRemove={() => this.updateConnection(undefined)}
+            showSettings={showSettings}
+            url={url}
+          />
+        </Route>
+      </Switch>
     )
   }
 }
 
-export default withXkit(ConnectorDetailRoute)
+export default withXkit(withRouter(ConnectorDetailRoute))
