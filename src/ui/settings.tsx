@@ -18,11 +18,15 @@ import SettingsSelect, {
   SettingsSelectField,
   isSettingsSelectField
 } from './settings-select'
+import SettingsSwitch, {
+  SettingsSwitchField,
+  isSettingsSwitchField
+} from './settings-switch'
 import { logger } from '../util'
 import ConnectorDetail from './connector-detail'
 import { toaster } from './toaster'
 
-export type SettingsField = SettingsTextField | SettingsSelectField
+export type SettingsField = SettingsTextField | SettingsSelectField | SettingsSwitchField
 export type SettingsUpdate =  (fields: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface SettingsProps {
@@ -41,7 +45,7 @@ interface SettingsState {
   fields: SettingsField[]
 }
 
-function changeValue (fields: SettingsField[], name: string, value: string | string[]): SettingsField[] {
+function changeValue (fields: SettingsField[], name: string, value: string | string[] | boolean): SettingsField[] {
   return fields.map(field => {
     if (field.name !== name) {
       return field
@@ -53,7 +57,7 @@ function changeValue (fields: SettingsField[], name: string, value: string | str
 
 interface SettingsFieldComponentProps {
   field: SettingsField
-  onChange: (value: string | string[]) => void,
+  onChange: (value: string | string[] | boolean) => void,
 }
 
 const SettingsFieldComponent: React.FC<SettingsFieldComponentProps> = ({ field, onChange }) => {
@@ -63,6 +67,10 @@ const SettingsFieldComponent: React.FC<SettingsFieldComponentProps> = ({ field, 
 
   if (isSettingsSelectField(field)) {
     return <SettingsSelect field={field} onChange={onChange} />
+  }
+
+  if (isSettingsSwitchField(field)) {
+    return <SettingsSwitch field={field} onChange={onChange} />
   }
 }
 
