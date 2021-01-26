@@ -75,16 +75,21 @@ interface SettingsSelectProps {
   onChange: (value: string | string[]) => void
 }
 
-function multiSelectButtonText (placeholder?: string, value?: string[]): string {
+function multiSelectButtonText (placeholder?: string, value?: string[], evergreenOptions: EvergreenSelectOption[]): string {
   if (value == null || !value.length) {
     return placeholder || 'Select many...'
   }
 
   if (value.length === 1) {
-    return `Selected: ${value[0]}`
+    return `Selected: ${valueLabel(value[0], evergreenOptions)}`
   }
 
-  return `Selected: ${value[0]} + ${value.length - 1} more`
+  return `Selected: ${valueLabel(value[0], evergreenOptions)} + ${value.length - 1} more`
+}
+
+function valueLabel (value?: string, evergreenOptions: EvergreenSelectOption[]): string {
+  const selectedOption = value ? evergreenOptions.find(opt => opt.value === value) : undefined
+  return selectedOption ? selectedOption.label : value
 }
 
 const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
@@ -97,12 +102,14 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
     ...fieldProps
   } = field
 
+  const evergreenOptions = fillOptions(options)
+
   if (isSingle(field)) {
     const { value } = field
 
     const placeholderToUse = field.placeholder || 'Select one...'
 
-    const selectedText = value ? `Selected: ${value}` : placeholderToUse
+    const selectedText = value ? `Selected: ${valueLabel(value, evergreenOptions)}` : placeholderToUse
 
     return (
       <SelectMenuField
@@ -111,7 +118,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
         intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
         label={label ? label : name}
         selected={value}
-        options={fillOptions(options)}
+        options={evergreenOptions}
         onSelect={(opt: EvergreenSelectOption) => onChange(opt.value)}
         closeOnSelect
       >
@@ -135,7 +142,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
         isMultiSelect
         label={label ? label : name}
         selected={value}
-        options={fillOptions(options)}
+        options={evergreenOptions}
         onSelect={(opt: EvergreenSelectOption) => onChange(value ? value.concat(opt.value) : [opt.value])}
         onDeselect={(opt: EvergreenSelectOption) => onChange(value ? value.filter(val => val !== opt.value) : [])}
       >
@@ -143,7 +150,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
           intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
           height={majorScale(5)}
         >
-          {multiSelectButtonText(placeholder, value)}
+          {multiSelectButtonText(placeholder, value, evergreenOptions)}
         </Button>
       </SelectMenuField>
     )
