@@ -100,7 +100,11 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
     try {
       const fields = await onUpdate(this.state.fields)
       this.setState({ fields })
-      toaster.success(`Saved settings for ${connector.name}`)
+
+      const hasValidationErrors = fields.some(field => Boolean(field.validationMessage))
+      if (!hasValidationErrors) {
+        toaster.success(`Saved settings for ${connector.name}`)
+      }
     } catch (e) {
       toaster.danger(`Error while saving settings: ${e.message}`)
     } finally {

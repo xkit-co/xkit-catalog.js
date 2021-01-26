@@ -101,7 +101,12 @@ class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponent
     } = this.props
     const settings = await updateSettings(connection, settingsToSave)
     this.setState({ settings })
-    history.push(url)
+
+    const hasValidationErrors = settings.some(setting => Boolean(setting.validationMessage))
+
+    if (!hasValidationErrors) {
+      history.push(url)
+    }
     return settings
   }
 

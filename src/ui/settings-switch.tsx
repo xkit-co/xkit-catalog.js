@@ -9,7 +9,6 @@ export interface SettingsSwitchField {
   label?: string,
   value?: boolean,
   description?: string,
-  placeholder?: string,
   hint?: string,
   validationMessage?: string,
   [key: string]: string | boolean
