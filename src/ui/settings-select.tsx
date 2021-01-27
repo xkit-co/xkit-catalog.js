@@ -75,19 +75,19 @@ interface SettingsSelectProps {
   onChange: (value: string | string[]) => void
 }
 
-function multiSelectButtonText (placeholder?: string, value?: string[], evergreenOptions: EvergreenSelectOption[]): string {
+function multiSelectButtonText (evergreenOptions: EvergreenSelectOption[], placeholder?: string, value?: string[]): string {
   if (value == null || !value.length) {
     return placeholder || 'Select many...'
   }
 
   if (value.length === 1) {
-    return `Selected: ${valueLabel(value[0], evergreenOptions)}`
+    return `Selected: ${valueLabel(evergreenOptions, value[0])}`
   }
 
-  return `Selected: ${valueLabel(value[0], evergreenOptions)} + ${value.length - 1} more`
+  return `Selected: ${valueLabel(evergreenOptions, value[0])} + ${value.length - 1} more`
 }
 
-function valueLabel (value?: string, evergreenOptions: EvergreenSelectOption[]): string {
+function valueLabel (evergreenOptions: EvergreenSelectOption[], value?: string): string {
   const selectedOption = value ? evergreenOptions.find(opt => opt.value === value) : undefined
   return selectedOption ? selectedOption.label : value
 }
@@ -109,7 +109,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
 
     const placeholderToUse = field.placeholder || 'Select one...'
 
-    const selectedText = value ? `Selected: ${valueLabel(value, evergreenOptions)}` : placeholderToUse
+    const selectedText = value ? `Selected: ${valueLabel(evergreenOptions, value)}` : placeholderToUse
 
     return (
       <SelectMenuField
@@ -150,7 +150,7 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
           intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
           height={majorScale(5)}
         >
-          {multiSelectButtonText(placeholder, value, evergreenOptions)}
+          {multiSelectButtonText(evergreenOptions, placeholder, value)}
         </Button>
       </SelectMenuField>
     )
