@@ -31,6 +31,7 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = 
       onMouseLeave={() => setHovered(false)}
       display="flex"
       justifyContent="center"
+      height={28}
       marginBottom={margin}
       marginTop={margin}
       marginLeft={align === 'right' ? 'auto' : undefined}
