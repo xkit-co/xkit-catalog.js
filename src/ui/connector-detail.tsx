@@ -131,7 +131,7 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
                   {title}
                 </Heading>
                 <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(3)}>
-                  <ConnectionStatusBadge connection={connection} />
+                  <ConnectionStatusBadge useTooltip={false} connections={[connection]} />
                 </Pane>
               </Pane>
               <Text color="muted">{subtitle}</Text>
