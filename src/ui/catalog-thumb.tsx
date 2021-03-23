@@ -1,9 +1,7 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Card,
   Heading,
-  Button,
   Paragraph,
   Pane,
   majorScale

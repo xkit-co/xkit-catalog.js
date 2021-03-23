@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Alert,
   Pane,
@@ -23,8 +22,6 @@ import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
-import Settings, { SettingsField } from './settings'
-import { logger } from '../util'
 
 interface ConnectorDetailProps {
   removeBranding: boolean,
