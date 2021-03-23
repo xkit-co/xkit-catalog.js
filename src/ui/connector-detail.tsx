@@ -18,7 +18,7 @@ import {
   connectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 import { toaster } from './toaster'
-import ConnectionStatusBadge from './connection-status'
+import ConnectionStatusBadge from './connection-status-badge'
 import ConnectorMark from './connector-mark'
 import { friendlyMessage } from './errors'
 import withXkit, { XkitConsumer } from './with-xkit'
@@ -121,11 +121,11 @@ class ConnectorDetail extends React.Component<XkitConsumer<ConnectorDetailProps>
       children,
       actions
     } = this.props
-    
+
     return (
       <Pane>
         {this.renderAuthAlert()}
-        <Pane display="flex" marginTop={majorScale(3)}>  
+        <Pane display="flex" marginTop={majorScale(3)}>
           <Pane flexGrow={1} display="flex" alignItems="center">
             <ConnectorMark markUrl={mark_url} size={majorScale(6)} />
             <Pane marginLeft={majorScale(2)}>
