@@ -12,9 +12,10 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
-import ConnectorDetailRoute, { SettingsUpdate } from './connector-detail-route'
+import ConnectorDetailRoute from './connector-detail-route'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
+import { SettingsUpdate } from './app'
 
 interface HomeProps {
   title?: string,
@@ -31,21 +32,21 @@ interface HomeState {
 }
 
 class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
-  constructor (props: XkitConsumer<HomeProps>) {
+  constructor(props: XkitConsumer<HomeProps>) {
     super(props)
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount (): void {
+  componentDidMount(): void {
     this.loadPlatform()
     if (!this.props.hideTitle) {
       document.title = this.title()
     }
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<HomeProps>, prevState: HomeState): void {
+  componentDidUpdate(prevProps: XkitConsumer<HomeProps>, prevState: HomeState): void {
     if (prevProps.hideTitle !== this.props.hideTitle) {
       if (!this.props.hideTitle) {
         document.title = this.title()
@@ -61,7 +62,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
   }
 
-  async loadPlatform (): Promise<void> {
+  async loadPlatform(): Promise<void> {
     const {
       xkit,
       hideTitle
@@ -77,7 +78,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
   }
 
-  title (): string {
+  title(): string {
     const {
       title
     } = this.props
@@ -97,7 +98,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     return 'Loading...'
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const {
       title,
       hideTitle,
@@ -112,7 +113,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     } = this.state
 
     if (loading) {
-      return <Spinner marginX="auto"  marginY={150} size={majorScale(6)} />
+      return <Spinner marginX="auto" marginY={150} size={majorScale(6)} />
     }
 
     const homePaths = connectorsPath === '' ? ['/'] : ['/', connectorsPath]
@@ -132,7 +133,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
           </Route>
           <Route
             path={`${connectorsPath}/:slug`}
-            render={({ match }: RouteComponentProps<{slug: string}>) => {
+            render={({ match }: RouteComponentProps<{ slug: string }>) => {
               return (
                 <ConnectorDetailRoute
                   removeBranding={platform && platform.remove_branding}

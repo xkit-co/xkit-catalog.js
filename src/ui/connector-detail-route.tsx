@@ -1,12 +1,9 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { IKitConfig } from '@xkit-co/xkit.js/lib/config'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
   Connection,
   isConnection
 } from '@xkit-co/xkit.js/lib/api/connection'
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 import { toaster } from './toaster'
 import {
   Pane,
@@ -21,10 +18,10 @@ import {
   withRouter,
   RouteComponentProps
 } from 'react-router-dom'
-import Settings, { SettingsField } from './settings'
+import { SettingsField } from './settings-form'
+import Settings from './settings'
+import { SettingsUpdate } from './app'
 import Install from './install'
-
-export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 interface ConnectorDetailRouteProps {
   updateSettings: SettingsUpdate,
@@ -44,24 +41,24 @@ interface ConnectorDetailRouteState {
 type ConnectorDetailRouteComponentProps = RouteComponentProps & XkitConsumer<ConnectorDetailRouteProps>
 
 class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponentProps, ConnectorDetailRouteState> {
-  constructor (props: ConnectorDetailRouteComponentProps) {
+  constructor(props: ConnectorDetailRouteComponentProps) {
     super(props)
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.loadConnector()
   }
 
-  componentDidUpdate (prevProps: ConnectorDetailRouteComponentProps) {
+  componentDidUpdate(prevProps: ConnectorDetailRouteComponentProps) {
     if (prevProps.xkit !== this.props.xkit) {
       this.loadConnector()
     }
   }
 
-  async loadConnector (): Promise<void> {
+  async loadConnector(): Promise<void> {
     const {
       slug,
       xkit,
@@ -81,7 +78,7 @@ class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponent
     }
   }
 
-  async updateConnection (connection?: Connection): Promise<void> {
+  async updateConnection(connection?: Connection): Promise<void> {
     this.setState({ connection })
     if (!this.props.updateSettings || !connection) return
     try {
@@ -92,7 +89,7 @@ class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponent
     }
   }
 
-  async updateSettings (connection: Connection, settingsToSave: SettingsField[]): Promise<SettingsField[]> {
+  async updateSettings(connection: Connection, settingsToSave: SettingsField[]): Promise<SettingsField[]> {
     const { connector } = this.state
     const {
       updateSettings,
@@ -116,7 +113,7 @@ class ConnectorDetailRoute extends React.Component<ConnectorDetailRouteComponent
     history.push(`${url}/settings`)
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const {
       removeBranding,
       updateSettings,
