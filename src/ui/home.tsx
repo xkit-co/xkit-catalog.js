@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Switch,
   Route,
@@ -8,11 +7,12 @@ import {
 import {
   Heading,
   Spinner,
+  Pane,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
-import ConnectorDetailRoute from './connector-detail-route'
+import ConnectorDetails from './connector-details'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { SettingsUpdate } from './app'
@@ -116,8 +116,6 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       return <Spinner marginX="auto" marginY={150} size={majorScale(6)} />
     }
 
-    const homePaths = connectorsPath === '' ? ['/'] : ['/', connectorsPath]
-
     return (
       <>
         {hideTitle ? '' : <Heading size={800} marginBottom={majorScale(2)}>{this.title()}</Heading>}
@@ -135,12 +133,12 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
             path={`${connectorsPath}/:slug`}
             render={({ match }: RouteComponentProps<{ slug: string }>) => {
               return (
-                <ConnectorDetailRoute
+                <ConnectorDetails
                   removeBranding={platform && platform.remove_branding}
                   path={match.path}
                   url={match.url}
                   slug={match.params.slug}
-                  updateSettings={updateSettings}
+                  settingsUpdate={updateSettings}
                 />
               )
             }}
