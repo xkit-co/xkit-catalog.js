@@ -186,6 +186,8 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
           <Route path={`${path}/settings`}>
             <ConnectionSettings
               connector={connector}
+              connection={connection}
+              showConnectionName={false}
               fields={fields}
               isLoading={actionPending}
               onChangeField={changeField}
