@@ -26,7 +26,7 @@ import { friendlyMessage } from './errors'
 import { SettingsUpdate } from './app'
 import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
-import ConnectorSettings from './connector-settings'
+import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
 import ConnectorAuthAlert from './connector-auth-alert'
 
@@ -184,7 +184,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       <Switch>
         {hasSettings &&
           <Route path={`${path}/settings`}>
-            <ConnectorSettings
+            <ConnectionSettings
               connector={connector}
               fields={fields}
               isLoading={actionPending}

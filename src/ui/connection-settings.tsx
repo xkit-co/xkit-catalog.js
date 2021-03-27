@@ -19,7 +19,7 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({ connector }) => {
   )
 }
 
-interface ConnectorSettingsProps {
+interface ConnectionSettingsProps {
   connector: Connector,
   fields: SettingsField[],
   isLoading: boolean,
@@ -28,7 +28,7 @@ interface ConnectorSettingsProps {
   onClickCancel: () => void | Promise<void>
 }
 
-const ConnectorSettings: React.FC<ConnectorSettingsProps> = ({ connector, fields, isLoading, onChangeField, onClickSave, onClickCancel }) => {
+const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({ connector, fields, isLoading, onChangeField, onClickSave, onClickCancel }) => {
   return (
     <Pane>
       <Pane display="flex">
@@ -61,4 +61,4 @@ const ConnectorSettings: React.FC<ConnectorSettingsProps> = ({ connector, fields
   )
 }
 
-export default ConnectorSettings
+export default ConnectionSettings
