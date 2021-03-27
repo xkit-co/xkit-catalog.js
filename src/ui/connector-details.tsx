@@ -28,7 +28,7 @@ import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
-import ConnectorAuthAlert from './connector-auth-alert'
+import ConnectionAuthAlert from './connection-auth-alert'
 
 interface ConnectorDetailsBaseProps {
   path: string,
@@ -199,7 +199,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         <Route>
           {connection && connectionStatus(connection) === ConnectionStatus.Error &&
             <Pane marginBottom={majorScale(3)}>
-              <ConnectorAuthAlert
+              <ConnectionAuthAlert
                 connector={connector}
                 isLoading={actionPending}
                 onClickReconnect={reconnect}

@@ -2,13 +2,13 @@ import React from 'react'
 import { Alert, Button, RefreshIcon, Text, majorScale } from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 
-interface ConnectorAuthAlertProps {
+interface ConnectionAuthAlertProps {
   connector: Connector,
   isLoading: boolean,
   onClickReconnect: () => void | Promise<void>
 }
 
-const ConnectorAuthAlert: React.FC<ConnectorAuthAlertProps> = ({
+const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
   connector,
   isLoading,
   onClickReconnect
@@ -41,4 +41,4 @@ const ConnectorAuthAlert: React.FC<ConnectorAuthAlertProps> = ({
   )
 }
 
-export default ConnectorAuthAlert
+export default ConnectionAuthAlert
