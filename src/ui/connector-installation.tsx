@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
+import { Connection, ConnectionStatus, connectionStatus } from '@xkit-co/xkit.js/lib/api/connection'
 import {
   AddIcon,
   Pane,
   TrashIcon,
-  CogIcon
+  CogIcon,
+  majorScale
 } from '@treygriffith/evergreen-ui'
+import ConnectionAuthAlert from './connection-auth-alert'
 import ConnectionStatusBadge from './connection-status-badge'
 import ConnectorDescription from './connector-description'
 import ConnectorHeader from './connector-header'
@@ -37,6 +39,7 @@ interface ConnectorInstallationProps {
   onClickInstall: () => void | Promise<void>
   onClickSettings: () => void | Promise<void>
   onClickRemove: () => void | Promise<void>
+  onClickReconnect: () => void | Promise<void>
 }
 
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
@@ -46,10 +49,20 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   hasSettings,
   onClickInstall,
   onClickSettings,
-  onClickRemove
+  onClickRemove,
+  onClickReconnect
 }) => {
   return (
     <Pane>
+      {connection && connectionStatus(connection) === ConnectionStatus.Error &&
+        <Pane marginBottom={majorScale(3)}>
+          <ConnectionAuthAlert
+            connector={connector}
+            isLoading={isLoading}
+            onClickReconnect={onClickReconnect}
+          />
+        </Pane>
+      }
       <Pane display="flex">
         <Pane flexGrow={1}>
           <InstallationHeader connector={connector} connection={connection} />

@@ -8,12 +8,7 @@ import {
   Link
 } from 'react-router-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
-import {
-  Connection,
-  ConnectionStatus,
-  connectionStatus,
-  isConnection
-} from '@xkit-co/xkit.js/lib/api/connection'
+import { Connection, isConnection } from '@xkit-co/xkit.js/lib/api/connection'
 import { toaster } from './toaster'
 import {
   Pane,
@@ -28,7 +23,6 @@ import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
-import ConnectionAuthAlert from './connection-auth-alert'
 
 interface ConnectorDetailsBaseProps {
   path: string,
@@ -121,7 +115,6 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       toaster.danger(friendlyMessage(e.message))
     } finally {
       setActionPending(false)
-      this.setState({ reconnectLoading: false })
     }
   }
 
@@ -197,15 +190,6 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
           </Route>
         }
         <Route>
-          {connection && connectionStatus(connection) === ConnectionStatus.Error &&
-            <Pane marginBottom={majorScale(3)}>
-              <ConnectionAuthAlert
-                connector={connector}
-                isLoading={actionPending}
-                onClickReconnect={reconnect}
-              />
-            </Pane>
-          }
           <ConnectorInstallation
             connector={connector}
             connection={connection}
@@ -214,6 +198,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
             onClickInstall={installConnector}
             onClickSettings={openSettings}
             onClickRemove={removeConnector}
+            onClickReconnect={reconnect}
           />
         </Route>
       </Switch>
