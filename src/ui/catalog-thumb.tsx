@@ -26,7 +26,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
         slug,
         short_description,
         mark_url,
-        connection
+        connections
       },
       theme
     } = this.props
@@ -52,7 +52,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           <Pane flexGrow={1}>
             <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
           </Pane>
-          <ConnectionStatusBadge useTooltip={true} connections={[connection]} />
+          <ConnectionStatusBadge useTooltip={true} connections={connections || []} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>

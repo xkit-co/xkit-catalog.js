@@ -5,6 +5,7 @@ import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 import SettingsForm, { SettingsField } from './settings-form'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
+import PendingAction from './pending_action'
 
 interface SettingsHeaderProps {
   connector: Connector,
@@ -31,7 +32,7 @@ interface ConnectionSettingsProps {
   connection: Connection,
   showConnectionName: boolean,
   fields: SettingsField[],
-  isLoading: boolean,
+  pendingAction: PendingAction,
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void,
   onClickSave: () => void | Promise<void>
   onClickCancel: () => void | Promise<void>
@@ -42,7 +43,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
   connection,
   showConnectionName,
   fields,
-  isLoading,
+  pendingAction,
   onChangeField,
   onClickSave,
   onClickCancel
@@ -58,15 +59,12 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
           />
         </Pane>
         <Pane>
-          <ConnectorActionButton
-            isLoading={isLoading}
-            onClick={onClickCancel}
-          >
+          <ConnectorActionButton onClick={onClickCancel}>
             Cancel
           </ConnectorActionButton>
           <ConnectorActionButton
             appearance="primary"
-            isLoading={isLoading}
+            isLoading={pendingAction === PendingAction.Settings}
             onClick={onClickSave}
           >
             Save
