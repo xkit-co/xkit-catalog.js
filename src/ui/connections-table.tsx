@@ -1,6 +1,9 @@
 import * as React from 'react'
-import { ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
-import ConnectionStatusBadge from './connection-status-badge'
+import {
+  ConnectionOnly,
+  ConnectionStatus,
+  connectionStatus
+} from '@xkit-co/xkit.js/lib/api/connection'
 import {
   CogIcon,
   IconButton,
@@ -8,35 +11,41 @@ import {
   MoreIcon,
   Popover,
   Position,
+  RefreshIcon,
+  Spinner,
   Table,
   TrashIcon
 } from '@treygriffith/evergreen-ui'
+import ConnectionStatusBadge from './connection-status-badge'
+import PendingAction from './pending_action'
 
 interface ConnectionsTableProps {
   connections: ConnectionOnly[],
+  hasSettings: (connection: ConnectionOnly) => boolean,
+  pendingAction: PendingAction,
   onSelectSettings: (connection: ConnectionOnly) => void | Promise<void>,
+  onSelectReconnect: (connection: ConnectionOnly) => void | Promise<void>
   onSelectRemove: (connection: ConnectionOnly) => void | Promise<void>
 }
 
 const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
   connections,
+  hasSettings,
+  pendingAction,
   onSelectSettings,
+  onSelectReconnect,
   onSelectRemove
 }) => {
   const rows = connections.map(connection => {
-    const menu = (
-      <Menu>
-        <Menu.Item icon={CogIcon} onSelect={() => onSelectSettings(connection)}>
-          Settings...
-        </Menu.Item>
-        <Menu.Item icon={TrashIcon} onSelect={() => onSelectRemove(connection)}>
-          Remove...
-        </Menu.Item>
-      </Menu>
-    )
+    async function selectAndClose(
+      select: (connection: ConnectionOnly) => void | Promise<void>,
+      close: () => void) {
+      await select(connection)
+      close()
+    }
 
     return (
-      <Table.Row>
+      <Table.Row key={connection.id}>
         <Table.TextCell>
           {connection.authorization?.display_label || connection.id}
         </Table.TextCell>
@@ -44,7 +53,35 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
           <ConnectionStatusBadge useTooltip={true} connections={[connection]} />
         </Table.Cell>
         <Table.Cell width={48} flex="none">
-          <Popover content={menu} position={Position.BOTTOM_RIGHT}>
+          <Popover
+            content={({ close }) => (
+              <Menu>
+                {hasSettings(connection) &&
+                  <Menu.Item
+                    icon={CogIcon}
+                    onSelect={() => selectAndClose(onSelectSettings, close)}
+                  >
+                    Settings...
+                  </Menu.Item>
+                }
+                {connectionStatus(connection) === ConnectionStatus.Error &&
+                  <Menu.Item
+                    icon={pendingAction === PendingAction.Reconnect ? <Spinner /> : RefreshIcon}
+                    onSelect={() => selectAndClose(onSelectReconnect, close)}
+                  >
+                    Reconnect...
+                  </Menu.Item>
+                }
+                <Menu.Item
+                  icon={pendingAction === PendingAction.Remove ? <Spinner /> : TrashIcon}
+                  onSelect={() => selectAndClose(onSelectRemove, close)} intent="danger"
+                >
+                  Remove...
+                </Menu.Item>
+              </Menu>
+            )}
+            position={Position.BOTTOM_RIGHT}
+          >
             <IconButton icon={MoreIcon} height={24} appearance="minimal" />
           </Popover>
         </Table.Cell>
@@ -57,7 +94,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
       <Table.Head>
         <Table.TextHeaderCell>
           Name
-          </Table.TextHeaderCell>
+        </Table.TextHeaderCell>
         <Table.TextHeaderCell width={128} flex="none">
           Status
         </Table.TextHeaderCell>
