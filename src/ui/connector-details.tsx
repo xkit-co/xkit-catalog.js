@@ -3,14 +3,14 @@ import {
   Redirect,
   Switch,
   Route,
-  withRouter,
   RouteComponentProps,
-  Link
+  Link,
+  useHistory
 } from 'react-router-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Connection, ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
-import withXkit, { XkitConsumer } from './with-xkit'
+import { useXkit } from './xkit-context'
 import { toaster } from './toaster'
 import {
   Pane,
@@ -26,7 +26,7 @@ import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
 import PendingAction from './pending_action'
 
-interface ConnectorDetailsBaseProps {
+interface ConnectorDetailsProps {
   path: string,
   url: string,
   slug: string,
@@ -34,18 +34,17 @@ interface ConnectorDetailsBaseProps {
   settingsUpdate: SettingsUpdate
 }
 
-type ConnectorDetailsProps = RouteComponentProps & XkitConsumer<ConnectorDetailsBaseProps>
 type Settings = Record<string, SettingsField[]>
 
 const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   path,
+  url,
   slug,
   removeBranding,
-  settingsUpdate,
-  history,
-  url,
-  xkit
+  settingsUpdate
 }) => {
+  const xkit = useXkit()
+  const history = useHistory()
   const [isLoading, setIsLoading] = useState(true)
   const [pendingAction, setPendingAction] = useState(PendingAction.None)
   const [connector, setConnector] = useState<Connector>(null)
@@ -262,4 +261,4 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   )
 }
 
-export default withXkit(withRouter(ConnectorDetails))
+export default ConnectorDetails
