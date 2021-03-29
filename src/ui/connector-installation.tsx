@@ -42,7 +42,6 @@ const InstallationHeader: React.FC<InstallationHeaderProps> = ({ connector, conn
 
 interface ConnectorInstallationProps {
   connector: Connector,
-  multipleConnections: boolean,
   connections: Connection[],
   hasSettings: (connection: Connection) => boolean,
   pendingAction: PendingAction,
@@ -54,7 +53,6 @@ interface ConnectorInstallationProps {
 
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   connector,
-  multipleConnections,
   connections,
   pendingAction,
   hasSettings,
@@ -64,6 +62,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   onClickRemoveConnection
 }) => {
   const [currentTab, setCurrentTab] = useState('connections')
+  const multipleConnections = connector.supports_multiple_connections || connections.length > 1
   const computedTab = !multipleConnections || connections.length === 0 ? 'about' : currentTab
 
   return (

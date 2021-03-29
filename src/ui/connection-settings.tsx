@@ -9,28 +9,25 @@ import PendingAction from './pending_action'
 
 interface SettingsHeaderProps {
   connector: Connector,
-  connection: Connection,
-  showConnectionName: boolean
+  connection: Connection
 }
 
 const SettingsHeader: React.FC<SettingsHeaderProps> = ({
   connector,
-  connection,
-  showConnectionName
+  connection
 }) => {
-  const subtitle = showConnectionName
-    ? `Configure settings for ${connection.authorization?.display_name || connection.id}`
+  const subtitle = connector.supports_multiple_connections
+    ? `Configure settings for ${connection.authorization?.display_label || connection.id}`
     : `Configure settings for ${connector.name}`
 
   return (
-    <ConnectorHeader mark_url={connector.mark_url} title="Settings" subtitle={subtitle}/>
+    <ConnectorHeader mark_url={connector.mark_url} title="Settings" subtitle={subtitle} />
   )
 }
 
 interface ConnectionSettingsProps {
   connector: Connector,
   connection: Connection,
-  showConnectionName: boolean,
   fields: SettingsField[],
   pendingAction: PendingAction,
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void,
@@ -41,7 +38,6 @@ interface ConnectionSettingsProps {
 const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
   connector,
   connection,
-  showConnectionName,
   fields,
   pendingAction,
   onChangeField,
@@ -52,11 +48,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
     <Pane>
       <Pane display="flex">
         <Pane flexGrow={1}>
-          <SettingsHeader
-            connector={connector}
-            connection={connection}
-            showConnectionName={showConnectionName}
-          />
+          <SettingsHeader connector={connector} connection={connection} />
         </Pane>
         <Pane>
           <ConnectorActionButton onClick={onClickCancel}>

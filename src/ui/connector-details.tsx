@@ -201,9 +201,6 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     return <Redirect to={parentUrl} />
   }
 
-  // TODO: use authorizer prototype slug
-  const multipleConnections = connector.slug === 'segment' || connector.slug === 'zenefits-apikey'
-
   return (
     <Pane marginTop={majorScale(3)}>
       <Switch>
@@ -221,7 +218,6 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
               <ConnectionSettings
                 connector={connector}
                 connection={connection}
-                showConnectionName={multipleConnections}
                 fields={fieldsChangeset}
                 pendingAction={pendingAction}
                 onChangeField={changeField}
@@ -234,7 +230,6 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         <Route>
           <ConnectorInstallation
             connector={connector}
-            multipleConnections={multipleConnections}
             connections={connections}
             hasSettings={(connection) => settings[connection.id] && settings[connection.id].length > 0}
             pendingAction={pendingAction}
