@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {
-  ConnectionOnly,
+  Connection,
   ConnectionStatus,
   connectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
@@ -20,12 +20,12 @@ import ConnectionStatusBadge from './connection-status-badge'
 import PendingAction from './pending_action'
 
 interface ConnectionsTableProps {
-  connections: ConnectionOnly[],
-  hasSettings: (connection: ConnectionOnly) => boolean,
+  connections: Connection[],
+  hasSettings: (connection: Connection) => boolean,
   pendingAction: PendingAction,
-  onSelectSettings: (connection: ConnectionOnly) => void | Promise<void>,
-  onSelectReconnect: (connection: ConnectionOnly) => void | Promise<void>
-  onSelectRemove: (connection: ConnectionOnly) => void | Promise<void>
+  onSelectSettings: (connection: Connection) => void | Promise<void>,
+  onSelectReconnect: (connection: Connection) => void | Promise<void>
+  onSelectRemove: (connection: Connection) => void | Promise<void>
 }
 
 const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
@@ -38,7 +38,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
 }) => {
   const rows = connections.map(connection => {
     async function selectAndClose(
-      select: (connection: ConnectionOnly) => void | Promise<void>,
+      select: (connection: Connection) => void | Promise<void>,
       close: () => void) {
       await select(connection)
       close()

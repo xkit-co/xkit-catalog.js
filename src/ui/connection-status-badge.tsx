@@ -14,15 +14,15 @@ import {
 } from '@xkit-co/xkit.js/lib/api/connection'
 
 interface ConnectionStatusBadgeProps {
-  connections?: (ConnectionOnly | ConnectionShell)[],
-  useTooltip?: boolean
+  connections: (ConnectionOnly | ConnectionShell)[],
+  useTooltip: boolean
 }
 
 const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connections, useTooltip }) => {
   let total = 0
   let hasDisconnected = false
 
-  for (let connection of (connections || [])) {
+  for (let connection of connections) {
     const status = connectionStatus(connection)
     if (status !== ConnectionStatus.NotInstalled) total += 1
     if (status === ConnectionStatus.Error) hasDisconnected = true

@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
+import { Connection, ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
 import withXkit, { XkitConsumer } from './with-xkit'
 import { toaster } from './toaster'
 import {
@@ -57,8 +57,8 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     setIsLoading(true)
     try {
       const connector = await xkit.getConnector(slug)
-      const connections = (connector.connections || []).map(connectionOnly => {
-        return {...connectionOnly, connector: connector}
+      const connections = (connector.connections || []).map((connection: ConnectionOnly): Connection => {
+        return {...connection, connector: connector}
       })
       setConnector(connector)
       setConnections(connections)

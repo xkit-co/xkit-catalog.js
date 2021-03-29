@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
-  ConnectionOnly,
+  Connection,
   ConnectionStatus,
   connectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
@@ -24,7 +24,7 @@ import PendingAction from './pending_action'
 
 interface InstallationHeaderProps {
   connector: Connector,
-  connections: ConnectionOnly[],
+  connections: Connection[],
   showBadge: boolean
 }
 
@@ -43,13 +43,13 @@ const InstallationHeader: React.FC<InstallationHeaderProps> = ({ connector, conn
 interface ConnectorInstallationProps {
   connector: Connector,
   multipleConnections: boolean,
-  connections: ConnectionOnly[],
-  hasSettings: (connection: ConnectionOnly) => boolean,
+  connections: Connection[],
+  hasSettings: (connection: Connection) => boolean,
   pendingAction: PendingAction,
   onClickAddConnection: () => void | Promise<void>
-  onClickSettings: (connection: ConnectionOnly) => void | Promise<void>
-  onClickReconnect: (connection: ConnectionOnly) => void | Promise<void>
-  onClickRemoveConnection: (connection: ConnectionOnly) => void | Promise<void>
+  onClickSettings: (connection: Connection) => void | Promise<void>
+  onClickReconnect: (connection: Connection) => void | Promise<void>
+  onClickRemoveConnection: (connection: Connection) => void | Promise<void>
 }
 
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
