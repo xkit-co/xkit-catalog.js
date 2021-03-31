@@ -6,6 +6,7 @@ import SettingsForm, { SettingsField } from './settings-form'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import { isPending, ActionType, PendingAction } from './pending_action'
+import connectionName from './connection_name'
 
 interface SettingsHeaderProps {
   connector: Connector,
@@ -17,7 +18,7 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({
   connection
 }) => {
   const subtitle = connector.supports_multiple_connections
-    ? `Configure settings for ${connection.authorization?.display_label || connection.id}`
+    ? `Configure settings for ${connectionName(connection)}`
     : `Configure settings for ${connector.name}`
 
   return (

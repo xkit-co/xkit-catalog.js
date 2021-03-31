@@ -18,6 +18,7 @@ import {
 } from '@treygriffith/evergreen-ui'
 import ConnectionStatusBadge from './connection-status-badge'
 import { isPending, ActionType, PendingAction } from './pending_action'
+import connectionName from './connection_name'
 
 interface ConnectionsTableProps {
   connections: Connection[],
@@ -47,7 +48,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
     return (
       <Table.Row key={connection.id}>
         <Table.TextCell>
-          {connection.authorization?.display_label || connection.id}
+          {connectionName(connection)}
         </Table.TextCell>
         <Table.Cell width={128} flex="none">
           <ConnectionStatusBadge useTooltip={true} connections={[connection]} />
