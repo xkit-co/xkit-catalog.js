@@ -20,7 +20,7 @@ import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import ConnectionsTable from './connections-table'
 import Tab from './tab'
-import PendingAction from './pending_action'
+import { isPending, ActionType, PendingAction } from './pending_action'
 
 interface InstallationHeaderProps {
   connector: Connector,
@@ -71,7 +71,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
         <Pane marginBottom={majorScale(3)}>
           <ConnectionAuthAlert
             connector={connector}
-            isLoading={pendingAction === PendingAction.Reconnect}
+            isLoading={isPending(pendingAction, ActionType.Reconnect, connections[0])}
             onClickReconnect={() => onClickReconnect(connections[0])}
           />
         </Pane>
@@ -89,7 +89,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <ConnectorActionButton
               iconBefore={AddIcon}
               appearance="primary"
-              isLoading={pendingAction === PendingAction.Install}
+              isLoading={isPending(pendingAction, ActionType.Install)}
               onClick={onClickAddConnection}
             >
               Install
@@ -99,7 +99,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           {multipleConnections && connections.length > 0 &&
             <ConnectorActionButton
               iconBefore={AddIcon}
-              isLoading={pendingAction === PendingAction.Install}
+              isLoading={isPending(pendingAction, ActionType.Install)}
               onClick={onClickAddConnection}
             >
               Add Connection
@@ -110,7 +110,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <>
               <ConnectorActionButton
                 iconBefore={TrashIcon}
-                isLoading={pendingAction === PendingAction.Remove}
+                isLoading={isPending(pendingAction, ActionType.Remove, connections[0])}
                 onClick={() => onClickRemoveConnection(connections[0])}
               >
                 Remove

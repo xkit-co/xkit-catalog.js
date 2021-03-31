@@ -17,7 +17,7 @@ import {
   TrashIcon
 } from '@treygriffith/evergreen-ui'
 import ConnectionStatusBadge from './connection-status-badge'
-import PendingAction from './pending_action'
+import { isPending, ActionType, PendingAction } from './pending_action'
 
 interface ConnectionsTableProps {
   connections: Connection[],
@@ -66,14 +66,14 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
                 }
                 {connectionStatus(connection) === ConnectionStatus.Error &&
                   <Menu.Item
-                    icon={pendingAction === PendingAction.Reconnect ? <Spinner /> : RefreshIcon}
+                    icon={isPending(pendingAction, ActionType.Reconnect, connection) ? <Spinner /> : RefreshIcon}
                     onSelect={() => selectAndClose(onSelectReconnect, close)}
                   >
                     Reconnect...
                   </Menu.Item>
                 }
                 <Menu.Item
-                  icon={pendingAction === PendingAction.Remove ? <Spinner /> : TrashIcon}
+                  icon={isPending(pendingAction, ActionType.Remove, connection) ? <Spinner /> : TrashIcon}
                   onSelect={() => selectAndClose(onSelectRemove, close)} intent="danger"
                 >
                   Remove...

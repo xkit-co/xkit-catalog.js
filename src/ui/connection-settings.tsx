@@ -5,7 +5,7 @@ import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 import SettingsForm, { SettingsField } from './settings-form'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
-import PendingAction from './pending_action'
+import { isPending, ActionType, PendingAction } from './pending_action'
 
 interface SettingsHeaderProps {
   connector: Connector,
@@ -56,7 +56,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
           </ConnectorActionButton>
           <ConnectorActionButton
             appearance="primary"
-            isLoading={pendingAction === PendingAction.Settings}
+            isLoading={isPending(pendingAction, ActionType.Settings, connection)}
             onClick={onClickSave}
           >
             Save

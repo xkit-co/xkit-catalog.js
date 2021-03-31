@@ -24,7 +24,7 @@ import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
-import PendingAction from './pending_action'
+import { ActionType, PendingAction } from './pending_action'
 
 interface ConnectorDetailsProps {
   path: string,
@@ -46,7 +46,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   const xkit = useXkit()
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(true)
-  const [pendingAction, setPendingAction] = useState(PendingAction.None)
+  const [pendingAction, setPendingAction] = useState<PendingAction>({ type: ActionType.None })
   const [connector, setConnector] = useState<Connector>(null)
   const [connections, setConnections] = useState<Connection[]>([])
   const [settings, setSettings] = useState<Settings>({})
@@ -57,7 +57,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     try {
       const connector = await xkit.getConnector(slug)
       const connections = (connector.connections || []).map((connection: ConnectionOnly): Connection => {
-        return {...connection, connector: connector}
+        return { ...connection, connector: connector }
       })
       setConnector(connector)
       setConnections(connections)
@@ -96,7 +96,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
 
   async function addConnection() {
     try {
-      setPendingAction(PendingAction.Install)
+      setPendingAction({ type: ActionType.Install })
       const connection = await xkit.addConnection(connector)
       const fields = await loadFields(connection)
       setConnections([...connections, connection])
@@ -107,13 +107,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     } catch (e) {
       toaster.danger(friendlyMessage(e.message))
     } finally {
-      setPendingAction(PendingAction.None)
+      setPendingAction({ type: ActionType.None })
     }
   }
 
   async function removeConnection(connection: Connection) {
     try {
-      setPendingAction(PendingAction.Remove)
+      setPendingAction({ type: ActionType.Remove, connectionId: connection.id })
       await xkit.removeConnection({ id: connection.id })
       const updatedConnections = connections.filter(conn => conn.id !== connection.id)
       const { [connection.id]: fields, ...updatedSettings } = settings
@@ -123,13 +123,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     } catch (e) {
       toaster.danger(friendlyMessage(e.message))
     } finally {
-      setPendingAction(PendingAction.None)
+      setPendingAction({ type: ActionType.None })
     }
   }
 
   async function reconnect(connection: Connection) {
     try {
-      setPendingAction(PendingAction.Reconnect)
+      setPendingAction({ type: ActionType.Reconnect, connectionId: connection.id })
       const newConnection = await xkit.reconnect(connection)
       const fields = await loadFields(newConnection)
 
@@ -144,7 +144,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     } catch (e) {
       toaster.danger(friendlyMessage(e.message))
     } finally {
-      setPendingAction(PendingAction.None)
+      setPendingAction({ type: ActionType.None })
     }
   }
 
@@ -163,7 +163,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
 
   async function saveSettings(connection: Connection) {
     try {
-      setPendingAction(PendingAction.Settings)
+      setPendingAction({ type: ActionType.Settings })
       const updatedFields = await settingsUpdate(connection, fieldsChangeset)
       setFieldsChangeset(updatedFields)
       const hasValidationErrors = updatedFields.some(field => Boolean(field.validationMessage))
@@ -175,7 +175,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     } catch (e) {
       toaster.danger(`Error while saving settings: ${e.message}`)
     } finally {
-      setPendingAction(PendingAction.None)
+      setPendingAction({ type: ActionType.None })
     }
   }
 
