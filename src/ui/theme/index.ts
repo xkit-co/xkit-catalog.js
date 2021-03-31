@@ -9,6 +9,7 @@ import {
   CatalogTheme
 } from './catalog-theme'
 import customizeButtons, { CustomButtonsProps } from './buttons'
+import customizeTabs from './tabs'
 import customizeText, { CustomTextProps } from './text'
 import customizeCards, { CustomCardProps } from './cards'
 
@@ -33,6 +34,9 @@ function buildTheme(props: CatalogThemeProps): CatalogTheme {
     theme = customizeButtons(theme, props.buttons)
   }
 
+  // We derive the tab style from the primary button if available.
+  theme = customizeTabs(theme, props.buttons)
+
   return theme
 }
 
@@ -45,4 +49,4 @@ export {
   useTheme,
   ThemeConsumer
 }
- 
+

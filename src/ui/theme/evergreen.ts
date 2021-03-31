@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { StyleAttribute } from 'glamor'
 import {
-  IntentTypes,
-  ButtonAppearance,
   defaultTheme,
   Theme,
   // @ts-ignore
@@ -36,30 +34,47 @@ declare module '@treygriffith/evergreen-ui' {
     getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle,
     getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle,
     getFontFamily: (family: string) => string,
+    getTabClassName: (appearance: DefaultAppearance) => string,
     getTextColor: (color: string) => string
   }
 }
 
-type ButtonProps = Partial<{
-  opacity: number,
-  backgroundImage: string,
+type AppearanceProps = Partial<{
+  background: string,
   backgroundColor: string,
+  backgroundImage: string,
+  borderRadius: number,
+  transition: string,
   boxShadow: string,
+  opacity: number,
   color: string,
+  textShadow: string,
+  outline: string,
+  cursor: string,
   pointerEvents: string
 }>
 
 export type ButtonStateProps = Partial<{
-  disabled: ButtonProps,
-  base: ButtonProps,
-  hover: ButtonProps,
-  focus: ButtonProps,
-  active: ButtonProps,
-  focusAndActive: ButtonProps
+  disabled: AppearanceProps,
+  base: AppearanceProps,
+  hover: AppearanceProps,
+  focus: AppearanceProps,
+  active: AppearanceProps,
+  focusAndActive: AppearanceProps
+}>
+
+export type TabStateProps = Partial<{
+  base: AppearanceProps,
+  hover: AppearanceProps,
+  active: AppearanceProps,
+  focus: AppearanceProps,
+  current: AppearanceProps,
+  disabled: AppearanceProps
 }>
 
 interface ThemerType {
-  createButtonAppearance: (props: ButtonStateProps) => StyleAttribute
+  createButtonAppearance: (props: ButtonStateProps) => StyleAttribute,
+  createTabAppearance: (props: TabStateProps) => StyleAttribute
 }
 
 const Themer = UntypedThemer as ThemerType
