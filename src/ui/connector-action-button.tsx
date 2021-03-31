@@ -4,21 +4,21 @@ import {
   Button,
   minorScale,
 } from '@treygriffith/evergreen-ui'
+import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectorActionButtonProps {
   appearance?: string,
-  isLoading?: boolean,
   iconBefore?: any,
   onClick: () => void | Promise<void>
 }
 
 const ConnectorActionButton: React.FC<ConnectorActionButtonProps> = ({
   appearance,
-  isLoading,
   iconBefore,
   onClick,
   children
 }) => {
+  const [isLoading, handleAction] = useAsyncActionHandler(onClick)
   const appearanceProps = appearance ? { appearance: appearance } : {}
   const loading = isLoading || false
 
@@ -30,7 +30,7 @@ const ConnectorActionButton: React.FC<ConnectorActionButtonProps> = ({
       marginLeft={majorScale(1)}
       height={majorScale(5)}
       isLoading={loading}
-      onClick={onClick}
+      onClick={handleAction}
     >
       {children}
     </Button>

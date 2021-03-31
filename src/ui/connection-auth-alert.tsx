@@ -1,18 +1,19 @@
 import React from 'react'
 import { Alert, Button, RefreshIcon, Text, majorScale } from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectionAuthAlertProps {
   connector: Connector,
-  isLoading: boolean,
   onClickReconnect: () => void | Promise<void>
 }
 
 const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
   connector,
-  isLoading,
   onClickReconnect
 }) => {
+  const [isLoading, handleAction] = useAsyncActionHandler(onClickReconnect)
+
   return (
     <Alert
       intent="warning"
@@ -27,7 +28,7 @@ const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
             iconBefore={isLoading ? null : RefreshIcon}
             isLoading={isLoading}
             height={majorScale(4)}
-            onClick={onClickReconnect}
+            onClick={handleAction}
           >
             Reconnect
           </Button>

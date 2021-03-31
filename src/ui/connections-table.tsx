@@ -17,13 +17,32 @@ import {
   TrashIcon
 } from '@treygriffith/evergreen-ui'
 import ConnectionStatusBadge from './connection-status-badge'
-import { isPending, ActionType, PendingAction } from './pending_action'
 import connectionName from './connection_name'
+import useAsyncActionHandler from './async_action_handler'
+
+interface MenuItemProps {
+  icon?: React.ElementType | JSX.Element | null | false
+  onSelect: () => void | Promise<void>,
+  intent?: string
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({icon, onSelect, intent, children}) => {
+  const [isLoading, handleAction] = useAsyncActionHandler(onSelect)
+
+  return (
+    <Menu.Item
+      icon={isLoading ? <Spinner /> : icon}
+      onSelect={handleAction}
+      intent={intent}
+    >
+      {children}
+    </Menu.Item>
+  )
+}
 
 interface ConnectionsTableProps {
   connections: Connection[],
   hasSettings: (connection: Connection) => boolean,
-  pendingAction: PendingAction,
   onSelectSettings: (connection: Connection) => void | Promise<void>,
   onSelectReconnect: (connection: Connection) => void | Promise<void>
   onSelectRemove: (connection: Connection) => void | Promise<void>
@@ -32,7 +51,6 @@ interface ConnectionsTableProps {
 const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
   connections,
   hasSettings,
-  pendingAction,
   onSelectSettings,
   onSelectReconnect,
   onSelectRemove
@@ -58,27 +76,28 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
             content={({ close }) => (
               <Menu>
                 {hasSettings(connection) &&
-                  <Menu.Item
+                  <MenuItem
                     icon={CogIcon}
                     onSelect={() => selectAndClose(onSelectSettings, close)}
                   >
                     Settings...
-                  </Menu.Item>
+                  </MenuItem>
                 }
                 {connectionStatus(connection) === ConnectionStatus.Error &&
-                  <Menu.Item
-                    icon={isPending(pendingAction, ActionType.Reconnect, connection) ? <Spinner /> : RefreshIcon}
+                  <MenuItem
+                    icon={RefreshIcon}
                     onSelect={() => selectAndClose(onSelectReconnect, close)}
                   >
                     Reconnect...
-                  </Menu.Item>
+                  </MenuItem>
                 }
-                <Menu.Item
-                  icon={isPending(pendingAction, ActionType.Remove, connection) ? <Spinner /> : TrashIcon}
-                  onSelect={() => selectAndClose(onSelectRemove, close)} intent="danger"
+                <MenuItem
+                  icon={TrashIcon}
+                  onSelect={() => selectAndClose(onSelectRemove, close)}
+                  intent="danger"
                 >
                   Remove...
-                </Menu.Item>
+                </MenuItem>
               </Menu>
             )}
             position={Position.BOTTOM_RIGHT}

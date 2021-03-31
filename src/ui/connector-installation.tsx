@@ -20,7 +20,6 @@ import ConnectorDescription from './connector-description'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import ConnectionsTable from './connections-table'
-import { isPending, ActionType, PendingAction } from './pending_action'
 
 interface InstallationHeaderProps {
   connector: Connector,
@@ -44,7 +43,6 @@ interface ConnectorInstallationProps {
   connector: Connector,
   connections: Connection[],
   hasSettings: (connection: Connection) => boolean,
-  pendingAction: PendingAction,
   onClickAddConnection: () => void | Promise<void>
   onClickSettings: (connection: Connection) => void | Promise<void>
   onClickReconnect: (connection: Connection) => void | Promise<void>
@@ -54,7 +52,6 @@ interface ConnectorInstallationProps {
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   connector,
   connections,
-  pendingAction,
   hasSettings,
   onClickAddConnection,
   onClickSettings,
@@ -71,7 +68,6 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
         <Pane marginBottom={majorScale(3)}>
           <ConnectionAuthAlert
             connector={connector}
-            isLoading={isPending(pendingAction, ActionType.Reconnect, connections[0])}
             onClickReconnect={() => onClickReconnect(connections[0])}
           />
         </Pane>
@@ -89,7 +85,6 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <ConnectorActionButton
               iconBefore={AddIcon}
               appearance="primary"
-              isLoading={isPending(pendingAction, ActionType.Install)}
               onClick={onClickAddConnection}
             >
               Install
@@ -99,7 +94,6 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           {multipleConnections && connections.length > 0 &&
             <ConnectorActionButton
               iconBefore={AddIcon}
-              isLoading={isPending(pendingAction, ActionType.Install)}
               onClick={onClickAddConnection}
             >
               Add Connection
@@ -110,7 +104,6 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <>
               <ConnectorActionButton
                 iconBefore={TrashIcon}
-                isLoading={isPending(pendingAction, ActionType.Remove, connections[0])}
                 onClick={() => onClickRemoveConnection(connections[0])}
               >
                 Remove
@@ -152,7 +145,6 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           <ConnectionsTable
             connections={connections}
             hasSettings={hasSettings}
-            pendingAction={pendingAction}
             onSelectSettings={onClickSettings}
             onSelectReconnect={onClickReconnect}
             onSelectRemove={onClickRemoveConnection}
