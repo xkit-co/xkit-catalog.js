@@ -5,14 +5,14 @@ import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectionAuthAlertProps {
   connector: Connector,
-  onClickReconnect: () => void | Promise<void>
+  onReconnect: () => void | Promise<void>
 }
 
 const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
   connector,
-  onClickReconnect
+  onReconnect
 }) => {
-  const [isLoading, handleAction] = useAsyncActionHandler(onClickReconnect)
+  const [isLoading, handleAction] = useAsyncActionHandler(onReconnect)
 
   return (
     <Alert

@@ -30,8 +30,8 @@ interface ConnectionSettingsProps {
   connection: Connection,
   fields: SettingsField[],
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void,
-  onClickSave: () => void | Promise<void>
-  onClickCancel: () => void | Promise<void>
+  onSave: () => void | Promise<void>
+  onCancel: () => void | Promise<void>
 }
 
 const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
@@ -39,8 +39,8 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
   connection,
   fields,
   onChangeField,
-  onClickSave,
-  onClickCancel
+  onSave,
+  onCancel
 }) => {
   return (
     <Pane>
@@ -49,10 +49,10 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
           <SettingsHeader connector={connector} connection={connection} />
         </Pane>
         <Pane>
-          <ConnectorActionButton onClick={onClickCancel}>
+          <ConnectorActionButton onClick={onCancel}>
             Cancel
           </ConnectorActionButton>
-          <ConnectorActionButton appearance="primary" onClick={onClickSave}>
+          <ConnectorActionButton appearance="primary" onClick={onSave}>
             Save
           </ConnectorActionButton>
         </Pane>

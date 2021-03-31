@@ -43,20 +43,20 @@ interface ConnectorInstallationProps {
   connector: Connector,
   connections: Connection[],
   hasSettings: (connection: Connection) => boolean,
-  onClickAddConnection: () => void | Promise<void>
-  onClickSettings: (connection: Connection) => void | Promise<void>
-  onClickReconnect: (connection: Connection) => void | Promise<void>
-  onClickRemoveConnection: (connection: Connection) => void | Promise<void>
+  onAddConnection: () => void | Promise<void>
+  onOpenSettings: (connection: Connection) => void | Promise<void>
+  onReconnect: (connection: Connection) => void | Promise<void>
+  onRemoveConnection: (connection: Connection) => void | Promise<void>
 }
 
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   connector,
   connections,
   hasSettings,
-  onClickAddConnection,
-  onClickSettings,
-  onClickReconnect,
-  onClickRemoveConnection
+  onAddConnection,
+  onOpenSettings,
+  onReconnect,
+  onRemoveConnection
 }) => {
   const [currentTab, setCurrentTab] = useState('connections')
   const multipleConnections = connector.supports_multiple_connections || connections.length > 1
@@ -68,7 +68,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
         <Pane marginBottom={majorScale(3)}>
           <ConnectionAuthAlert
             connector={connector}
-            onClickReconnect={() => onClickReconnect(connections[0])}
+            onReconnect={() => onReconnect(connections[0])}
           />
         </Pane>
       }
@@ -85,7 +85,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <ConnectorActionButton
               iconBefore={AddIcon}
               appearance="primary"
-              onClick={onClickAddConnection}
+              onClick={onAddConnection}
             >
               Install
             </ConnectorActionButton>
@@ -94,7 +94,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           {multipleConnections && connections.length > 0 &&
             <ConnectorActionButton
               iconBefore={AddIcon}
-              onClick={onClickAddConnection}
+              onClick={onAddConnection}
             >
               Add Connection
             </ConnectorActionButton>
@@ -104,14 +104,14 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             <>
               <ConnectorActionButton
                 iconBefore={TrashIcon}
-                onClick={() => onClickRemoveConnection(connections[0])}
+                onClick={() => onRemoveConnection(connections[0])}
               >
                 Remove
               </ConnectorActionButton>
               {hasSettings(connections[0]) &&
                 <ConnectorActionButton
                   iconBefore={CogIcon}
-                  onClick={() => onClickSettings(connections[0])}
+                  onClick={() => onOpenSettings(connections[0])}
                 >
                   Configure
                 </ConnectorActionButton>
@@ -145,9 +145,9 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           <ConnectionsTable
             connections={connections}
             hasSettings={hasSettings}
-            onSelectSettings={onClickSettings}
-            onSelectReconnect={onClickReconnect}
-            onSelectRemove={onClickRemoveConnection}
+            onSelectSettings={onOpenSettings}
+            onSelectReconnect={onReconnect}
+            onSelectRemove={onRemoveConnection}
           />
         </Pane>
         <Pane display={computedTab === 'about' ? 'block' : 'none'}>

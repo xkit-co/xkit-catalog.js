@@ -206,8 +206,8 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
                 connection={connection}
                 fields={fieldsChangeset}
                 onChangeField={changeField}
-                onClickSave={() => saveSettings(connection)}
-                onClickCancel={closeSettings}
+                onSave={() => saveSettings(connection)}
+                onCancel={closeSettings}
               />
             )
           }}
@@ -217,10 +217,10 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
             connector={connector}
             connections={connections}
             hasSettings={(connection) => settings[connection.id] && settings[connection.id].length > 0}
-            onClickAddConnection={addConnection}
-            onClickSettings={openSettings}
-            onClickReconnect={reconnect}
-            onClickRemoveConnection={removeConnection}
+            onAddConnection={addConnection}
+            onOpenSettings={openSettings}
+            onReconnect={reconnect}
+            onRemoveConnection={removeConnection}
           />
         </Route>
       </Switch>
