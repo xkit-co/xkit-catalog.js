@@ -98,8 +98,9 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       const fields = await loadFields(connection)
       setConnections([...connections, connection])
       setSettings({ ...settings, [connection.id]: fields })
-      setFieldsChangeset(fields)
-      history.push(`${url}/settings/${connection.id}`)
+      if (fields && fields.length) {
+        openSettings(connection, fields)
+      }
       toaster.success(`Installed ${connector.name}`)
     } catch (e) {
       toaster.danger(friendlyMessage(e.message))
@@ -130,15 +131,17 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       const updatedSettings = { ...settings, [connection.id]: fields }
       setConnections(updatedConnections)
       setSettings(updatedSettings)
-      history.push(`${url}/settings/${connection.id}`)
+      if (fields && fields.length) {
+        openSettings(newConnection, fields)
+      }
       toaster.success(`Reconnected to ${connector.name}`)
     } catch (e) {
       toaster.danger(friendlyMessage(e.message))
     }
   }
 
-  function openSettings(connection: Connection) {
-    setFieldsChangeset(settings[connection.id])
+  function openSettings(connection: Connection, fields?: SettingsField[]) {
+    setFieldsChangeset(fields ? fields : settings[connection.id])
     history.push(`${url}/settings/${connection.id}`)
   }
 
@@ -157,8 +160,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       const hasValidationErrors = updatedFields.some(field => Boolean(field.validationMessage))
       if (!hasValidationErrors) {
         setSettings({ ...settings, [connection.id]: updatedFields })
-        history.push(url)
-        setFieldsChangeset(null)
+        closeSettings()
       }
     } catch (e) {
       toaster.danger(`Error while saving settings: ${e.message}`)
