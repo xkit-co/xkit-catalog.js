@@ -4,14 +4,13 @@ import {
   defaultCatalogTheme,
   CatalogTheme
 } from './catalog-theme'
-import {
-  Themer,
-  ButtonStateProps
-} from './evergreen'
+import { Themer } from './evergreen'
 import {
   IntentTypes,
   ButtonAppearance
 } from '@treygriffith/evergreen-ui'
+import getLinearGradient from './get-linear-gradient'
+import defaultControlStyles from './default-control-styles'
 
 interface Gradient {
   start: string,
@@ -20,7 +19,7 @@ interface Gradient {
 
 type Background = string | Gradient
 
-function isGradient (bg: Background): bg is Gradient {
+function isGradient(bg: Background): bg is Gradient {
   if (!bg) return false
   if (typeof bg === 'string') return false
   return true
@@ -32,10 +31,6 @@ interface HasBackground {
 
 interface HasTextColor {
   textColor: string
-}
-
-function getLinearGradient(top: string, bottom: string): string {
-  return `linear-gradient(to bottom, ${top}, ${bottom})`
 }
 
 interface LinearGradientState {
@@ -65,7 +60,7 @@ function getLinearGradientStates(start: string, end: string): LinearGradientStat
   }
 }
 
-function getStartColor (background: Background): string {
+function getStartColor(background: Background): string {
   if (isGradient(background)) {
     return background.start
   }
@@ -73,7 +68,7 @@ function getStartColor (background: Background): string {
   return background
 }
 
-function getEndColor (background: Background): string {
+function getEndColor(background: Background): string {
   if (isGradient(background)) {
     return background.end
   }
@@ -81,51 +76,10 @@ function getEndColor (background: Background): string {
   return background
 }
 
-function getBackgroundImage (prop: HasBackground, state: 'base' | 'hover' | 'active'): string {
+function getBackgroundImage(prop: HasBackground, state: 'base' | 'hover' | 'active'): string {
   const background = prop.background
 
   return getLinearGradientStates(getStartColor(background), getEndColor(background))[state]
-}
-
-
-function defaultControlStyles (theme: CatalogTheme): ButtonStateProps {
-  return {
-    disabled: {
-      opacity: 0.8,
-      backgroundImage: 'none',
-      backgroundColor: theme.scales.neutral.N2A,
-      boxShadow: 'none',
-      color: theme.scales.neutral.N7A,
-      pointerEvents: 'none'
-    },
-    base: {
-      backgroundColor: 'white',
-      backgroundImage: getLinearGradient('#FFFFFF', '#F4F5F7'),
-      boxShadow: `inset 0 0 0 1px ${theme.scales.neutral.N4A}, inset 0 -1px 1px 0 ${
-        theme.scales.neutral.N2A
-      }`
-    },
-    hover: {
-      backgroundImage: getLinearGradient('#FAFBFB', '#EAECEE')
-    },
-    focus: {
-      boxShadow: `0 0 0 3px ${theme.scales.blue.B4A}, inset 0 0 0 1px ${
-        theme.scales.neutral.N5A
-      }, inset 0 -1px 1px 0 ${theme.scales.neutral.N4A}`
-    },
-    active: {
-      backgroundImage: 'none',
-      backgroundColor: theme.scales.blue.B3A,
-      boxShadow: `inset 0 0 0 1px ${theme.scales.neutral.N4A}, inset 0 1px 1px 0 ${
-        theme.scales.neutral.N2A
-      }`
-    },
-    focusAndActive: {
-      boxShadow: `0 0 0 3px ${theme.scales.blue.B4A}, inset 0 0 0 1px ${
-        theme.scales.neutral.N5A
-      }, inset 0 1px 1px 0 ${theme.scales.neutral.N2A}`
-    }
-  }
 }
 
 export type CustomButtonsProps = Partial<{
@@ -135,10 +89,10 @@ export type CustomButtonsProps = Partial<{
   minimal: HasBackground & HasTextColor
 }>
 
-export default function customizeButtons (theme: CatalogTheme, props: CustomButtonsProps): CatalogTheme {
+export default function customizeButtons(theme: CatalogTheme, props: CustomButtonsProps): CatalogTheme {
   return {
     ...theme,
-    getButtonClassName (appearance: ButtonAppearance, intent: IntentTypes): string {
+    getButtonClassName(appearance: ButtonAppearance, intent: IntentTypes): string {
       const buttonProps = props[appearance]
 
       if (!buttonProps || (intent && intent !== 'none')) {
@@ -162,9 +116,8 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
         },
         focus: {
           ...defaults.focus,
-          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${
-            this.scales.neutral.N4A
-          }, inset 0 -1px 1px 0 ${this.scales.neutral.N5A}`
+          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A
+            }, inset 0 -1px 1px 0 ${this.scales.neutral.N5A}`
         },
         active: {
           ...defaults.active,
@@ -172,9 +125,8 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
         },
         focusAndActive: {
           ...defaults.focusAndActive,
-          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${
-            this.scales.neutral.N4A
-          }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
+          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A
+            }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
         }
       })).toString()
     }

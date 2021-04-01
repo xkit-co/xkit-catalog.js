@@ -2,10 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { logger } from '../util'
 import AppWrapper from './app-wrapper'
-import {
-  Pane,
-  majorScale
-} from '@treygriffith/evergreen-ui'
+import { Pane } from '@treygriffith/evergreen-ui'
 import {
   Route,
   Router
@@ -19,13 +16,13 @@ import {
 import { CatalogFilter } from './catalog'
 import { CatalogThemeProps } from './theme'
 import Home from './home'
+import { SettingsField } from './settings-form'
 import { XkitJs } from '@xkit-co/xkit.js'
-import { SettingsUpdate } from './connector-detail-route'
-import { SettingsField } from './settings'
+import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
-export function isRouterType (type: string | undefined): type is routerType {
+export function isRouterType(type: string | undefined): type is routerType {
   return ['memory', 'hash', 'browser'].includes(type)
 }
 
@@ -40,6 +37,8 @@ export function createHistory(type: routerType, basename: string): History {
 
   return createBrowserHistory({ basename })
 }
+
+export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 export interface AppOptions {
   hideTitle?: boolean,
@@ -73,14 +72,14 @@ class App extends React.Component<AppProps, AppState> {
     settings: (): SettingsField[] => []
   }
 
-  createHistory (): History {
+  createHistory(): History {
     if (this.props.history) {
       return this.props.history
     }
     return createHistory(this.props.routerType, this.props.rootPath)
   }
 
-  constructor (props: AppProps) {
+  constructor(props: AppProps) {
     super(props)
     this.state = {
       history: this.createHistory()
@@ -95,7 +94,7 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
-  renderApp () {
+  renderApp() {
     const {
       title,
       hideTitle,
@@ -125,7 +124,7 @@ class App extends React.Component<AppProps, AppState> {
     )
   }
 
-  render () {
+  render() {
     const {
       routerType,
       rootPath,

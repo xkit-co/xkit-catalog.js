@@ -9,13 +9,15 @@ import {
   CatalogTheme
 } from './catalog-theme'
 import customizeButtons, { CustomButtonsProps } from './buttons'
+import customizeTabs, { CustomTabProps } from './tabs'
 import customizeText, { CustomTextProps } from './text'
 import customizeCards, { CustomCardProps } from './cards'
 
 type CatalogThemeProps = Partial<{
   text: CustomTextProps,
   buttons: CustomButtonsProps,
-  card: CustomCardProps
+  card: CustomCardProps,
+  tab: CustomTabProps
 }>
 
 function buildTheme(props: CatalogThemeProps): CatalogTheme {
@@ -33,6 +35,9 @@ function buildTheme(props: CatalogThemeProps): CatalogTheme {
     theme = customizeButtons(theme, props.buttons)
   }
 
+  // Call it always, adds "minimal" appearance.
+  theme = customizeTabs(theme, props.tab)
+
   return theme
 }
 
@@ -45,4 +50,4 @@ export {
   useTheme,
   ThemeConsumer
 }
- 
+

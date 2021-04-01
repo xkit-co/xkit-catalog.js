@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
 
 const XkitContext = React.createContext<XkitJs | null>(null)
@@ -68,7 +67,12 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
   }
 }
 
+function useXkit (): XkitJs {
+  return React.useContext(XkitContext)
+}
+
 export {
   SubscribedProvider as Provider,
-  Consumer
+  Consumer,
+  useXkit
 }

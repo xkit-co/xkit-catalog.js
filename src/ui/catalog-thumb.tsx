@@ -1,16 +1,14 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Card,
   Heading,
-  Button,
   Paragraph,
   Pane,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Link } from 'react-router-dom'
-import ConnectionStatus from './connection-status'
+import ConnectionStatusBadge from './connection-status-badge'
 import ConnectorMark from './connector-mark'
 import { ThemeConsumer, withTheme } from './theme'
 
@@ -28,7 +26,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
         slug,
         short_description,
         mark_url,
-        connection
+        connections
       },
       theme
     } = this.props
@@ -54,7 +52,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           <Pane flexGrow={1}>
             <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
           </Pane>
-          <ConnectionStatus useTooltip={true} connection={connection} />
+          <ConnectionStatusBadge useTooltip={true} connections={connections || []} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>
