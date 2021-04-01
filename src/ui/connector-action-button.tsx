@@ -18,7 +18,7 @@ const ConnectorActionButton: React.FC<ConnectorActionButtonProps> = ({
   onClick,
   children
 }) => {
-  const [isLoading, handleAction] = useAsyncActionHandler(onClick)
+  const [isLoading, handleClick] = useAsyncActionHandler(onClick)
   const appearanceProps = appearance ? { appearance: appearance } : {}
   const loading = isLoading || false
 
@@ -30,7 +30,7 @@ const ConnectorActionButton: React.FC<ConnectorActionButtonProps> = ({
       marginLeft={majorScale(1)}
       height={majorScale(5)}
       isLoading={loading}
-      onClick={handleAction}
+      onClick={handleClick}
     >
       {children}
     </Button>

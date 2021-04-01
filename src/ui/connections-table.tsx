@@ -27,12 +27,12 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({icon, onSelect, intent, children}) => {
-  const [isLoading, handleAction] = useAsyncActionHandler(onSelect)
+  const [isLoading, handleSelect] = useAsyncActionHandler(onSelect)
 
   return (
     <Menu.Item
       icon={isLoading ? <Spinner /> : icon}
-      onSelect={handleAction}
+      onSelect={handleSelect}
       intent={intent}
     >
       {children}

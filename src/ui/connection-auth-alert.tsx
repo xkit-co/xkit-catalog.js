@@ -12,7 +12,7 @@ const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
   connector,
   onReconnect
 }) => {
-  const [isLoading, handleAction] = useAsyncActionHandler(onReconnect)
+  const [isReconnecting, handleReconnect] = useAsyncActionHandler(onReconnect)
 
   return (
     <Alert
@@ -25,10 +25,10 @@ const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
           <Button
             float="right"
             appearance="primary"
-            iconBefore={isLoading ? null : RefreshIcon}
-            isLoading={isLoading}
+            iconBefore={isReconnecting ? null : RefreshIcon}
+            isLoading={isReconnecting}
             height={majorScale(4)}
-            onClick={handleAction}
+            onClick={handleReconnect}
           >
             Reconnect
           </Button>
