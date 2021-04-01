@@ -34,8 +34,7 @@ function buildTheme(props: CatalogThemeProps): CatalogTheme {
     theme = customizeButtons(theme, props.buttons)
   }
 
-  // We derive the tab style from the primary button if available.
-  theme = customizeTabs(theme, props.buttons)
+  theme = customizeTabs(theme)
 
   return theme
 }

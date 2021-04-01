@@ -25,6 +25,8 @@ declare module '@treygriffith/evergreen-ui' {
     textTransform: string
   }>
 
+  type TabAppearance = DefaultAppearance | 'minimal'
+
   interface Theme {
     getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string,
     getBackground: (background: string) => string,
@@ -34,7 +36,7 @@ declare module '@treygriffith/evergreen-ui' {
     getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle,
     getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle,
     getFontFamily: (family: string) => string,
-    getTabClassName: (appearance: DefaultAppearance) => string,
+    getTabClassName: (appearance: TabAppearance) => string,
     getTextColor: (color: string) => string
   }
 }

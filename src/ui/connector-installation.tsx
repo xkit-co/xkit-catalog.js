@@ -10,7 +10,6 @@ import {
   Pane,
   TrashIcon,
   CogIcon,
-  Tab,
   Tablist,
   majorScale
 } from '@treygriffith/evergreen-ui'
@@ -20,6 +19,7 @@ import ConnectorDescription from './connector-description'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import ConnectionsTable from './connections-table'
+import Tab from './tab'
 
 interface InstallationHeaderProps {
   connector: Connector,
