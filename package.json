@@ -17,7 +17,9 @@
     "prepublishOnly": "rm -rf lib && tsc --outDir lib --declaration && npm run compile-css && npm run copy-images",
     "compile-css": "bin/css-to-js src/ lib/",
     "copy-images": "parcel build --no-cache src/ui/images/index.ts --out-dir lib/ui/images --no-source-maps && rm lib/ui/images/report.html",
-    "repo": "echo $npm_package_repository_url"
+    "repo": "echo $npm_package_repository_url",
+    "lint": "npx ts-standard",
+    "lint-fix": "npx ts-standard --fix"
   },
   "author": "Xkit <dev@xkit.co>",
   "license": "MIT",
@@ -36,6 +38,7 @@
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "parcel-plugin-css-to-string": "^2.5.0",
     "parcel-plugin-stdin": "^0.1.1",
+    "ts-standard": "^10.0.0",
     "typescript": "~3.9.5"
   },
   "dependencies": {
