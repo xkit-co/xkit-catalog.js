@@ -3,14 +3,14 @@ import { StyleAttribute } from 'glamor'
 import {
   defaultTheme,
   Theme,
-  // @ts-ignore
+  // @ts-expect-error
   withTheme as untypedWithTheme,
-  // @ts-ignore
+  // @ts-expect-error
   ThemeProvider as UntypedProvider,
-  // @ts-ignore
+  // @ts-expect-error
   useTheme as UntypedUseTheme
 } from '@treygriffith/evergreen-ui'
-// @ts-ignore
+// @ts-expect-error
 import { Themer as UntypedThemer } from '@treygriffith/evergreen-ui/commonjs/themer'
 
 declare module '@treygriffith/evergreen-ui' {
@@ -29,53 +29,53 @@ declare module '@treygriffith/evergreen-ui' {
 
   interface Theme {
     getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string,
-    getBackground: (background: string) => string,
-    getElevation: (elevation: number) => string,
-    getIconColor: (color: string) => string,
-    getHeadingStyle: (size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) => TypographyStyle,
-    getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle,
-    getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle,
-    getFontFamily: (family: string) => string,
-    getTabClassName: (appearance: TabAppearance) => string,
+    getBackground: (background: string) => string
+    getElevation: (elevation: number) => string
+    getIconColor: (color: string) => string
+    getHeadingStyle: (size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) => TypographyStyle
+    getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle
+    getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle
+    getFontFamily: (family: string) => string
+    getTabClassName: (appearance: TabAppearance) => string
     getTextColor: (color: string) => string
   }
 }
 
 type AppearanceProps = Partial<{
-  background: string,
-  backgroundColor: string,
-  backgroundImage: string,
-  borderRadius: number,
-  transition: string,
-  boxShadow: string,
-  opacity: number,
-  color: string,
-  textShadow: string,
-  outline: string,
-  cursor: string,
+  background: string
+  backgroundColor: string
+  backgroundImage: string
+  borderRadius: number
+  transition: string
+  boxShadow: string
+  opacity: number
+  color: string
+  textShadow: string
+  outline: string
+  cursor: string
   pointerEvents: string
 }>
 
 export type ButtonStateProps = Partial<{
-  disabled: AppearanceProps,
-  base: AppearanceProps,
-  hover: AppearanceProps,
-  focus: AppearanceProps,
-  active: AppearanceProps,
+  disabled: AppearanceProps
+  base: AppearanceProps
+  hover: AppearanceProps
+  focus: AppearanceProps
+  active: AppearanceProps
   focusAndActive: AppearanceProps
 }>
 
 export type TabStateProps = Partial<{
-  base: AppearanceProps,
-  hover: AppearanceProps,
-  active: AppearanceProps,
-  focus: AppearanceProps,
-  current: AppearanceProps,
+  base: AppearanceProps
+  hover: AppearanceProps
+  active: AppearanceProps
+  focus: AppearanceProps
+  current: AppearanceProps
   disabled: AppearanceProps
 }>
 
 interface ThemerType {
-  createButtonAppearance: (props: ButtonStateProps) => StyleAttribute,
+  createButtonAppearance: (props: ButtonStateProps) => StyleAttribute
   createTabAppearance: (props: TabStateProps) => StyleAttribute
 }
 

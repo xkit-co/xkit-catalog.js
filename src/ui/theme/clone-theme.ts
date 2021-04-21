@@ -1,6 +1,6 @@
 import { CatalogTheme } from './catalog-theme'
 
-export default function cloneTheme(theme: CatalogTheme): CatalogTheme {
+export default function cloneTheme (theme: CatalogTheme): CatalogTheme {
   return {
     ...theme,
     card: { ...theme.card },
@@ -11,7 +11,7 @@ export default function cloneTheme(theme: CatalogTheme): CatalogTheme {
       icon: { ...theme.colors.icon },
       intent: { ...theme.colors.intent }
     },
-    elevations: [ ...theme.elevations ],
+    elevations: [...theme.elevations],
     fills: {
       solid: {
         neutral: { ...theme.fills.solid.neutral },
@@ -33,7 +33,7 @@ export default function cloneTheme(theme: CatalogTheme): CatalogTheme {
         teal: { ...theme.fills.subtle.teal },
         purple: { ...theme.fills.subtle.purple }
       },
-      options: [ ...theme.fills.options ]
+      options: [...theme.fills.options]
     },
     palette: {
       ...theme.palette,
@@ -50,8 +50,8 @@ export default function cloneTheme(theme: CatalogTheme): CatalogTheme {
       neutral: { ...theme.scales.neutral },
       blue: { ...theme.scales.blue }
     },
-    avatarColors: [ ...theme.avatarColors ],
-    badgeColors: [ ...theme.badgeColors ],
+    avatarColors: [...theme.avatarColors],
+    badgeColors: [...theme.badgeColors],
     typography: {
       headings: { ...theme.typography.headings },
       text: { ...theme.typography.text },

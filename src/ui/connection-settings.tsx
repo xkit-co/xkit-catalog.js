@@ -8,7 +8,7 @@ import ConnectorActionButton from './connector-action-button'
 import connectionName from './connection_name'
 
 interface SettingsHeaderProps {
-  connector: Connector,
+  connector: Connector
   connection: Connection
 }
 
@@ -21,14 +21,14 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({
     : `Configure settings for ${connector.name}`
 
   return (
-    <ConnectorHeader mark_url={connector.mark_url} title="Settings" subtitle={subtitle} />
+    <ConnectorHeader mark_url={connector.mark_url} title='Settings' subtitle={subtitle} />
   )
 }
 
 interface ConnectionSettingsProps {
-  connector: Connector,
-  connection: Connection,
-  fields: SettingsField[],
+  connector: Connector
+  connection: Connection
+  fields: SettingsField[]
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void,
   onSave: () => void | Promise<void>
   onCancel: () => void | Promise<void>
@@ -44,7 +44,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
 }) => {
   return (
     <Pane>
-      <Pane display="flex">
+      <Pane display='flex'>
         <Pane flexGrow={1}>
           <SettingsHeader connector={connector} connection={connection} />
         </Pane>
@@ -52,7 +52,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
           <ConnectorActionButton onClick={onCancel}>
             Cancel
           </ConnectorActionButton>
-          <ConnectorActionButton appearance="primary" onClick={onSave}>
+          <ConnectorActionButton appearance='primary' onClick={onSave}>
             Save
           </ConnectorActionButton>
         </Pane>

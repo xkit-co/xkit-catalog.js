@@ -18,7 +18,7 @@ export type SettingsField = SettingsTextField | SettingsSelectField | SettingsSw
 
 interface SettingsFieldInputProps {
   field: SettingsField
-  onChange: (value: string | string[] | boolean) => void,
+  onChange: (value: string | string[] | boolean) => void
 }
 
 const SettingsFieldInput: React.FC<SettingsFieldInputProps> = ({ field, onChange }) => {
@@ -39,7 +39,7 @@ const SettingsFieldInput: React.FC<SettingsFieldInputProps> = ({ field, onChange
 }
 
 interface SettingsFormProps {
-  fields: SettingsField[],
+  fields: SettingsField[]
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void
 }
 

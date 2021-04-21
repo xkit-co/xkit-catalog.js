@@ -6,7 +6,7 @@ import {
   listenToOpener
 } from './util'
 import { Styled } from './ui/scope-styles'
-import PoweredBy from'./ui/powered-by'
+import PoweredBy from './ui/powered-by'
 import {
   Pane,
   Spinner,
@@ -20,21 +20,21 @@ const renderLoading = (id: string, title: string, removeBranding: boolean, opene
       (
         <Styled>
           <Pane
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            minHeight="100%"
-            width="100%"
-            position="absolute"
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            minHeight='100%'
+            width='100%'
+            position='absolute'
           >
             <Spinner />
-            <Heading marginTop="default">{title ? `Connecting to ${title}` : 'Connecting'}...</Heading>
+            <Heading marginTop='default'>{title ? `Connecting to ${title}` : 'Connecting'}...</Heading>
             <Pane
-              position="absolute"
+              position='absolute'
               bottom={0}
             >
-              <PoweredBy removeBranding={removeBranding} campaign="loading_popup" />
+              <PoweredBy removeBranding={removeBranding} campaign='loading_popup' />
             </Pane>
           </Pane>
         </Styled>
@@ -55,5 +55,5 @@ const renderLoading = (id: string, title: string, removeBranding: boolean, opene
   sendToOpener('authWindow:ready', openerOrigin, validOrigins)
 }
 
-// @ts-ignore
+// @ts-expect-error
 window.renderLoading = renderLoading

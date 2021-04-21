@@ -1,7 +1,7 @@
 import createXkitWithCatalog from './index'
-// @ts-ignore
+// @ts-expect-error
 window.xkit = window.xkit || {}
-// @ts-ignore
+// @ts-expect-error
 window.xkit.init = function (domain: string) {
   Object.assign(this, createXkitWithCatalog(domain))
 }

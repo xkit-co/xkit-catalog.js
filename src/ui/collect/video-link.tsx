@@ -17,7 +17,7 @@ interface VideoLinkProps {
 interface VideoLinkState {
   isOpen: boolean
 }
-              
+
 class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
   constructor (props: VideoLinkProps) {
     super(props)
@@ -39,15 +39,15 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
 
     return (
       <Paragraph
-        color="muted"
+        color='muted'
         marginTop={majorScale(2)}
-        textAlign="center"
+        textAlign='center'
       >
         Having trouble?{' '}
         <Link
           href={videoUrl}
-          target="_blank"
-          onClick={this.handleOpenClick}
+          target='_blank'
+          onClick={this.handleOpenClick} rel='noreferrer'
         >
           Watch a video guide
         </Link>
@@ -59,11 +59,11 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
             paddingLeft: majorScale(5),
             paddingRight: majorScale(5),
             paddingBottom: majorScale(5),
-            backgroundColor: "transparent"
+            backgroundColor: 'transparent'
           }}
-          >
-          <video width="100%" autoPlay={isOpen} muted controls>
-            <source src={videoUrl} type="video/mp4" />
+        >
+          <video width='100%' autoPlay={isOpen} muted controls>
+            <source src={videoUrl} type='video/mp4' />
             Your browser does not support HTML5 video.
           </video>
         </SideSheet>

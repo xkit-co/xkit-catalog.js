@@ -4,13 +4,13 @@ import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 import SwitchField from './switch-field'
 
 export interface SettingsSwitchField {
-  type: 'switch',
-  name: string,
-  label?: string,
-  value?: boolean,
-  description?: string,
-  hint?: string,
-  validationMessage?: string,
+  type: 'switch'
+  name: string
+  label?: string
+  value?: boolean
+  description?: string
+  hint?: string
+  validationMessage?: string
   [key: string]: string | boolean
 }
 
@@ -20,7 +20,7 @@ export function isSettingsSwitchField (field: Record<string, unknown>): field is
 
 interface SettingsSwitchProps {
   field: SettingsSwitchField
-  onChange: (value: boolean) => void,
+  onChange: (value: boolean) => void
 }
 
 const SettingsSwitch: React.FC<SettingsSwitchProps> = ({ onChange, field }) => {
@@ -32,8 +32,8 @@ const SettingsSwitch: React.FC<SettingsSwitchProps> = ({ onChange, field }) => {
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked)}
       isInvalid={Boolean(fieldProps.validationMessage)}
       value={name}
-      checked={value === true ? true : false}
-      label={label ? label : name}
+      checked={value}
+      label={label || name}
     />
   )
 }

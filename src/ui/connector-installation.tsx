@@ -22,8 +22,8 @@ import ConnectionsTable from './connections-table'
 import Tab from './tab'
 
 interface InstallationHeaderProps {
-  connector: Connector,
-  connections: Connection[],
+  connector: Connector
+  connections: Connection[]
   showBadge: boolean
 }
 
@@ -40,9 +40,9 @@ const InstallationHeader: React.FC<InstallationHeaderProps> = ({ connector, conn
 }
 
 interface ConnectorInstallationProps {
-  connector: Connector,
-  connections: Connection[],
-  hasSettings: (connection: Connection) => boolean,
+  connector: Connector
+  connections: Connection[]
+  hasSettings: (connection: Connection) => boolean
   onAddConnection: () => void | Promise<void>
   onOpenSettings: (connection: Connection) => void | Promise<void>
   onReconnect: (connection: Connection) => void | Promise<void>
@@ -70,9 +70,8 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
             connector={connector}
             onReconnect={() => onReconnect(connections[0])}
           />
-        </Pane>
-      }
-      <Pane display="flex">
+        </Pane>}
+      <Pane display='flex'>
         <Pane flexGrow={1}>
           <InstallationHeader
             connector={connector}
@@ -84,12 +83,11 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           {connections.length === 0 &&
             <ConnectorActionButton
               iconBefore={AddIcon}
-              appearance="primary"
+              appearance='primary'
               onClick={onAddConnection}
             >
               Install
-            </ConnectorActionButton>
-          }
+            </ConnectorActionButton>}
 
           {multipleConnections && connections.length > 0 &&
             <ConnectorActionButton
@@ -97,8 +95,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
               onClick={onAddConnection}
             >
               Add Connection
-            </ConnectorActionButton>
-          }
+            </ConnectorActionButton>}
 
           {!multipleConnections && connections.length === 1 &&
             <>
@@ -114,31 +111,28 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
                   onClick={() => onOpenSettings(connections[0])}
                 >
                   Configure
-                </ConnectorActionButton>
-              }
-            </>
-          }
+                </ConnectorActionButton>}
+            </>}
         </Pane>
       </Pane>
 
       {multipleConnections && connections.length > 0 &&
         <Tablist marginBottom={majorScale(2)} marginTop={majorScale(2)}>
           <Tab
-            key="connections"
+            key='connections'
             onSelect={() => setCurrentTab('connections')}
             isSelected={computedTab === 'connections'}
           >
             Connections
           </Tab>
           <Tab
-            key="about"
+            key='about'
             onSelect={() => setCurrentTab('about')}
             isSelected={computedTab === 'about'}
           >
             About
           </Tab>
-        </Tablist>
-      }
+        </Tablist>}
 
       <Pane marginTop={majorScale(2)} marginBottom={majorScale(4)}>
         <Pane display={computedTab === 'connections' ? 'block' : 'none'}>

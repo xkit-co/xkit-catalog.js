@@ -15,17 +15,17 @@ export interface XkitCatalog extends XkitJs {
 }
 
 interface Catalog {
-  el: HTMLElement,
+  el: HTMLElement
   pushHistory: (path: string) => void
 }
 
-function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {}): Catalog {
+function renderCatalog (xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {}): Catalog {
   const history = createHistory(
-                    isRouterType(opts.routerType) ? opts.routerType : undefined,
-                    opts.rootPath
-                  )
+    isRouterType(opts.routerType) ? opts.routerType : undefined,
+    opts.rootPath
+  )
 
-  const { routerType, ...appOpts } = opts  
+  const { routerType, ...appOpts } = opts
 
   ReactDOM.render(
     <App
@@ -44,7 +44,7 @@ function renderCatalog(xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {})
   }
 }
 
-function unmountCatalog(el: HTMLElement): boolean {
+function unmountCatalog (el: HTMLElement): boolean {
   return ReactDOM.unmountComponentAtNode(el)
 }
 

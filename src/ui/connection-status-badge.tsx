@@ -14,7 +14,7 @@ import {
 } from '@xkit-co/xkit.js/lib/api/connection'
 
 interface ConnectionStatusBadgeProps {
-  connections: (ConnectionOnly | ConnectionShell)[],
+  connections: Array<ConnectionOnly | ConnectionShell>
   useTooltip: boolean
 }
 
@@ -22,7 +22,7 @@ const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connectio
   let total = 0
   let hasDisconnected = false
 
-  for (let connection of connections) {
+  for (const connection of connections) {
     const status = connectionStatus(connection)
     if (status !== ConnectionStatus.NotInstalled) total += 1
     if (status === ConnectionStatus.Error) hasDisconnected = true
@@ -54,11 +54,12 @@ const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connectio
     return null
   }
 
-  const badge =
-    <Badge color={badgeColor} display="flex" alignItems="center">
+  const badge = (
+    <Badge color={badgeColor} display='flex' alignItems='center'>
       {hasDisconnected && total > 1 && <WarningSignIcon size={minorScale(3)} style={{ marginRight: '3px' }} />}
       {badgeText}
     </Badge>
+  )
 
   return useTooltip
     ? <Tooltip content={tooltipText} position={Position.TOP}>{badge}</Tooltip>

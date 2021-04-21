@@ -13,7 +13,7 @@ import ConnectorMark from './connector-mark'
 import { ThemeConsumer, withTheme } from './theme'
 
 interface CatalogThumbProps {
-  connector: Connector,
+  connector: Connector
   connectorsPath: string
 }
 
@@ -33,7 +33,7 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
 
     return (
       <Card
-        background="base"
+        background='base'
         elevation={theme.card.elevation}
         hoverElevation={theme.card.hoverElevation}
         borderRadius={theme.card.borderRadius}
@@ -41,18 +41,18 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
         marginBottom={majorScale(3)}
         width={250}
         minHeight={150}
-        display="flex"
-        flexDirection="column"
+        display='flex'
+        flexDirection='column'
         padding={theme.card.padding}
         is={Link}
-        textDecoration="none"
+        textDecoration='none'
         to={`${connectorsPath}/${slug}`}
       >
-        <Pane display="flex">
+        <Pane display='flex'>
           <Pane flexGrow={1}>
             <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
           </Pane>
-          <ConnectionStatusBadge useTooltip={true} connections={connections || []} />
+          <ConnectionStatusBadge useTooltip connections={connections || []} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>

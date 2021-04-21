@@ -13,8 +13,8 @@ const Instructions: React.FC<InstructionProps> = ({ text }) => {
   return (
     <Markdown
       marginBottom={majorScale(3)}
-      copyableCode={true}
-      newWindow={true}
+      copyableCode
+      newWindow
       text={text}
     />
   )

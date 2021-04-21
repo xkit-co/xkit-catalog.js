@@ -13,7 +13,7 @@ import Portal from './portal'
 import { Provider as XkitProvider } from './xkit-context'
 
 interface AppWrapperProps {
-  xkit: XkitJs,
+  xkit: XkitJs
   theme?: CatalogThemeProps
 }
 

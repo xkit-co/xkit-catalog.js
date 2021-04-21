@@ -3,30 +3,30 @@ import {
   Pane,
   majorScale,
   Heading,
-  Text,
+  Text
 } from '@treygriffith/evergreen-ui'
 import ConnectorMark from './connector-mark'
 
 interface ConnectorHeaderProps {
-  mark_url: string,
-  title: string,
+  mark_url: string
+  title: string
   subtitle: string
 }
 
 const ConnectorHeader: React.FC<ConnectorHeaderProps> = ({ mark_url, title, subtitle, children }) => {
   return (
-    <Pane display="flex" alignItems="center">
+    <Pane display='flex' alignItems='center'>
       <ConnectorMark markUrl={mark_url} size={majorScale(6)} />
       <Pane marginLeft={majorScale(2)}>
-        <Pane display="flex">
+        <Pane display='flex'>
           <Heading size={700}>
             {title}
           </Heading>
-          <Pane display="flex" flexDirection="column" justifyContent="center" marginLeft={majorScale(3)}>
+          <Pane display='flex' flexDirection='column' justifyContent='center' marginLeft={majorScale(3)}>
             {children}
           </Pane>
         </Pane>
-        <Text color="muted">{subtitle}</Text>
+        <Text color='muted'>{subtitle}</Text>
       </Pane>
     </Pane>
   )
