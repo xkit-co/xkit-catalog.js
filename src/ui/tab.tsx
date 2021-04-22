@@ -11,7 +11,7 @@ const Tab: React.FC<TabOwnProps> = ({
     <EgTab
       isSelected={isSelected}
       onSelect={onSelect}
-      appearance="minimal"
+      appearance='minimal'
       height={40}
       size={300}
       paddingTop={12}

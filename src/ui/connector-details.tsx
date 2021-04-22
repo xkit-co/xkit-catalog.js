@@ -16,7 +16,7 @@ import {
   Pane,
   Spinner,
   majorScale,
-  BackButton,
+  BackButton
 } from '@treygriffith/evergreen-ui'
 import { friendlyMessage } from './errors'
 import { SettingsUpdate } from './app'
@@ -26,10 +26,10 @@ import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
 
 interface ConnectorDetailsProps {
-  path: string,
-  url: string,
-  slug: string,
-  removeBranding: boolean,
+  path: string
+  url: string
+  slug: string
+  removeBranding: boolean
   settingsUpdate: SettingsUpdate
 }
 
@@ -50,7 +50,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   const [settings, setSettings] = useState<Settings>({})
   const [fieldsChangeset, setFieldsChangeset] = useState<SettingsField[]>(null)
 
-  async function loadData(xkit: XkitJs, slug: string) {
+  async function loadData (xkit: XkitJs, slug: string) {
     setIsLoading(true)
     try {
       const connector = await xkit.getConnector(slug)
@@ -67,7 +67,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function loadSettings(connections: Connection[]) {
+  async function loadSettings (connections: Connection[]) {
     if (!settingsUpdate) return
 
     try {
@@ -82,7 +82,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function loadFields(connection: Connection) {
+  async function loadFields (connection: Connection) {
     if (!settingsUpdate) return
 
     try {
@@ -92,13 +92,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function addConnection() {
+  async function addConnection () {
     try {
       const connection = await xkit.addConnection(connector)
       const fields = await loadFields(connection)
       setConnections([...connections, connection])
       setSettings({ ...settings, [connection.id]: fields })
-      if (fields && fields.length) {
+      if (fields && (fields.length > 0)) {
         openSettings(connection, fields)
       }
       toaster.success(`Installed ${connector.name}`)
@@ -107,7 +107,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function removeConnection(connection: Connection) {
+  async function removeConnection (connection: Connection) {
     try {
       await xkit.removeConnection({ id: connection.id })
       const updatedConnections = connections.filter(conn => conn.id !== connection.id)
@@ -120,7 +120,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function reconnect(connection: Connection) {
+  async function reconnect (connection: Connection) {
     try {
       const newConnection = await xkit.reconnect(connection)
       const fields = await loadFields(newConnection)
@@ -131,7 +131,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       const updatedSettings = { ...settings, [connection.id]: fields }
       setConnections(updatedConnections)
       setSettings(updatedSettings)
-      if (fields && fields.length) {
+      if (fields && (fields.length > 0)) {
         openSettings(newConnection, fields)
       }
       toaster.success(`Reconnected to ${connector.name}`)
@@ -140,12 +140,12 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function openSettings(connection: Connection, fields?: SettingsField[]) {
-    setFieldsChangeset(fields ? fields : settings[connection.id])
+  function openSettings (connection: Connection, fields?: SettingsField[]) {
+    setFieldsChangeset(fields || settings[connection.id])
     history.push(`${url}/settings/${connection.id}`)
   }
 
-  function changeField(fieldName: string, value: string | string[] | boolean) {
+  function changeField (fieldName: string, value: string | string[] | boolean) {
     const changed = fieldsChangeset.map((field: SettingsField) => {
       if (field.name !== fieldName) return field
       return Object.assign({}, field, { value })
@@ -153,7 +153,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     setFieldsChangeset(changed)
   }
 
-  async function saveSettings(connection: Connection) {
+  async function saveSettings (connection: Connection) {
     try {
       const updatedFields = await settingsUpdate(connection, fieldsChangeset)
       setFieldsChangeset(updatedFields)
@@ -167,7 +167,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function closeSettings() {
+  function closeSettings () {
     history.push(url)
     setFieldsChangeset(null)
   }
@@ -178,7 +178,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
 
   if (isLoading) {
     return (
-      <Pane display="flex" alignItems="center" justifyContent="center" height={150}>
+      <Pane display='flex' alignItems='center' justifyContent='center' height={150}>
         <Spinner size={majorScale(6)} />
       </Pane>
     )
@@ -227,15 +227,15 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         </Route>
       </Switch>
 
-      <Pane marginTop={majorScale(3)} display="flex" justifyContent="space-between">
-        <BackButton is={Link} to="/">
+      <Pane marginTop={majorScale(3)} display='flex' justifyContent='space-between'>
+        <BackButton is={Link} to='/'>
           Back to Catalog
         </BackButton>
         <PoweredBy
           margin={0}
-          align="right"
+          align='right'
           removeBranding={removeBranding}
-          campaign="catalog_detail_footer"
+          campaign='catalog_detail_footer'
         />
       </Pane>
     </Pane>

@@ -14,6 +14,5 @@ const renderCollect = function (id: string, opts: AppOptions): void {
   })
 }
 
-// @ts-ignore
+// @ts-expect-error
 window.renderCollect = renderCollect
-

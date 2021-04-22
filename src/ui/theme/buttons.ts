@@ -13,13 +13,13 @@ import getLinearGradient from './get-linear-gradient'
 import defaultControlStyles from './default-control-styles'
 
 interface Gradient {
-  start: string,
+  start: string
   end: string
 }
 
 type Background = string | Gradient
 
-function isGradient(bg: Background): bg is Gradient {
+function isGradient (bg: Background): bg is Gradient {
   if (!bg) return false
   if (typeof bg === 'string') return false
   return true
@@ -34,12 +34,12 @@ interface HasTextColor {
 }
 
 interface LinearGradientState {
-  base: string,
-  hover: string,
+  base: string
+  hover: string
   active: string
 }
 
-function emphasizeLinearGradient(startStr: string, endStr: string, amount: number): string {
+function emphasizeLinearGradient (startStr: string, endStr: string, amount: number): string {
   const start = tinycolor(startStr)
   const end = tinycolor(endStr)
 
@@ -52,7 +52,7 @@ function emphasizeLinearGradient(startStr: string, endStr: string, amount: numbe
   return getLinearGradient(start.lighten(amount).toString(), end.lighten(amount).toString())
 }
 
-function getLinearGradientStates(start: string, end: string): LinearGradientState {
+function getLinearGradientStates (start: string, end: string): LinearGradientState {
   return {
     base: getLinearGradient(start, end),
     hover: emphasizeLinearGradient(start, end, 5),
@@ -60,7 +60,7 @@ function getLinearGradientStates(start: string, end: string): LinearGradientStat
   }
 }
 
-function getStartColor(background: Background): string {
+function getStartColor (background: Background): string {
   if (isGradient(background)) {
     return background.start
   }
@@ -68,7 +68,7 @@ function getStartColor(background: Background): string {
   return background
 }
 
-function getEndColor(background: Background): string {
+function getEndColor (background: Background): string {
   if (isGradient(background)) {
     return background.end
   }
@@ -76,23 +76,23 @@ function getEndColor(background: Background): string {
   return background
 }
 
-function getBackgroundImage(prop: HasBackground, state: 'base' | 'hover' | 'active'): string {
+function getBackgroundImage (prop: HasBackground, state: 'base' | 'hover' | 'active'): string {
   const background = prop.background
 
   return getLinearGradientStates(getStartColor(background), getEndColor(background))[state]
 }
 
 export type CustomButtonsProps = Partial<{
-  primary: HasBackground & HasTextColor,
-  default: HasBackground & HasTextColor,
+  primary: HasBackground & HasTextColor
+  default: HasBackground & HasTextColor
   // Note: we don't use minimal buttons
   minimal: HasBackground & HasTextColor
 }>
 
-export default function customizeButtons(theme: CatalogTheme, props: CustomButtonsProps): CatalogTheme {
+export default function customizeButtons (theme: CatalogTheme, props: CustomButtonsProps): CatalogTheme {
   return {
     ...theme,
-    getButtonClassName(appearance: ButtonAppearance, intent: IntentTypes): string {
+    getButtonClassName (appearance: ButtonAppearance, intent: IntentTypes): string {
       const buttonProps = props[appearance]
 
       if (!buttonProps || (intent && intent !== 'none')) {

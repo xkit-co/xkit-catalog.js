@@ -10,7 +10,6 @@ import {
   useTheme
 } from './theme'
 
-
 type CopyableTextInputProps = TextInputProps & {
   fontFamily?: string
 }
@@ -20,11 +19,11 @@ export const CopyableTextInput: React.FunctionComponent<CopyableTextInputProps> 
 
   return (
     <TextInput
-      width="100%"
+      width='100%'
       readOnly
       value={value}
       onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.target.select()}
-      style={{fontFamily: theme.getFontFamily(fontFamily)}}
+      style={{ fontFamily: theme.getFontFamily(fontFamily) }}
       {...props}
     />
   )
@@ -39,11 +38,11 @@ export const CopyableTextarea: React.FunctionComponent<CopyableTextareaProps> = 
 
   return (
     <Textarea
-      width="100%"
+      width='100%'
       readOnly
       value={value}
       onFocus={(e: React.FocusEvent<HTMLTextAreaElement>) => e.target.select()}
-      style={{fontFamily: theme.getFontFamily(fontFamily)}}
+      style={{ fontFamily: theme.getFontFamily(fontFamily) }}
       {...props}
     />
   )

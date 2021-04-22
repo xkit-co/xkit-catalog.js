@@ -1,5 +1,5 @@
-import { CatalogTheme } from ".";
-import getLinearGradient from "./get-linear-gradient";
+import { CatalogTheme } from '.'
+import getLinearGradient from './get-linear-gradient'
 
 export default function defaultControlStyles (theme: CatalogTheme) {
   return {

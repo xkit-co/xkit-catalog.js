@@ -15,19 +15,19 @@ type CatalogColors = typeof defaultTheme.colors & {
 }
 
 export interface CardProps {
-  padding: number,
-  elevation: 1 | 2 | 3,
-  hoverElevation: 1 | 2 | 3,
+  padding: number
+  elevation: 1 | 2 | 3
+  hoverElevation: 1 | 2 | 3
   borderRadius: number
 }
 
 export interface CatalogTheme extends Omit<Theme, 'palette' | 'colors'> {
-  palette: CatalogPalette,
-  colors: CatalogColors,
+  palette: CatalogPalette
+  colors: CatalogColors
   card: CardProps
 }
 
-function keyAsValue(obj: { [index: string]: string }, keyValue: string): string {
+function keyAsValue (obj: { [index: string]: string }, keyValue: string): string {
   if (obj.hasOwnProperty(keyValue)) {
     return obj[keyValue]
   }

@@ -9,16 +9,16 @@ interface ConnectorDescriptionProps {
 
 const ConnectorDescription: React.FC<ConnectorDescriptionProps> = ({ connector }) => {
   if (!connector.description) {
-    return <Markdown size="large" text={connector.about} />
+    return <Markdown size='large' text={connector.about} />
   }
 
   return (
     <>
-      <Markdown size="large" text={connector.description} />
-      <Heading size={600} marginTop="default">
+      <Markdown size='large' text={connector.description} />
+      <Heading size={600} marginTop='default'>
         About {connector.name}
       </Heading>
-      <Markdown size="medium" text={connector.about} />
+      <Markdown size='medium' text={connector.about} />
     </>
   )
 }

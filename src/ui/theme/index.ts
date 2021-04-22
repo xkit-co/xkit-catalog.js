@@ -14,13 +14,13 @@ import customizeText, { CustomTextProps } from './text'
 import customizeCards, { CustomCardProps } from './cards'
 
 type CatalogThemeProps = Partial<{
-  text: CustomTextProps,
-  buttons: CustomButtonsProps,
-  card: CustomCardProps,
+  text: CustomTextProps
+  buttons: CustomButtonsProps
+  card: CustomCardProps
   tab: CustomTabProps
 }>
 
-function buildTheme(props: CatalogThemeProps): CatalogTheme {
+function buildTheme (props: CatalogThemeProps): CatalogTheme {
   let theme = defaultCatalogTheme
 
   if (props.card) {
@@ -50,4 +50,3 @@ export {
   useTheme,
   ThemeConsumer
 }
-

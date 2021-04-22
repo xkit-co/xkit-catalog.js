@@ -9,7 +9,7 @@ export type CustomTabProps = Partial<{
 }>
 
 // https://github.com/segmentio/evergreen/blob/master/src/theme/src/default-theme/component-specific/getTabClassName.js
-function defaultAppearance(theme: CatalogTheme, color: string) {
+function defaultAppearance (theme: CatalogTheme, color: string) {
   const { disabled } = defaultControlStyles(theme)
   return Themer.createTabAppearance({
     base: {},
@@ -28,7 +28,7 @@ function defaultAppearance(theme: CatalogTheme, color: string) {
   })
 }
 
-function minimalAppearance(theme: CatalogTheme, color: string) {
+function minimalAppearance (theme: CatalogTheme, color: string) {
   const { disabled } = defaultControlStyles(theme)
 
   const appearance = Themer.createTabAppearance({
@@ -60,19 +60,19 @@ function minimalAppearance(theme: CatalogTheme, color: string) {
     },
     // https://github.com/segmentio/evergreen/blob/master/src/themer/src/createTabAppearance.js
     '&[aria-current="page"]::before, &[aria-selected="true"]::before': {
-      transform: 'scaleY(1)',
+      transform: 'scaleY(1)'
     }
   }
 }
 
-export default function customizeTabs(theme: CatalogTheme, props?: CustomTabProps): CatalogTheme {
+export default function customizeTabs (theme: CatalogTheme, props?: CustomTabProps): CatalogTheme {
   const color = props?.textColor || theme.scales.blue.B9
   const defaultTabClassName = css(defaultAppearance(theme, color)).toString()
   const minimalTabClassName = css(minimalAppearance(theme, color)).toString()
 
   return {
     ...theme,
-    getTabClassName(appearance: TabAppearance): string {
+    getTabClassName (appearance: TabAppearance): string {
       return appearance === 'minimal'
         ? minimalTabClassName
         : defaultTabClassName

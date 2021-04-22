@@ -16,15 +16,15 @@ const renderError = (id: string, error: string, openerOrigin: string, validOrigi
       (
         <Styled>
           <Pane
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            minHeight="100%"
-            width="100%"
-            position="absolute"
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            minHeight='100%'
+            width='100%'
+            position='absolute'
           >
-            <Heading marginTop="default">{error}</Heading>
+            <Heading marginTop='default'>{error}</Heading>
           </Pane>
         </Styled>
       ),
@@ -42,5 +42,5 @@ const renderError = (id: string, error: string, openerOrigin: string, validOrigi
   window.close()
 }
 
-// @ts-ignore
+// @ts-expect-error
 window.renderError = renderError

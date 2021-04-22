@@ -16,8 +16,7 @@ type PrefixInputFieldProps = TextInputProps & FormFieldProps & {
 }
 
 class PrefixInputField extends React.Component<PrefixInputFieldProps> {
-  private suffixPane = React.createRef<HTMLDivElement>()
-
+  private readonly suffixPane = React.createRef<HTMLDivElement>()
 
   render () {
     const { suffix, ...restProps } = this.props
@@ -28,16 +27,17 @@ class PrefixInputField extends React.Component<PrefixInputFieldProps> {
 
     return (
       <FormField {...formFieldProps} marginBottom={majorScale(3)}>
-        <Pane position="relative">
-          <TextInput {...inputProps} width="100%" paddingRight={width} />
-          <Pane position="absolute" right={0} top={0} pointerEvents="none">
+        <Pane position='relative'>
+          <TextInput {...inputProps} width='100%' paddingRight={width} />
+          <Pane position='absolute' right={0} top={0} pointerEvents='none'>
             <div ref={this.suffixPane}>
               <Text
-                display="block"
+                display='block'
                 padding={6}
                 paddingRight={majorScale(1)}
-                color="muted"
-              >{suffix}</Text>
+                color='muted'
+              >{suffix}
+              </Text>
             </div>
           </Pane>
         </Pane>

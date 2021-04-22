@@ -22,11 +22,11 @@ import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
-export function isRouterType(type: string | undefined): type is routerType {
+export function isRouterType (type: string | undefined): type is routerType {
   return ['memory', 'hash', 'browser'].includes(type)
 }
 
-export function createHistory(type: routerType, basename: string): History {
+export function createHistory (type: routerType, basename: string): History {
   if (type === 'memory') {
     return createMemoryHistory()
   }
@@ -41,16 +41,16 @@ export function createHistory(type: routerType, basename: string): History {
 export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
 export interface AppOptions {
-  hideTitle?: boolean,
-  hideSearch?: boolean,
-  title?: string,
-  inheritRouter?: boolean,
-  rootPath?: string,
-  routerType?: routerType,
-  history?: History,
-  theme?: CatalogThemeProps,
-  connectorsPath?: string,
-  filter?: CatalogFilter,
+  hideTitle?: boolean
+  hideSearch?: boolean
+  title?: string
+  inheritRouter?: boolean
+  rootPath?: string
+  routerType?: routerType
+  history?: History
+  theme?: CatalogThemeProps
+  connectorsPath?: string
+  filter?: CatalogFilter
   settings?: SettingsUpdate
 }
 
@@ -59,7 +59,7 @@ interface AppProps extends AppOptions {
 }
 
 interface AppState {
-  history: History,
+  history: History
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -72,14 +72,14 @@ class App extends React.Component<AppProps, AppState> {
     settings: (): SettingsField[] => []
   }
 
-  createHistory(): History {
+  createHistory (): History {
     if (this.props.history) {
       return this.props.history
     }
     return createHistory(this.props.routerType, this.props.rootPath)
   }
 
-  constructor(props: AppProps) {
+  constructor (props: AppProps) {
     super(props)
     this.state = {
       history: this.createHistory()
@@ -94,7 +94,7 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
-  renderApp() {
+  renderApp () {
     const {
       title,
       hideTitle,
@@ -108,8 +108,8 @@ class App extends React.Component<AppProps, AppState> {
 
     return (
       <AppWrapper xkit={xkit} theme={theme}>
-        <Route path="/" strict={true}>
-          <Pane margin="auto">
+        <Route path='/' strict>
+          <Pane margin='auto'>
             <Home
               title={title}
               hideTitle={hideTitle}
@@ -124,7 +124,7 @@ class App extends React.Component<AppProps, AppState> {
     )
   }
 
-  render() {
+  render () {
     const {
       routerType,
       rootPath,

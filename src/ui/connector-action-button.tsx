@@ -2,13 +2,13 @@ import * as React from 'react'
 import {
   majorScale,
   Button,
-  minorScale,
+  minorScale
 } from '@treygriffith/evergreen-ui'
 import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectorActionButtonProps {
-  appearance?: string,
-  iconBefore?: any,
+  appearance?: string
+  iconBefore?: any
   onClick: () => void | Promise<void>
 }
 

@@ -21,22 +21,22 @@ class AuthorizationMark extends React.Component<AuthorizationMarkProps> {
 
     return (
       <Pane
-        border="default"
-        borderRadius="100%"
-        borderTopColor="transparent"
-        borderLeftColor="transparent"
+        border='default'
+        borderRadius='100%'
+        borderTopColor='transparent'
+        borderLeftColor='transparent'
         padding={majorScale(2)}
-        background="tint1"
-        position="absolute"
+        background='tint1'
+        position='absolute'
         top={-1 * majorScale(9)}
-        display="flex"
-        justifyContent="center"
-        style={{transform: "rotate(45deg)"}}
+        display='flex'
+        justifyContent='center'
+        style={{ transform: 'rotate(45deg)' }}
       >
         <ConnectorMark
           markUrl={this.props.markUrl}
           size={majorScale(6)}
-          style={{transform: "rotate(-45deg)"}}
+          style={{ transform: 'rotate(-45deg)' }}
         />
       </Pane>
     )
@@ -56,9 +56,9 @@ class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
     return (
       <Pane
         flexGrow={1}
-        display="flex"
-        justifyContent="center"
-        position="relative"
+        display='flex'
+        justifyContent='center'
+        position='relative'
       >
         <AuthorizationMark markUrl={mark_url} />
         <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(4)}>

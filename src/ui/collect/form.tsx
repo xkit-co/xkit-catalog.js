@@ -12,13 +12,13 @@ import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
 
 interface FormProps {
-  authorization: Authorization,
+  authorization: Authorization
   onComplete: (authorization: Authorization) => void
 }
 
 interface FormState {
-  saving: boolean,
-  values: { [name: string]: string | null },
+  saving: boolean
+  values: { [name: string]: string | null }
   validationMessages: { [name: string]: string | null }
 }
 
@@ -63,7 +63,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       if (value) {
         validationMessages[field.name] = null
       } else {
-        validationMessages[field.name] = "cannot be blank"
+        validationMessages[field.name] = 'cannot be blank'
         validationSuccess = false
       }
     })
@@ -100,7 +100,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       } = authorization
 
       if (!state || !collect_field) {
-        throw new Error(`Authorization not yet loaded`)
+        throw new Error('Authorization not yet loaded')
       }
       const updatedAuthorization = await xkit.setAuthorizationFields(slug, state, values)
       onComplete(updatedAuthorization)
@@ -154,12 +154,12 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       <form>
         {this.renderFields()}
         <Button
-          appearance="primary"
+          appearance='primary'
           isLoading={saving}
           onClick={this.handleSave}
-          justifyContent="center"
+          justifyContent='center'
           height={majorScale(5)}
-          width="100%"
+          width='100%'
         >
           {saving ? 'Saving' : this.saveLabel()}
         </Button>

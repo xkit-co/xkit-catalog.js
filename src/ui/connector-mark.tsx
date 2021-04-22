@@ -2,8 +2,8 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 interface ConnectorMarkProps {
-  markUrl: string,
-  size: number,
+  markUrl: string
+  size: number
   style?: React.CSSProperties
 }
 

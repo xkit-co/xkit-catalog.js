@@ -28,7 +28,7 @@ declare module 'remark-react' {
   export default remark2react
 }
 
-declare module "*.css" {
-  const styles: string;
-  export default classes;
+declare module '*.css' {
+  const styles: string
+  export default classes
 }

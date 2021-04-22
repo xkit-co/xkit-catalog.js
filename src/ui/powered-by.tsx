@@ -9,9 +9,9 @@ import {
 import { logo, monoLogo } from './images'
 
 interface PoweredByProps {
-  removeBranding?: boolean,
-  campaign?: string,
-  margin?: number,
+  removeBranding?: boolean
+  campaign?: string
+  margin?: number
   align?: 'left' | 'right'
 }
 
@@ -24,20 +24,20 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = 
 
   return (
     <Pane
-      is="a"
+      is='a'
       href={`https://xkit.co?utm_source=app&utm_campaign=${campaign}`}
-      style={{textDecoration: "none"}}
+      style={{ textDecoration: 'none' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      display="flex"
-      justifyContent="center"
+      display='flex'
+      justifyContent='center'
       height={28}
       marginBottom={margin}
       marginTop={margin}
       marginLeft={align === 'right' ? 'auto' : undefined}
     >
       <Text
-        color="black"
+        color='black'
         opacity={0.5}
         size={400}
         marginTop={majorScale(1)}
@@ -56,7 +56,7 @@ const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = 
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(logo)}`}
         width={55}
-        style={{display: hovered ? 'block' : 'none'}}
+        style={{ display: hovered ? 'block' : 'none' }}
       />
     </Pane>
   )

@@ -23,16 +23,16 @@ import PoweredBy from './powered-by'
 export type CatalogFilter = (connector: Connector) => boolean
 
 interface CatalogProps {
-  platform: Platform,
-  showBackButton?: boolean,
-  hideSearch?: boolean,
-  connectorsPath: string,
+  platform: Platform
+  showBackButton?: boolean
+  hideSearch?: boolean
+  connectorsPath: string
   filter: CatalogFilter
 }
 
 interface CatalogState {
   connectors: Connector[]
-  loading: boolean,
+  loading: boolean
   search: string
 }
 
@@ -44,7 +44,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     this.state = {
       connectors: [],
       loading: true,
-      search: ""
+      search: ''
     }
   }
 
@@ -80,15 +80,15 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       <Pane
         marginTop={majorScale(3)}
         marginBottom={majorScale(3)}
-        display="flex"
-        justifyContent="space-between"
+        display='flex'
+        justifyContent='space-between'
       >
-        {shouldShowBack && <BackButton is="a" href={platform.website}>Back to {platform.name}</BackButton>}
+        {shouldShowBack && <BackButton is='a' href={platform.website}>Back to {platform.name}</BackButton>}
         <PoweredBy
           margin={0}
-          align="right"
+          align='right'
           removeBranding={platform.remove_branding}
-          campaign="catalog_footer"
+          campaign='catalog_footer'
         />
       </Pane>
     )
@@ -108,21 +108,21 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       connectorsPath,
       filter
     } = this.props
-    const { connectors, loading} = this.state
+    const { connectors, loading } = this.state
     if (loading) {
       return (
         <EmptyCatalog>
-          <Spinner margin="auto" size={majorScale(6)} />
+          <Spinner margin='auto' size={majorScale(6)} />
         </EmptyCatalog>
       )
     }
 
     const filteredConnectors = connectors.filter(filter).filter(this.searchFilter)
 
-    if (!filteredConnectors.length) {
+    if (filteredConnectors.length === 0) {
       return (
-        <EmptyCatalog background="tint1">
-          <Heading size={600} textAlign="center">
+        <EmptyCatalog background='tint1'>
+          <Heading size={600} textAlign='center'>
             <Text marginRight={majorScale(1)}>
               <InboxIcon />
             </Text>
@@ -151,18 +151,17 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
         {!hideSearch &&
           <SearchInput
             marginTop={majorScale(2)}
-            placeholder="Search integrations..."
+            placeholder='Search integrations...'
             height={majorScale(6)}
-            width="100%"
+            width='100%'
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ search: e.target.value })}
             value={search}
-          />
-        }
+          />}
         <Pane
           clearfix
           marginTop={majorScale(3)}
-          display="flex"
-          flexWrap="wrap"
+          display='flex'
+          flexWrap='wrap'
           marginRight={majorScale(-3)}
           marginBottom={majorScale(-3)}
         >
@@ -187,9 +186,9 @@ const EmptyCatalog: React.FC<EmptyCatalogProps> = ({ background, children }): Re
       background={background}
       padding={majorScale(2)}
       height={150}
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
     >
       {children}
     </Card>

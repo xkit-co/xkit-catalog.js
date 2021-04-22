@@ -20,7 +20,7 @@ import VideoLink from './video-link'
 import PoweredBy from '../powered-by'
 
 export interface AppOptions {
-  authorization: Authorization,
+  authorization: Authorization
   removeBranding: boolean
 }
 
@@ -43,7 +43,7 @@ class App extends React.Component<AppProps> {
       window.location.href = authorization.authorize_url
       return
     }
-    
+
     // Focus on the calling window, and close this window
     if (window.opener && !window.opener.closed) {
       window.opener.focus()
@@ -66,28 +66,28 @@ class App extends React.Component<AppProps> {
       <AppWrapper xkit={this.props.xkit}>
         <Pane
           padding={majorScale(4)}
-          minHeight="100%"
-          width="100%"
-          display="flex"
-          justifyContent="center"
-          background="tint1"
-          position="absolute"
+          minHeight='100%'
+          width='100%'
+          display='flex'
+          justifyContent='center'
+          background='tint1'
+          position='absolute'
         >
-          <Pane width="100%" maxWidth={majorScale(60)}>
+          <Pane width='100%' maxWidth={majorScale(60)}>
             <Card
               marginTop={majorScale(4)}
               marginBottom={majorScale(4)}
               padding={majorScale(4)}
               elevation={1}
-              width="100%"
-              background="base"
+              width='100%'
+              background='base'
             >
               <AuthorizationTitle authorization={authorization} />
               <Instructions text={collect_instructions} />
               <Form authorization={authorization} onComplete={this.onComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
-            <PoweredBy removeBranding={removeBranding} campaign="collect_popup" />
+            <PoweredBy removeBranding={removeBranding} campaign='collect_popup' />
           </Pane>
         </Pane>
       </AppWrapper>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {
-  // @ts-ignore
+  // @ts-expect-error
   plugins as untypedGlamorPlugins
 } from 'glamor'
 import {
@@ -13,7 +13,7 @@ import resetStyles from './reset.css'
 
 // Plugins aren't in Glamor's type definition
 interface StyleDefinition {
-  selector: string,
+  selector: string
   style: unknown
 }
 type PluginFn = (def: StyleDefinition) => StyleDefinition
@@ -24,24 +24,23 @@ interface PluginSet {
 
 const glamorPlugins = untypedGlamorPlugins as PluginSet
 
-
 // Need to heavily specify our styles to override anything set in the parent
 const SCOPE_ID = 'xkit___embed'
 const PREFIX_CLASS = 'xkit-'
 
-function scopeSelector(selector: string): string {
+function scopeSelector (selector: string): string {
   return selector.split(',').map((part: string) => {
     return `#${SCOPE_ID} ${part.trim()}`
   }).join(',')
 }
 
 interface GlamorDefinition<T> {
-  selector: string,
+  selector: string
   style: T
 }
 
 interface UIBoxDefinition<T> {
-  selector: string,
+  selector: string
   rules: T
 }
 
@@ -59,7 +58,7 @@ useUIBoxPlugin(addUIBoxScope)
 setClassNamePrefix(PREFIX_CLASS)
 
 interface StyledState {
-  cssTag?: HTMLElement,
+  cssTag?: HTMLElement
 }
 
 // An App MUST include the Styled component **exactly once**, otherwise styles won't work

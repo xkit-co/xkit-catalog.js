@@ -8,35 +8,35 @@ import {
 import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 
 interface SelectOptionObj {
-  value: string,
+  value: string
   label?: string
 }
 
 type SelectOption = SelectOptionObj | string
 
 interface EvergreenSelectOption {
-  value: string,
+  value: string
   label: string
 }
 
 interface SettingsSelectProto {
-  name: string,
-  options: SelectOption[],
-  label?: string,
-  description?: string,
-  placeholder?: string,
-  hint?: string,
-  validationMessage?: string,
+  name: string
+  options: SelectOption[]
+  label?: string
+  description?: string
+  placeholder?: string
+  hint?: string
+  validationMessage?: string
   [key: string]: string | string[] | SelectOption[]
 }
 
 interface SettingsSelectSingleField extends SettingsSelectProto {
-  type: 'select',
+  type: 'select'
   value: string
 }
 
 interface SettingsSelectMultipleField extends SettingsSelectProto {
-  type: 'select-multiple',
+  type: 'select-multiple'
   value: string[]
 }
 
@@ -54,7 +54,7 @@ function isSingle (field: SettingsSelectField): field is SettingsSelectSingleFie
   return hasOwnProperty(field, 'type') && field.type === 'select'
 }
 
-function fillOptions(opts: SelectOption[]): EvergreenSelectOption[] {
+function fillOptions (opts: SelectOption[]): EvergreenSelectOption[] {
   return opts.map(opt => {
     if (typeof opt === 'string') {
       return {
@@ -71,12 +71,12 @@ function fillOptions(opts: SelectOption[]): EvergreenSelectOption[] {
 }
 
 interface SettingsSelectProps {
-  field: SettingsSelectField,
+  field: SettingsSelectField
   onChange: (value: string | string[]) => void
 }
 
 function multiSelectButtonText (evergreenOptions: EvergreenSelectOption[], placeholder?: string, value?: string[]): string {
-  if (value == null || !value.length) {
+  if (value == null || (value.length === 0)) {
     return placeholder || 'Select many...'
   }
 
@@ -115,15 +115,15 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
       <SelectMenuField
         {...fieldProps}
         hasTitle={false}
-        intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
-        label={label ? label : name}
+        intent={fieldProps.validationMessage ? 'danger' : 'none'}
+        label={label || name}
         selected={value}
         options={evergreenOptions}
         onSelect={(opt: EvergreenSelectOption) => onChange(opt.value)}
         closeOnSelect
       >
         <Button
-          intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
+          intent={fieldProps.validationMessage ? 'danger' : 'none'}
           height={majorScale(5)}
         >
           {selectedText}
@@ -140,14 +140,14 @@ const SettingsSelect: React.FC<SettingsSelectProps> = ({ onChange, field }) => {
         {...fieldProps}
         hasTitle={false}
         isMultiSelect
-        label={label ? label : name}
+        label={label || name}
         selected={value}
         options={evergreenOptions}
         onSelect={(opt: EvergreenSelectOption) => onChange(value ? value.concat(opt.value) : [opt.value])}
         onDeselect={(opt: EvergreenSelectOption) => onChange(value ? value.filter(val => val !== opt.value) : [])}
       >
         <Button
-          intent={Boolean(fieldProps.validationMessage) ? 'danger' : 'none'}
+          intent={fieldProps.validationMessage ? 'danger' : 'none'}
           height={majorScale(5)}
         >
           {multiSelectButtonText(evergreenOptions, placeholder, value)}

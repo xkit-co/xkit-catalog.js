@@ -22,11 +22,11 @@ import useAsyncActionHandler from './async_action_handler'
 
 interface MenuItemProps {
   icon?: React.ElementType | JSX.Element | null | false
-  onSelect: () => void | Promise<void>,
+  onSelect: () => void | Promise<void>
   intent?: string
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({icon, onSelect, intent, children}) => {
+const MenuItem: React.FC<MenuItemProps> = ({ icon, onSelect, intent, children }) => {
   const [isLoading, handleSelect] = useAsyncActionHandler(onSelect)
 
   return (
@@ -41,9 +41,9 @@ const MenuItem: React.FC<MenuItemProps> = ({icon, onSelect, intent, children}) =
 }
 
 interface ConnectionsTableProps {
-  connections: Connection[],
-  hasSettings: (connection: Connection) => boolean,
-  onSelectSettings: (connection: Connection) => void | Promise<void>,
+  connections: Connection[]
+  hasSettings: (connection: Connection) => boolean
+  onSelectSettings: (connection: Connection) => void | Promise<void>
   onSelectReconnect: (connection: Connection) => void | Promise<void>
   onSelectRemove: (connection: Connection) => void | Promise<void>
 }
@@ -56,7 +56,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
   onSelectRemove
 }) => {
   const rows = connections.map(connection => {
-    async function selectAndClose(
+    async function selectAndClose (
       select: (connection: Connection) => void | Promise<void>,
       close: () => void) {
       await select(connection)
@@ -68,10 +68,10 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
         <Table.TextCell>
           {connectionName(connection)}
         </Table.TextCell>
-        <Table.Cell width={128} flex="none">
-          <ConnectionStatusBadge useTooltip={true} connections={[connection]} />
+        <Table.Cell width={128} flex='none'>
+          <ConnectionStatusBadge useTooltip connections={[connection]} />
         </Table.Cell>
-        <Table.Cell width={48} flex="none">
+        <Table.Cell width={48} flex='none'>
           <Popover
             content={({ close }) => (
               <Menu>
@@ -81,16 +81,14 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
                     onSelect={() => selectAndClose(onSelectSettings, close)}
                   >
                     Settings...
-                  </MenuItem>
-                }
+                  </MenuItem>}
                 {connectionStatus(connection) === ConnectionStatus.Error &&
                   <MenuItem
                     icon={RefreshIcon}
                     onSelect={() => selectAndClose(onSelectReconnect, close)}
                   >
                     Reconnect...
-                  </MenuItem>
-                }
+                  </MenuItem>}
                 <MenuItem
                   icon={TrashIcon}
                   onSelect={() => selectAndClose(onSelectRemove, close)}
@@ -102,7 +100,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
             )}
             position={Position.BOTTOM_RIGHT}
           >
-            <IconButton icon={MoreIcon} height={24} appearance="minimal" />
+            <IconButton icon={MoreIcon} height={24} appearance='minimal' />
           </Popover>
         </Table.Cell>
       </Table.Row>
@@ -115,10 +113,10 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
         <Table.TextHeaderCell>
           Name
         </Table.TextHeaderCell>
-        <Table.TextHeaderCell width={128} flex="none">
+        <Table.TextHeaderCell width={128} flex='none'>
           Status
         </Table.TextHeaderCell>
-        <Table.HeaderCell width={48} flex="none" />
+        <Table.HeaderCell width={48} flex='none' />
       </Table.Head>
       <Table.Body>
         {rows}
