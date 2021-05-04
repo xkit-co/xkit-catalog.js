@@ -1,8 +1,7 @@
 /// <reference path="../declarations.d.ts"/>
 
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import unified, { Processor, Plugin } from 'unified'
+import unified, { Processor } from 'unified'
 import parse from 'remark-parse'
 import remark2react, { components as RemarkComponents } from 'remark-react'
 import {
@@ -90,8 +89,6 @@ enum Sizes {
   medium = 'medium',
   large = 'large'
 }
-
-type Processors = Record<Sizes, Processor>
 
 const ParentProcessor = unified().use(parse)
 

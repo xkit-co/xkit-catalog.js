@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Portal as EvergreenPortal
 } from '@treygriffith/evergreen-ui'

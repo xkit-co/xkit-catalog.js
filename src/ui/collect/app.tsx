@@ -1,10 +1,8 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import AppWrapper from '../app-wrapper'
 import {
   Card,
   Pane,
-  Heading,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { XkitJs } from '@xkit-co/xkit.js'
@@ -12,7 +10,6 @@ import {
   Authorization,
   AuthorizationStatus
 } from '@xkit-co/xkit.js/lib/api/authorization'
-import { toaster } from '../toaster'
 import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'

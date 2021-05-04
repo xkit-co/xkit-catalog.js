@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Pane,
   Text,
@@ -95,7 +94,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   searchFilter = (connector: Connector): boolean => {
-    const { connectors, search } = this.state
+    const { search } = this.state
     if (!search.length) {
       return true
     }

@@ -1,6 +1,6 @@
 declare module 'remark-react' {
   import * as React from 'react'
-  import { Transformer, Processor, Settings } from 'unified'
+  import { Transformer, Processor } from 'unified'
 
   export type elements =
     | 'code'

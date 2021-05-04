@@ -1,9 +1,7 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Button,
   TextInputField,
-  TextInputFieldProps,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import PrefixInputField from '../prefix-input-field'

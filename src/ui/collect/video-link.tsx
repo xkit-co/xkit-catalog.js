@@ -1,10 +1,7 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Paragraph,
   Link,
-  Dialog,
-  Pane,
   SideSheet,
   Position,
   majorScale

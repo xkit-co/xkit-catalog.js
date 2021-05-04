@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { logger } from '../util'
 import AppWrapper from './app-wrapper'
 import { Pane } from '@treygriffith/evergreen-ui'
@@ -126,8 +125,6 @@ class App extends React.Component<AppProps, AppState> {
 
   render () {
     const {
-      routerType,
-      rootPath,
       inheritRouter
     } = this.props
     const { history } = this.state
