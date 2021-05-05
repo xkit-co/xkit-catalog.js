@@ -127,7 +127,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
         isInvalid: Boolean(validationMessage),
         validationMessage: validationMessage ? `${collectField.label} ${validationMessage}` : undefined,
         disabled: saving,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ values: {...values, [name]: e.target.value}}),
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ values: { ...values, [name]: e.target.value } }),
         onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null
       }
 
