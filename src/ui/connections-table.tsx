@@ -92,7 +92,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
                 <MenuItem
                   icon={TrashIcon}
                   onSelect={() => selectAndClose(onSelectRemove, close)}
-                  intent="danger"
+                  intent='danger'
                 >
                   Remove...
                 </MenuItem>
