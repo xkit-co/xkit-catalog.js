@@ -81,7 +81,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       title
     } = this.props
     const {
-      platform,
+      platform
     } = this.state
 
     if (title) {
