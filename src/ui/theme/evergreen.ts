@@ -28,7 +28,7 @@ declare module '@treygriffith/evergreen-ui' {
   type TabAppearance = DefaultAppearance | 'minimal'
 
   interface Theme {
-    getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string,
+    getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string
     getBackground: (background: string) => string
     getElevation: (elevation: number) => string
     getIconColor: (color: string) => string

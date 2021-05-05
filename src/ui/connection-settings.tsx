@@ -29,7 +29,7 @@ interface ConnectionSettingsProps {
   connector: Connector
   connection: Connection
   fields: SettingsField[]
-  onChangeField: (fieldName: string, value: string | string[] | boolean) => void,
+  onChangeField: (fieldName: string, value: string | string[] | boolean) => void
   onSave: () => void | Promise<void>
   onCancel: () => void | Promise<void>
 }

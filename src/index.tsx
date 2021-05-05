@@ -10,7 +10,7 @@ export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'rout
 }
 
 export interface XkitCatalog extends XkitJs {
-  renderCatalog: (el: HTMLElement, opts: CatalogOptions) => void,
+  renderCatalog: (el: HTMLElement, opts: CatalogOptions) => void
   unmountCatalog: (el: HTMLElement) => boolean
 }
 

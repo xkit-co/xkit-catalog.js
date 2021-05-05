@@ -20,8 +20,8 @@ function isParagraphSize (size: number): size is ParagraphSizes {
 }
 
 export type CustomTextProps = Partial<{
-  fonts: Partial<Record<FontFamily, string>>,
-  colors: Partial<Record<'muted' | 'default' | 'dark' | 'selected', string>>,
+  fonts: Partial<Record<FontFamily, string>>
+  colors: Partial<Record<'muted' | 'default' | 'dark' | 'selected', string>>
   sizes: Partial<Record<AllTextSizes, number>>
 }>
 
