@@ -9,7 +9,7 @@ const path = require('path')
 // TODO: configurable
 const CSS_EXTENSION = '.css'
 
-function precompileCSS(fileContents){
+function precompileCSS(fileContents) {
   const escaped = fileContents.replace(/`/g, "\\\`")
 
   return `module.exports = \`${escaped}\`;`
