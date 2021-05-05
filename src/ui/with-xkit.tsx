@@ -14,10 +14,6 @@ export default function withXkit<Props extends {}> (WrappedComponent: React.Comp
   class WithXkit extends React.Component<Omit<Props, keyof XkitConsumer>, {}> {
     static displayName: string
 
-    constructor (props: Props) {
-      super(props)
-    }
-
     render (): React.ReactElement {
       return (
         <Consumer>
