@@ -1,8 +1,6 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Pane,
-  PaneProps,
   Heading,
   majorScale
 } from '@treygriffith/evergreen-ui'

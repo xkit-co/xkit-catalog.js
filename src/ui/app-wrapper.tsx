@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Styled } from './scope-styles'
 import {

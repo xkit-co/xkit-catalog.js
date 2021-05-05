@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   toaster as defaultToaster
 } from '@treygriffith/evergreen-ui'

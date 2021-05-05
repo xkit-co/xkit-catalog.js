@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { TextInputField } from '@treygriffith/evergreen-ui'
 import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Pane,
   Text,
@@ -7,7 +6,6 @@ import {
   FormFieldProps,
   TextInput,
   TextInputProps,
-  minorScale,
   majorScale
 } from '@treygriffith/evergreen-ui'
 

@@ -7,7 +7,6 @@ import {
 import {
   Heading,
   Spinner,
-  Pane,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
@@ -64,8 +63,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
 
   async loadPlatform (): Promise<void> {
     const {
-      xkit,
-      hideTitle
+      xkit
     } = this.props
     this.setState({ loading: true })
     try {
@@ -84,7 +82,6 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     } = this.props
     const {
       platform,
-      loading
     } = this.state
 
     if (title) {
@@ -100,7 +97,6 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
 
   render (): React.ReactElement {
     const {
-      title,
       hideTitle,
       hideSearch,
       connectorsPath,

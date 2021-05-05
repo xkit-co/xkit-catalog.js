@@ -1,9 +1,7 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Pane,
   Text,
-  minorScale,
   majorScale
 } from '@treygriffith/evergreen-ui'
 import { logo, monoLogo } from './images'

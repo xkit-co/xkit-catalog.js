@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import Markdown from '../markdown'
 import { majorScale } from '@treygriffith/evergreen-ui'
 
