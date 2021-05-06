@@ -27,7 +27,7 @@ interface AppProps extends AppOptions {
 
 class App extends React.Component<AppProps> {
   // TODO: should this be here? Or in the HTML template?
-  onComplete = (authorization: Authorization): void => {
+  handleFormComplete = (authorization: Authorization): void => {
     // In cases where the Authorize URL is updated after we
     // submit our collect data, we redirect the window there rather than
     // just finishing
@@ -81,7 +81,7 @@ class App extends React.Component<AppProps> {
             >
               <AuthorizationTitle authorization={authorization} />
               <Instructions text={collect_instructions} />
-              <Form authorization={authorization} onComplete={this.onComplete} />
+              <Form authorization={authorization} onComplete={this.handleFormComplete} />
               <VideoLink videoUrl={collect_video_url} />
             </Card>
             <PoweredBy removeBranding={removeBranding} campaign='collect_popup' />
