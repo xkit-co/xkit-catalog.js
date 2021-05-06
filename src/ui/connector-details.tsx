@@ -75,7 +75,9 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         connections.map(connection => settingsUpdate(connection, undefined))
       )
       const settings: Settings = {}
-      connections.forEach((connection, index) => settings[connection.id] = fields[index])
+      connections.forEach((connection, index) => {
+        settings[connection.id] = fields[index]
+      })
       setSettings(settings)
     } catch (e) {
       toaster.danger(`Error while loading settings: ${e.message}`)
