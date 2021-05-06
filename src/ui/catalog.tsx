@@ -47,11 +47,11 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     }
   }
 
-  componentDidMount () {
+  componentDidMount (): void {
     this.loadConnectors()
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>) {
+  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>): void {
     if (prevProps.xkit !== this.props.xkit) {
       this.loadConnectors()
     }
@@ -69,7 +69,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     }
   }
 
-  renderBackButton () {
+  renderBackButton (): React.ReactNode {
     const { platform, showBackButton } = this.props
     const shouldShowBack = platform && platform.website && showBackButton
 
@@ -102,7 +102,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
            (compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) > SIMILARITY_MIN)
   }
 
-  renderConnectors () {
+  renderConnectors (): React.ReactNode {
     const {
       connectorsPath,
       filter
@@ -142,7 +142,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     })
   }
 
-  render () {
+  render (): React.ReactElement {
     const { hideSearch } = this.props
     const { search } = this.state
     return (

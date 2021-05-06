@@ -10,7 +10,7 @@ import {
   Heading
 } from '@treygriffith/evergreen-ui'
 
-const renderError = (id: string, error: string, openerOrigin: string, validOrigins: string[]) => {
+const renderError = (id: string, error: string, openerOrigin: string, validOrigins: string[]): void => {
   domReady(window.document, () => {
     ReactDOM.render(
       (

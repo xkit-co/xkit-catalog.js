@@ -1,7 +1,7 @@
 import { CatalogTheme } from '.'
 import getLinearGradient from './get-linear-gradient'
 
-export default function defaultControlStyles (theme: CatalogTheme) {
+export default function defaultControlStyles (theme: CatalogTheme): any {
   return {
     disabled: {
       opacity: 0.8,

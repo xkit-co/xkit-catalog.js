@@ -75,7 +75,7 @@ export class Styled extends React.Component<{}, StyledState> {
     }
   }
 
-  render () {
+  render (): React.ReactElement {
     const { children } = this.props
     return (
       <div id={SCOPE_ID}>

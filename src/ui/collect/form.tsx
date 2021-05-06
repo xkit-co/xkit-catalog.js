@@ -110,7 +110,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
-  renderFields () {
+  renderFields (): React.ReactNode {
     const {
       saving,
       values,
@@ -145,7 +145,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     })
   }
 
-  render () {
+  render (): React.ReactElement {
     const { saving } = this.state
 
     return (

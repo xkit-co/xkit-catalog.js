@@ -16,7 +16,7 @@ type PrefixInputFieldProps = TextInputProps & FormFieldProps & {
 class PrefixInputField extends React.Component<PrefixInputFieldProps> {
   private readonly suffixPane = React.createRef<HTMLDivElement>()
 
-  render () {
+  render (): React.ReactElement {
     const { suffix, ...restProps } = this.props
     const { value, isInvalid, onChange, onKeyDown, placeholder, disabled, ...formFieldProps } = restProps
     const inputProps = { value, isInvalid, onChange, onKeyDown, placeholder, disabled }

@@ -14,7 +14,7 @@ import {
 } from '@treygriffith/evergreen-ui'
 import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 
-const renderLoading = (id: string, title: string, removeBranding: boolean, openerOrigin: string, validOrigins: string[]) => {
+const renderLoading = (id: string, title: string, removeBranding: boolean, openerOrigin: string, validOrigins: string[]): void => {
   domReady(window.document, () => {
     ReactDOM.render(
       (

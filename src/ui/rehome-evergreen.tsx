@@ -47,7 +47,7 @@ export default class RehomeEvergreen extends React.Component<RehomeEvergreenProp
     this.components().forEach(name => this.moveComponent(this.ref.current, window.document.body, name))
   }
 
-  render () {
+  render (): React.ReactElement {
     const { children } = this.props
     return (
       <div ref={this.ref}>

@@ -18,7 +18,7 @@ interface CatalogThumbProps {
 }
 
 class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
-  render () {
+  render (): React.ReactElement {
     const {
       connectorsPath,
       connector: {

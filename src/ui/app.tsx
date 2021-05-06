@@ -93,7 +93,7 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
-  renderApp () {
+  renderApp (): React.ReactElement {
     const {
       title,
       hideTitle,
@@ -123,7 +123,7 @@ class App extends React.Component<AppProps, AppState> {
     )
   }
 
-  render () {
+  render (): React.ReactElement {
     const {
       inheritRouter
     } = this.props

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { XkitJs } from '@xkit-co/xkit.js'
 import { Consumer } from './xkit-context'
 
-function getDisplayName (WrappedComponent: React.ComponentType) {
+function getDisplayName (WrappedComponent: React.ComponentType): string {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 

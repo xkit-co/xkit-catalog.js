@@ -48,7 +48,7 @@ class App extends React.Component<AppProps> {
     window.close()
   }
 
-  render () {
+  render (): React.ReactElement {
     const {
       authorization,
       removeBranding

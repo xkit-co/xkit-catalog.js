@@ -50,7 +50,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   const [settings, setSettings] = useState<Settings>({})
   const [fieldsChangeset, setFieldsChangeset] = useState<SettingsField[]>(null)
 
-  async function loadData (xkit: XkitJs, slug: string) {
+  async function loadData (xkit: XkitJs, slug: string): Promise<void> {
     setIsLoading(true)
     try {
       const connector = await xkit.getConnector(slug)
@@ -67,7 +67,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function loadSettings (connections: Connection[]) {
+  async function loadSettings (connections: Connection[]): Promise<void> {
     if (!settingsUpdate) return
 
     try {
@@ -84,8 +84,8 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function loadFields (connection: Connection) {
-    if (!settingsUpdate) return
+  async function loadFields (connection: Connection): Promise<SettingsField[] | null> {
+    if (!settingsUpdate) return null
 
     try {
       return await settingsUpdate(connection, undefined)
@@ -94,7 +94,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function addConnection () {
+  async function addConnection (): Promise<void> {
     try {
       const connection = await xkit.addConnection(connector)
       const fields = await loadFields(connection)
@@ -109,7 +109,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function removeConnection (connection: Connection) {
+  async function removeConnection (connection: Connection): Promise<void> {
     try {
       await xkit.removeConnection({ id: connection.id })
       const updatedConnections = connections.filter(conn => conn.id !== connection.id)
@@ -122,7 +122,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function reconnect (connection: Connection) {
+  async function reconnect (connection: Connection): Promise<void> {
     try {
       const newConnection = await xkit.reconnect(connection)
       const fields = await loadFields(newConnection)
@@ -142,12 +142,12 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function openSettings (connection: Connection, fields?: SettingsField[]) {
+  function openSettings (connection: Connection, fields?: SettingsField[]): void {
     setFieldsChangeset(fields || settings[connection.id])
     history.push(`${url}/settings/${connection.id}`)
   }
 
-  function changeField (fieldName: string, value: string | string[] | boolean) {
+  function changeField (fieldName: string, value: string | string[] | boolean): void {
     const changed = fieldsChangeset.map((field: SettingsField) => {
       if (field.name !== fieldName) return field
       return Object.assign({}, field, { value })
@@ -155,7 +155,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     setFieldsChangeset(changed)
   }
 
-  async function saveSettings (connection: Connection) {
+  async function saveSettings (connection: Connection): Promise<void> {
     try {
       const updatedFields = await settingsUpdate(connection, fieldsChangeset)
       setFieldsChangeset(updatedFields)
@@ -169,7 +169,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function closeSettings () {
+  function closeSettings (): void {
     history.push(url)
     setFieldsChangeset(null)
   }

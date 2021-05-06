@@ -12,7 +12,7 @@ interface AuthorizationMarkProps {
 }
 
 class AuthorizationMark extends React.Component<AuthorizationMarkProps> {
-  render () {
+  render (): React.ReactNode {
     if (!this.props.markUrl) {
       return null
     }
@@ -46,7 +46,7 @@ interface AuthorizationTitleProps {
 }
 
 class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
-  render () {
+  render (): React.ReactElement {
     const { authorization } = this.props
     const mark_url = authorization.initiating_connector?.mark_url
     const name = authorization.initiating_connector?.name || authorization.authorizer.prototype.name
