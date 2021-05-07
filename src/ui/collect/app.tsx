@@ -55,8 +55,8 @@ class App extends React.Component<AppProps> {
     } = this.props
 
     const {
-      collect_video_url,
-      collect_instructions
+      collect_video_url: collectVideoUrl,
+      collect_instructions: collectInstructions
     } = authorization.authorizer.prototype
 
     return (
@@ -80,9 +80,9 @@ class App extends React.Component<AppProps> {
               background='base'
             >
               <AuthorizationTitle authorization={authorization} />
-              <Instructions text={collect_instructions} />
+              <Instructions text={collectInstructions} />
               <Form authorization={authorization} onComplete={this.handleFormComplete} />
-              <VideoLink videoUrl={collect_video_url} />
+              <VideoLink videoUrl={collectVideoUrl} />
             </Card>
             <PoweredBy removeBranding={removeBranding} campaign='collect_popup' />
           </Pane>

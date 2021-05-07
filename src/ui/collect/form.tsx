@@ -92,12 +92,12 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
         authorizer: {
           prototype: {
             slug,
-            collect_field
+            collect_field: collectField
           }
         }
       } = authorization
 
-      if (!state || !collect_field) {
+      if (!state || !collectField) {
         throw new Error('Authorization not yet loaded')
       }
       const updatedAuthorization = await xkit.setAuthorizationFields(slug, state, values)

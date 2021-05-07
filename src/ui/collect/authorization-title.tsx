@@ -48,7 +48,7 @@ interface AuthorizationTitleProps {
 class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
   render (): React.ReactElement {
     const { authorization } = this.props
-    const mark_url = authorization.initiating_connector?.mark_url
+    const markUrl = authorization.initiating_connector?.mark_url
     const name = authorization.initiating_connector?.name || authorization.authorizer.prototype.name
 
     return (
@@ -58,7 +58,7 @@ class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
         justifyContent='center'
         position='relative'
       >
-        <AuthorizationMark markUrl={mark_url} />
+        <AuthorizationMark markUrl={markUrl} />
         <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(4)}>
           Connect to {name}
         </Heading>
