@@ -44,7 +44,7 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
     } catch {}
   }
 
-  componentDidUpdate (prevProps: XkitProps) {
+  componentDidUpdate (prevProps: XkitProps): void {
     if (prevProps.value !== this.props.value) {
       this.unsubscribe()
       this.subscribe()
@@ -56,7 +56,7 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
     this.unsubscribe()
   }
 
-  render () {
+  render (): React.ReactElement {
     const { children } = this.props
     const { xkit } = this.state
     return (

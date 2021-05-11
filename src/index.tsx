@@ -69,7 +69,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
 
     // Attempt a login
     if (token) {
-      const doLogin = async () => {
+      const doLogin = async (): Promise<void> => {
         try {
           await xkit.login(token)
         } catch (e) {

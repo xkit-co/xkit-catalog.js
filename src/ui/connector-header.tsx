@@ -13,10 +13,10 @@ interface ConnectorHeaderProps {
   subtitle: string
 }
 
-const ConnectorHeader: React.FC<ConnectorHeaderProps> = ({ mark_url, title, subtitle, children }) => {
+const ConnectorHeader: React.FC<ConnectorHeaderProps> = ({ mark_url: markUrl, title, subtitle, children }) => {
   return (
     <Pane display='flex' alignItems='center'>
-      <ConnectorMark markUrl={mark_url} size={majorScale(6)} />
+      <ConnectorMark markUrl={markUrl} size={majorScale(6)} />
       <Pane marginLeft={majorScale(2)}>
         <Pane display='flex'>
           <Heading size={700}>

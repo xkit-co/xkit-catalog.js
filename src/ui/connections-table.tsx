@@ -58,7 +58,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
   const rows = connections.map(connection => {
     async function selectAndClose (
       select: (connection: Connection) => void | Promise<void>,
-      close: () => void) {
+      close: () => void): Promise<void> {
       await select(connection)
       close()
     }

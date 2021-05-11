@@ -19,9 +19,9 @@ import {
 import { logger } from '../util'
 import { CopyableTextInput, CopyableTextarea } from './copyable-input'
 
-const NewTabLink = (props: React.PropsWithChildren<{}>) => <Link target='_blank' {...props} />
+const NewTabLink = (props: React.PropsWithChildren<{}>): React.ReactElement => <Link target='_blank' {...props} />
 
-const CopyCode = (props: React.PropsWithChildren<{}>) => {
+const CopyCode = (props: React.PropsWithChildren<{}>): React.ReactElement => {
   const text = childrenToText(props.children)
   if (text.length > 40) {
     return (

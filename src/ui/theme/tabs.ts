@@ -9,7 +9,7 @@ export type CustomTabProps = Partial<{
 }>
 
 // https://github.com/segmentio/evergreen/blob/master/src/theme/src/default-theme/component-specific/getTabClassName.js
-function defaultAppearance (theme: CatalogTheme, color: string) {
+function defaultAppearance (theme: CatalogTheme, color: string): any {
   const { disabled } = defaultControlStyles(theme)
   return Themer.createTabAppearance({
     base: {},
@@ -28,7 +28,7 @@ function defaultAppearance (theme: CatalogTheme, color: string) {
   })
 }
 
-function minimalAppearance (theme: CatalogTheme, color: string) {
+function minimalAppearance (theme: CatalogTheme, color: string): any {
   const { disabled } = defaultControlStyles(theme)
 
   const appearance = Themer.createTabAppearance({

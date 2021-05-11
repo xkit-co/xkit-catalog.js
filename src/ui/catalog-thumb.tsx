@@ -18,14 +18,14 @@ interface CatalogThumbProps {
 }
 
 class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
-  render () {
+  render (): React.ReactElement {
     const {
       connectorsPath,
       connector: {
         name,
         slug,
-        short_description,
-        mark_url,
+        short_description: shortDescription,
+        mark_url: markUrl,
         connections
       },
       theme
@@ -50,13 +50,13 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
       >
         <Pane display='flex'>
           <Pane flexGrow={1}>
-            <ConnectorMark markUrl={mark_url} size={majorScale(5)} />
+            <ConnectorMark markUrl={markUrl} size={majorScale(5)} />
           </Pane>
           <ConnectionStatusBadge useTooltip connections={connections || []} />
         </Pane>
         <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>
-          {short_description}
+          {shortDescription}
         </Paragraph>
       </Card>
     )

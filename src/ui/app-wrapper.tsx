@@ -34,7 +34,7 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     }
   }
 
-  componentDidUpdate (prevProps: AppWrapperProps) {
+  componentDidUpdate (prevProps: AppWrapperProps): void {
     if (this.props.theme !== prevProps.theme) {
       this.setState({
         theme: buildTheme(this.props.theme)
@@ -42,7 +42,7 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     }
   }
 
-  render () {
+  render (): React.ReactElement {
     const {
       xkit,
       children

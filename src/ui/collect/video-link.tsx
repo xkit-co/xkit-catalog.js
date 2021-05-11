@@ -28,7 +28,7 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
     this.setState({ isOpen: true })
   }
 
-  render () {
+  render (): React.ReactNode {
     const { videoUrl } = this.props
     const { isOpen } = this.state
 

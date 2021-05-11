@@ -28,7 +28,7 @@ export interface CatalogTheme extends Omit<Theme, 'palette' | 'colors'> {
 }
 
 function keyAsValue (obj: { [index: string]: string }, keyValue: string): string {
-  if (obj.hasOwnProperty(keyValue)) {
+  if (Object.prototype.hasOwnProperty.call(obj, keyValue) === true) {
     return obj[keyValue]
   }
   return keyValue

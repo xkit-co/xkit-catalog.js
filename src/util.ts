@@ -1,11 +1,11 @@
-function noop () {}
+function noop (): void {}
 
-export function domReady (document: Document, fn: Function) {
+export function domReady (document: Document, fn: Function): void {
   if (document.readyState !== 'loading') {
     fn()
     return
   }
-  const listener = () => {
+  const listener = (): void => {
     fn()
     document.removeEventListener('DOMContentLoaded', listener)
   }
