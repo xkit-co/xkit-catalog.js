@@ -1,8 +1,8 @@
-import { css } from 'glamor'
 import { CatalogTheme } from './catalog-theme'
 import { Themer } from './evergreen'
 import { TabAppearance } from '@treygriffith/evergreen-ui'
 import defaultControlStyles from './default-control-styles'
+import cssClass from './css-class'
 
 export type CustomTabProps = Partial<{
   textColor: string
@@ -67,8 +67,8 @@ function minimalAppearance (theme: CatalogTheme, color: string): any {
 
 export default function customizeTabs (theme: CatalogTheme, props?: CustomTabProps): CatalogTheme {
   const color = props?.textColor || theme.scales.blue.B9
-  const defaultTabClassName = css(defaultAppearance(theme, color)).toString()
-  const minimalTabClassName = css(minimalAppearance(theme, color)).toString()
+  const defaultTabClassName = cssClass(defaultAppearance(theme, color))
+  const minimalTabClassName = cssClass(minimalAppearance(theme, color))
 
   return {
     ...theme,
