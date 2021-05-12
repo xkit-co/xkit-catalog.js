@@ -82,7 +82,7 @@ interface ThemerType {
 const Themer = UntypedThemer as ThemerType
 
 // ThemeProvider is not in the index.d.ts for evergreen
-const ThemeProvider = UntypedProvider as React.Provider<typeof defaultTheme>
+const ThemeProvider = UntypedProvider
 
 type ThemeHOC = <Props extends {}>(WrappedComponent: React.ComponentType<Props>) => React.ComponentType<Omit<Props, 'theme'>>
 
