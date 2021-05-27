@@ -1,5 +1,4 @@
 import tinycolor from 'tinycolor2'
-import { css } from 'glamor'
 import {
   defaultCatalogTheme,
   CatalogTheme
@@ -11,6 +10,7 @@ import {
 } from '@treygriffith/evergreen-ui'
 import getLinearGradient from './get-linear-gradient'
 import defaultControlStyles from './default-control-styles'
+import cssClass from './css-class'
 
 interface Gradient {
   start: string
@@ -102,7 +102,7 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
       const focusColor = tinycolor(getStartColor(buttonProps.background)).setAlpha(0.4).toString()
       const defaults = defaultControlStyles(this)
 
-      return css(Themer.createButtonAppearance({
+      return cssClass(Themer.createButtonAppearance({
         ...defaults,
         base: {
           ...defaults.base,
@@ -128,7 +128,7 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
           boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A
             }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
         }
-      })).toString()
+      }))
     }
   }
 }

@@ -65,7 +65,7 @@ interface StyledState {
 // and applies the scoping ID for stronger style rules.
 export class Styled extends React.Component<{}, StyledState> {
   componentDidMount (): void {
-    this.setState({ cssTag: injectCSS(window.document, resetStyles.replace(/\%\{SCOPE_ID\}/g, SCOPE_ID)) })
+    this.setState({ cssTag: injectCSS(window.document, resetStyles.replace(/%\{SCOPE_ID\}/g, SCOPE_ID)) })
   }
 
   componentWillUnmount (): void {
