@@ -68,15 +68,10 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
     const hideSearch = 'hideSearch' in domRoot.dataset
 
     // Attempt a login
-    if (token) {
-      const doLogin = async (): Promise<void> => {
-        try {
-          await xkit.login(token)
-        } catch (e) {
-          logger.debug(`Login failed: ${e.message}`, e)
-        }
-      }
-      doLogin()
+    if (token != null && token !== '') {
+      xkit.login(token).catch((e) => {
+        logger.debug(`Login failed: ${e.message}`, e)
+      })
     }
 
     // Only render the app if we are allowed to render from anywhere (no root path),

@@ -136,7 +136,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
             render={({ match }: RouteComponentProps<{ slug: string }>) => {
               return (
                 <ConnectorDetails
-                  removeBranding={platform && platform.remove_branding}
+                  removeBranding={platform?.remove_branding}
                   path={match.path}
                   url={match.url}
                   slug={match.params.slug}
