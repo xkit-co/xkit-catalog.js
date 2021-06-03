@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, {
+  useState,
+  useEffect
+} from 'react'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
   Connection,
@@ -20,6 +23,7 @@ import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import ConnectionsTable from './connections-table'
 import Tab from './tab'
+import { LocationListener } from './app'
 
 interface InstallationHeaderProps {
   connector: Connector
@@ -47,6 +51,7 @@ interface ConnectorInstallationProps {
   onOpenSettings: (connection: Connection) => void | Promise<void>
   onReconnect: (connection: Connection) => void | Promise<void>
   onRemoveConnection: (connection: Connection) => void | Promise<void>
+  onLocationChange: LocationListener
 }
 
 const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
@@ -56,11 +61,16 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   onAddConnection,
   onOpenSettings,
   onReconnect,
-  onRemoveConnection
+  onRemoveConnection,
+  onLocationChange
 }) => {
   const [currentTab, setCurrentTab] = useState('connections')
   const multipleConnections = connector.supports_multiple_connections || connections.length > 1
   const computedTab = !multipleConnections || connections.length === 0 ? 'about' : currentTab
+
+  useEffect(() => {
+    onLocationChange({ name: 'connector', connectorSlug: connector.slug })
+  }, [connector.slug])
 
   return (
     <Pane>

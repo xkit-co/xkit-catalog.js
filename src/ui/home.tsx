@@ -14,7 +14,10 @@ import Catalog, { CatalogFilter } from './catalog'
 import ConnectorDetails from './connector-details'
 import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import withXkit, { XkitConsumer } from './with-xkit'
-import { SettingsUpdate } from './app'
+import {
+  SettingsUpdate,
+  LocationListener
+} from './app'
 
 interface HomeProps {
   title?: string
@@ -23,6 +26,7 @@ interface HomeProps {
   connectorsPath: string
   filter: CatalogFilter
   updateSettings: SettingsUpdate
+  onLocationChange: LocationListener
 }
 
 interface HomeState {
@@ -101,7 +105,8 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       hideSearch,
       connectorsPath,
       filter,
-      updateSettings
+      updateSettings,
+      onLocationChange
     } = this.props
     const {
       platform,
@@ -123,6 +128,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
               hideSearch={hideSearch}
               connectorsPath={connectorsPath}
               filter={filter}
+              onLocationChange={onLocationChange}
             />
           </Route>
           <Route
@@ -135,6 +141,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
                   url={match.url}
                   slug={match.params.slug}
                   settingsUpdate={updateSettings}
+                  onLocationChange={onLocationChange}
                 />
               )
             }}

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { majorScale, Pane } from 'evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
@@ -6,6 +6,7 @@ import SettingsForm, { SettingsField } from './settings-form'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import connectionName from './connection_name'
+import { LocationListener } from './app'
 
 interface SettingsHeaderProps {
   connector: Connector
@@ -32,6 +33,7 @@ interface ConnectionSettingsProps {
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void
   onSave: () => void | Promise<void>
   onCancel: () => void | Promise<void>
+  onLocationChange: LocationListener
 }
 
 const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
@@ -40,8 +42,13 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
   fields,
   onChangeField,
   onSave,
-  onCancel
+  onCancel,
+  onLocationChange
 }) => {
+  useEffect(() => {
+    onLocationChange({ name: 'connectionSettings', connectorSlug: connector.slug, connectionId: connection.id })
+  }, [connection.id])
+
   return (
     <Pane>
       <Pane display='flex'>

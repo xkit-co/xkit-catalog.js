@@ -18,6 +18,7 @@ import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
 import { toaster } from './toaster'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
+import { LocationListener } from './app'
 
 export type CatalogFilter = (connector: Connector) => boolean
 
@@ -27,6 +28,7 @@ interface CatalogProps {
   hideSearch?: boolean
   connectorsPath: string
   filter: CatalogFilter
+  onLocationChange: LocationListener
 }
 
 interface CatalogState {
@@ -49,6 +51,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
 
   componentDidMount (): void {
     this.loadConnectors()
+    this.props.onLocationChange({ name: 'index' })
   }
 
   componentDidUpdate (prevProps: XkitConsumer<CatalogProps>): void {

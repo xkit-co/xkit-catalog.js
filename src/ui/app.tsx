@@ -39,6 +39,8 @@ export function createHistory (type: routerType, basename: string): History {
 
 export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
+export type LocationListener = (location: { name: string, connectorSlug?: string, connectionId?: string }) => void
+
 export interface AppOptions {
   hideTitle?: boolean
   hideSearch?: boolean
@@ -51,6 +53,7 @@ export interface AppOptions {
   connectorsPath?: string
   filter?: CatalogFilter
   settings?: SettingsUpdate
+  onLocationChange?: LocationListener
 }
 
 interface AppProps extends AppOptions {
@@ -102,7 +105,8 @@ class App extends React.Component<AppProps, AppState> {
       filter,
       settings,
       xkit,
-      theme
+      theme,
+      onLocationChange
     } = this.props
 
     return (
@@ -116,6 +120,7 @@ class App extends React.Component<AppProps, AppState> {
               connectorsPath={connectorsPath === '/' ? '' : connectorsPath}
               filter={filter}
               updateSettings={settings}
+              onLocationChange={onLocationChange}
             />
           </Pane>
         </Route>
