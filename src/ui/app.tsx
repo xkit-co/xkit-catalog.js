@@ -39,7 +39,22 @@ export function createHistory (type: routerType, basename: string): History {
 
 export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
 
-export type LocationListener = (location: { name: string, connectorSlug?: string, connectionId?: string }) => void
+interface IndexLocation {
+  name: 'index'
+}
+
+interface ConnectorLocation {
+  name: 'connector'
+  connectorSlug: string
+}
+
+interface ConnectionLocation {
+  name: 'connectionSettings'
+  connectorSlug: string
+  connectionId: string
+}
+
+export type LocationListener = (location: IndexLocation | ConnectorLocation | ConnectionLocation) => void
 
 export interface AppOptions {
   hideTitle?: boolean
