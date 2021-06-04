@@ -19,7 +19,10 @@ import {
   BackButton
 } from '@treygriffith/evergreen-ui'
 import { friendlyMessage } from './errors'
-import { SettingsUpdate } from './app'
+import {
+  SettingsUpdate,
+  LocationListener
+} from './app'
 import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
@@ -31,6 +34,7 @@ interface ConnectorDetailsProps {
   slug: string
   removeBranding: boolean
   settingsUpdate: SettingsUpdate
+  onLocationChange: LocationListener
 }
 
 type Settings = Record<string, SettingsField[]>
@@ -40,7 +44,8 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   url,
   slug,
   removeBranding,
-  settingsUpdate
+  settingsUpdate,
+  onLocationChange
 }) => {
   const xkit = useXkit()
   const history = useHistory()
@@ -212,6 +217,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
                 onChangeField={changeField}
                 onSave={() => saveSettings(connection)}
                 onCancel={closeSettings}
+                onLocationChange={onLocationChange}
               />
             )
           }}
@@ -225,6 +231,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
             onOpenSettings={openSettings}
             onReconnect={reconnect}
             onRemoveConnection={removeConnection}
+            onLocationChange={onLocationChange}
           />
         </Route>
       </Switch>
