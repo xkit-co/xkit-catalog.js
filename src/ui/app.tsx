@@ -86,7 +86,8 @@ class App extends React.Component<AppProps, AppState> {
     routerType: 'browser',
     theme: {},
     filter: () => true,
-    settings: (): SettingsField[] => []
+    settings: (): SettingsField[] => [],
+    onLocationChange: (): void => {}
   }
 
   createHistory (): History {
