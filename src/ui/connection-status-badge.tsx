@@ -9,7 +9,7 @@ import {
 import {
   ConnectionOnly,
   ConnectionShell,
-  connectionStatus,
+  getConnectionStatus,
   ConnectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 
@@ -23,7 +23,7 @@ const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connectio
   let hasDisconnected = false
 
   for (const connection of connections) {
-    const status = connectionStatus(connection)
+    const status = getConnectionStatus(connection)
     if (status !== ConnectionStatus.NotInstalled) total += 1
     if (status === ConnectionStatus.Error) hasDisconnected = true
   }
