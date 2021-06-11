@@ -6,7 +6,7 @@ import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
   Connection,
   ConnectionStatus,
-  connectionStatus
+  getConnectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 import {
   AddIcon,
@@ -74,7 +74,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
 
   return (
     <Pane>
-      {!multipleConnections && connections.length === 1 && connectionStatus(connections[0]) === ConnectionStatus.Error &&
+      {!multipleConnections && connections.length === 1 && getConnectionStatus(connections[0]) === ConnectionStatus.Error &&
         <Pane marginBottom={majorScale(3)}>
           <ConnectionAuthAlert
             connector={connector}
