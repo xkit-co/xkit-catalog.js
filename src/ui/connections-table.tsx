@@ -2,7 +2,7 @@ import * as React from 'react'
 import {
   Connection,
   ConnectionStatus,
-  getConnectionStatus
+  connectionStatus
 } from '@xkit-co/xkit.js/lib/api/connection'
 import {
   CogIcon,
@@ -82,7 +82,7 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
                   >
                     Settings...
                   </MenuItem>}
-                {getConnectionStatus(connection) === ConnectionStatus.Error &&
+                {connectionStatus(connection) === ConnectionStatus.Error &&
                   <MenuItem
                     icon={RefreshIcon}
                     onSelect={() => selectAndClose(onSelectReconnect, close)}
