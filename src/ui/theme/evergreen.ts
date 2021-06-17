@@ -3,14 +3,14 @@ import { StyleAttribute } from 'glamor'
 import {
   defaultTheme,
   Theme,
-  // @ts-ignore
+  // @ts-expect-error
   withTheme as untypedWithTheme,
-  // @ts-ignore
+  // @ts-expect-error
   ThemeProvider as UntypedProvider,
-  // @ts-ignore
+  // @ts-expect-error
   useTheme as UntypedUseTheme
 } from '@treygriffith/evergreen-ui'
-// @ts-ignore
+// @ts-expect-error
 import { Themer as UntypedThemer } from '@treygriffith/evergreen-ui/commonjs/themer'
 
 declare module '@treygriffith/evergreen-ui' {
