@@ -18,14 +18,16 @@ interface ToasterSettings {
 export const toaster: typeof defaultToaster = {
   ...defaultToaster,
   danger: (title: string, settings?: ToasterSettings): void => {
-    // @ts-expect-error
+    // TODO: please fix following typescript error
+// @ts-expect-error
     if (process.env.NODE_ENV === 'development') {
       logger.error(title)
     }
     defaultToaster.danger(title, settings)
   },
   warning: (title: string, settings?: ToasterSettings): void => {
-    // @ts-expect-error
+    // TODO: please fix following typescript error
+// @ts-expect-error
     if (process.env.NODE_ENV === 'development') {
       logger.warn(title)
     }

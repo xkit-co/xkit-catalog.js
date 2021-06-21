@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
-  // @ts-expect-error
+  // TODO: please fix following typescript error
+// @ts-expect-error
   plugins as untypedGlamorPlugins
 } from 'glamor'
 import {

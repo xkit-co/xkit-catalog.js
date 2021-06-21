@@ -55,5 +55,6 @@ const renderLoading = (id: string, title: string, removeBranding: boolean, opene
   sendToOpener('authWindow:ready', openerOrigin, validOrigins)
 }
 
+// TODO: please fix following typescript error
 // @ts-expect-error
 window.renderLoading = renderLoading

@@ -42,5 +42,6 @@ const renderError = (id: string, error: string, openerOrigin: string, validOrigi
   window.close()
 }
 
+// TODO: please fix following typescript error
 // @ts-expect-error
 window.renderError = renderError
