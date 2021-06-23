@@ -18,14 +18,12 @@ interface ToasterSettings {
 export const toaster: typeof defaultToaster = {
   ...defaultToaster,
   danger: (title: string, settings?: ToasterSettings): void => {
-    // @ts-ignore
     if (process.env.NODE_ENV === 'development') {
       logger.error(title)
     }
     defaultToaster.danger(title, settings)
   },
   warning: (title: string, settings?: ToasterSettings): void => {
-    // @ts-ignore
     if (process.env.NODE_ENV === 'development') {
       logger.warn(title)
     }

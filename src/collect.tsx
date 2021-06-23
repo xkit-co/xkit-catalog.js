@@ -14,5 +14,6 @@ const renderCollect = function (id: string, opts: AppOptions): void {
   })
 }
 
+// TODO: please fix following typescript error
 // @ts-expect-error
 window.renderCollect = renderCollect

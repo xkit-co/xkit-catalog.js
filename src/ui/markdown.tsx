@@ -169,7 +169,8 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
     const markdownSrc = text || childrenToText(children)
     const processor = this.getProcessor()
     // type waiting on https://github.com/vfile/vfile/pull/53
-    // @ts-expect-error
+    // TODO: please fix following typescript error
+// @ts-expect-error
     const contents = processor.processSync(markdownSrc).result
 
     return (
