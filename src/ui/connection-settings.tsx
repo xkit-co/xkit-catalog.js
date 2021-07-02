@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { majorScale, Pane } from 'evergreen-ui'
+import { majorScale, Pane } from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 import SettingsForm, { SettingsField } from './settings-form'
