@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Button, RefreshIcon, Text, majorScale } from '@treygriffith/evergreen-ui'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import { Connector } from '@xkit-co/xkit.js'
 import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectionAuthAlertProps {

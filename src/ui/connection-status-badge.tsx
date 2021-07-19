@@ -11,7 +11,7 @@ import {
   ConnectionShell,
   connectionStatus,
   ConnectionStatus
-} from '@xkit-co/xkit.js/lib/api/connection'
+} from '@xkit-co/xkit.js'
 
 interface ConnectionStatusBadgeProps {
   connections: Array<ConnectionOnly | ConnectionShell>

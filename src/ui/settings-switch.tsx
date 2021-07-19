@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
+import { hasOwnProperty } from '../util'
 import SwitchField from './switch-field'
 
 export interface SettingsSwitchField {

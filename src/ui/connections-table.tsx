@@ -3,7 +3,7 @@ import {
   Connection,
   ConnectionStatus,
   connectionStatus
-} from '@xkit-co/xkit.js/lib/api/connection'
+} from '@xkit-co/xkit.js'
 import {
   CogIcon,
   IconButton,

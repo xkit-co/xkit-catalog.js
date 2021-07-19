@@ -72,3 +72,9 @@ export const logger = {
   warn: console.warn.bind(console, 'Xkit:'),
   debug: process.env.NODE_ENV === 'development' ? console.debug.bind(console, 'Xkit:') : noop
 }
+
+// thx: https://fettblog.eu/typescript-hasownproperty/
+export function hasOwnProperty<X extends {}, Y extends PropertyKey>
+(obj: X, prop: Y): obj is X & Record<Y, unknown> {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
+}

@@ -6,7 +6,7 @@ import {
   Pane,
   majorScale
 } from '@treygriffith/evergreen-ui'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import { Connector } from '@xkit-co/xkit.js'
 import { Link } from 'react-router-dom'
 import ConnectionStatusBadge from './connection-status-badge'
 import ConnectorMark from './connector-mark'
