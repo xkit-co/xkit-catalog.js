@@ -4,7 +4,7 @@ import {
   Heading,
   majorScale
 } from '@treygriffith/evergreen-ui'
-import { Authorization } from '@xkit-co/xkit.js'
+import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
 import ConnectorMark from '../connector-mark'
 
 interface AuthorizationMarkProps {

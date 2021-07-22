@@ -8,7 +8,8 @@ import {
   useHistory
 } from 'react-router-dom'
 import { XkitJs } from '@xkit-co/xkit.js'
-import { Connector, Connection, ConnectionOnly } from '@xkit-co/xkit.js'
+import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import { Connection, ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
 import { useXkit } from './xkit-context'
 import { toaster } from './toaster'
 import {

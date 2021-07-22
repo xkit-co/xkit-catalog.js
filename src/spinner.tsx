@@ -3,8 +3,7 @@ import * as ReactDOM from 'react-dom'
 import {
   domReady,
   sendToOpener,
-  listenToOpener,
-  hasOwnProperty 
+  listenToOpener
 } from './util'
 import { Styled } from './ui/scope-styles'
 import PoweredBy from './ui/powered-by'
@@ -13,6 +12,7 @@ import {
   Spinner,
   Heading
 } from '@treygriffith/evergreen-ui'
+import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 
 const renderLoading = (id: string, title: string, removeBranding: boolean, openerOrigin: string, validOrigins: string[]): void => {
   domReady(window.document, () => {

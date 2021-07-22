@@ -16,7 +16,8 @@ import { CatalogFilter } from './catalog'
 import { CatalogThemeProps } from './theme'
 import Home from './home'
 import { SettingsField } from './settings-form'
-import { XkitJs, Connection } from '@xkit-co/xkit.js'
+import { XkitJs } from '@xkit-co/xkit.js'
+import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 
 type routerType = 'browser' | 'hash' | 'memory'
 

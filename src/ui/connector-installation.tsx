@@ -2,12 +2,12 @@ import React, {
   useState,
   useEffect
 } from 'react'
+import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
-  Connector,
   Connection,
   ConnectionStatus,
   connectionStatus
-} from '@xkit-co/xkit.js'
+} from '@xkit-co/xkit.js/lib/api/connection'
 import {
   AddIcon,
   Pane,
