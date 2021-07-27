@@ -34,7 +34,7 @@ const SettingsFieldInput: React.FC<SettingsFieldInputProps> = ({ field, onChange
     return <SettingsSwitch field={field} onChange={onChange} />
   }
 
-  logger.warn(`Ignored unsupported settings field type "${field}".`)
+  logger.warn(`Ignored unsupported settings field type "${field}".`) // eslint-disable-line @typescript-eslint/restrict-template-expressions
   return null
 }
 

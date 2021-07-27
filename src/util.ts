@@ -27,7 +27,7 @@ export function sendToOpener (message: unknown, openerOrigin: string, validOrigi
       if (validOrigins.includes(opener.location.origin)) {
         opener.postMessage(message, opener.location.origin)
       } else {
-        logger.error(`Could not find valid origin to notify: ${opener.location.origin}`)
+        logger.error(`Could not find valid origin to notify: ${opener.location.origin}`) // eslint-disable-line @typescript-eslint/restrict-template-expressions
       }
     }
   } catch (e) {
@@ -71,4 +71,12 @@ export const logger = {
   error: console.error.bind(console, 'Xkit:'),
   warn: console.warn.bind(console, 'Xkit:'),
   debug: process.env.NODE_ENV === 'development' ? console.debug.bind(console, 'Xkit:') : noop
+}
+
+export function errorMessage(e: any): string {
+  if (e instanceof Error) {
+    return e.message
+  } else {
+    return String(e)
+  }
 }

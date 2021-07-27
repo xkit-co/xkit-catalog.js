@@ -70,7 +70,7 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
 
   useEffect(() => {
     onLocationChange({ name: 'connector', connectorSlug: connector.slug })
-  }, [connector.slug])
+  }, [onLocationChange, connector.slug])
 
   return (
     <Pane>

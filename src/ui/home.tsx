@@ -18,6 +18,7 @@ import {
   SettingsUpdate,
   LocationListener
 } from './app'
+import { errorMessage } from '../util'
 
 interface HomeProps {
   title?: string
@@ -43,7 +44,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
   }
 
   componentDidMount (): void {
-    this.loadPlatform()
+    void this.loadPlatform()
     if (!this.props.hideTitle) {
       document.title = this.title()
     }
@@ -61,7 +62,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
 
     if (prevProps.xkit !== this.props.xkit) {
-      this.loadPlatform()
+      void this.loadPlatform()
     }
   }
 
@@ -74,7 +75,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       const platform = await xkit.getPlatform()
       this.setState({ platform })
     } catch (e) {
-      toaster.danger(`Error while loading platform: ${e.message}`)
+      toaster.danger(`Error while loading platform: ${errorMessage(e)}`)
     } finally {
       this.setState({ loading: false })
     }

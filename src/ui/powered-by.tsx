@@ -14,11 +14,11 @@ interface PoweredByProps {
 }
 
 const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = majorScale(4), align = 'left', campaign } = {}) => {
+  const [hovered, setHovered] = React.useState(false)
+
   if (removeBranding) {
     return null
   }
-
-  const [hovered, setHovered] = React.useState(false)
 
   return (
     <Pane

@@ -47,7 +47,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
 }) => {
   useEffect(() => {
     onLocationChange({ name: 'connectionSettings', connectorSlug: connector.slug, connectionId: connection.id })
-  }, [connection.id])
+  }, [onLocationChange, connection.id, connector.slug])
 
   return (
     <Pane>

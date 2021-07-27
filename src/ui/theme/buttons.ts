@@ -116,8 +116,8 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
         },
         focus: {
           ...defaults.focus,
-          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A
-            }, inset 0 -1px 1px 0 ${this.scales.neutral.N5A}`
+          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A // eslint-disable-line @typescript-eslint/restrict-template-expressions
+            }, inset 0 -1px 1px 0 ${this.scales.neutral.N5A}` // eslint-disable-line @typescript-eslint/restrict-template-expressions
         },
         active: {
           ...defaults.active,
@@ -125,8 +125,8 @@ export default function customizeButtons (theme: CatalogTheme, props: CustomButt
         },
         focusAndActive: {
           ...defaults.focusAndActive,
-          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A
-            }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}`
+          boxShadow: `0 0 0 3px ${focusColor}, inset 0 0 0 1px ${this.scales.neutral.N4A // eslint-disable-line @typescript-eslint/restrict-template-expressions
+            }, inset 0 1px 1px 0 ${this.scales.neutral.N2A}` // eslint-disable-line @typescript-eslint/restrict-template-expressions
         }
       }))
     }

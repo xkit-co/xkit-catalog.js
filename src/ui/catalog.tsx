@@ -19,6 +19,7 @@ import { toaster } from './toaster'
 import withXkit, { XkitConsumer } from './with-xkit'
 import PoweredBy from './powered-by'
 import { LocationListener } from './app'
+import { errorMessage } from '../util'
 
 export type CatalogFilter = (connector: Connector) => boolean
 
@@ -50,13 +51,13 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
   }
 
   componentDidMount (): void {
-    this.loadConnectors()
+    void this.loadConnectors()
     this.props.onLocationChange({ name: 'index' })
   }
 
   componentDidUpdate (prevProps: XkitConsumer<CatalogProps>): void {
     if (prevProps.xkit !== this.props.xkit) {
-      this.loadConnectors()
+      void this.loadConnectors()
     }
   }
 
@@ -66,7 +67,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       const connectors = await this.props.xkit.listConnectors()
       this.setState({ connectors })
     } catch (e) {
-      toaster.danger(`Error while loading connectors: ${e.message}`)
+      toaster.danger(`Error while loading connectors: ${errorMessage(e)}`)
     } finally {
       this.setState({ loading: false })
     }
@@ -74,7 +75,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
 
   renderBackButton (): React.ReactNode {
     const { platform, showBackButton } = this.props
-    const shouldShowBack = platform && platform.website && showBackButton
+    const shouldShowBack = platform?.website && showBackButton
 
     if (!shouldShowBack && platform.remove_branding) return
 

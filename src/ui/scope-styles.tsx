@@ -54,7 +54,7 @@ function addUIBoxScope<T> ({ selector, rules }: UIBoxDefinition<T>): UIBoxDefini
 
 // These are applied globally
 glamorPlugins.add(addGlamorScope)
-useUIBoxPlugin(addUIBoxScope)
+useUIBoxPlugin(addUIBoxScope) // eslint-disable-line react-hooks/rules-of-hooks
 setClassNamePrefix(PREFIX_CLASS)
 
 interface StyledState {

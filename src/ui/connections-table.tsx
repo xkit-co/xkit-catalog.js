@@ -78,20 +78,20 @@ const ConnectionsTable: React.FC<ConnectionsTableProps> = ({
                 {hasSettings(connection) &&
                   <MenuItem
                     icon={CogIcon}
-                    onSelect={() => selectAndClose(onSelectSettings, close)}
+                    onSelect={async () => await selectAndClose(onSelectSettings, close)}
                   >
                     Settings...
                   </MenuItem>}
                 {connectionStatus(connection) === ConnectionStatus.Error &&
                   <MenuItem
                     icon={RefreshIcon}
-                    onSelect={() => selectAndClose(onSelectReconnect, close)}
+                    onSelect={async () => await selectAndClose(onSelectReconnect, close)}
                   >
                     Reconnect...
                   </MenuItem>}
                 <MenuItem
                   icon={TrashIcon}
-                  onSelect={() => selectAndClose(onSelectRemove, close)}
+                  onSelect={async () => await selectAndClose(onSelectRemove, close)}
                   intent='danger'
                 >
                   Remove...

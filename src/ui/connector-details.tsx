@@ -27,6 +27,7 @@ import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
 import PoweredBy from './powered-by'
+import { errorMessage } from '../util'
 
 interface ConnectorDetailsProps {
   path: string
@@ -55,39 +56,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   const [settings, setSettings] = useState<Settings>({})
   const [fieldsChangeset, setFieldsChangeset] = useState<SettingsField[]>(null)
 
-  async function loadData (xkit: XkitJs, slug: string): Promise<void> {
-    setIsLoading(true)
-    try {
-      const connector = await xkit.getConnector(slug)
-      const connections = (connector.connections || []).map((connection: ConnectionOnly): Connection => {
-        return { ...connection, connector: connector }
-      })
-      setConnector(connector)
-      setConnections(connections)
-      await loadSettings(connections)
-    } catch (e) {
-      toaster.danger(`Error while loading connector: ${e.message}`)
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
-  async function loadSettings (connections: Connection[]): Promise<void> {
-    if (!settingsUpdate) return
-
-    try {
-      const fields = await Promise.all(
-        connections.map(connection => settingsUpdate(connection, undefined))
-      )
-      const settings: Settings = {}
-      connections.forEach((connection, index) => {
-        settings[connection.id] = fields[index]
-      })
-      setSettings(settings)
-    } catch (e) {
-      toaster.danger(`Error while loading settings: ${e.message}`)
-    }
-  }
 
   async function loadFields (connection: Connection): Promise<SettingsField[] | null> {
     if (!settingsUpdate) return null
@@ -95,7 +64,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     try {
       return await settingsUpdate(connection, undefined)
     } catch (e) {
-      toaster.danger(`Error while loading settings: ${e.message}`)
+      toaster.danger(`Error while loading settings: ${errorMessage(e)}`)
     }
   }
 
@@ -170,7 +139,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         closeSettings()
       }
     } catch (e) {
-      toaster.danger(`Error while saving settings: ${e.message}`)
+      toaster.danger(`Error while saving settings: ${errorMessage(e)}`)
     }
   }
 
@@ -179,9 +148,43 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     setFieldsChangeset(null)
   }
 
-  useEffect(() => {
-    loadData(xkit, slug)
-  }, [xkit, slug])
+  useEffect(() => { 
+    async function loadSettings (connections: Connection[]): Promise<void> {
+      if (!settingsUpdate) return
+
+      try {
+        const fields = await Promise.all(
+          connections.map(connection => settingsUpdate(connection, undefined))
+        )
+        const settings: Settings = {}
+        connections.forEach((connection, index) => {
+          settings[connection.id] = fields[index]
+        })
+        setSettings(settings)
+      } catch (e) {
+        toaster.danger(`Error while loading settings: ${errorMessage(e)}`)
+      }
+    }
+
+    async function loadData (xkit: XkitJs, slug: string): Promise<void> {
+      setIsLoading(true)
+      try {
+        const connector = await xkit.getConnector(slug)
+        const connections = (connector.connections || []).map((connection: ConnectionOnly): Connection => {
+          return { ...connection, connector: connector }
+        })
+        setConnector(connector)
+        setConnections(connections)
+        await loadSettings(connections)
+      } catch (e) {
+        toaster.danger(`Error while loading connector: ${errorMessage(e)}`)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    void loadData(xkit, slug)
+  }, [xkit, slug, settingsUpdate])
 
   if (isLoading) {
     return (
@@ -215,7 +218,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
                 connection={connection}
                 fields={fieldsChangeset}
                 onChangeField={changeField}
-                onSave={() => saveSettings(connection)}
+                onSave={async () => await saveSettings(connection)}
                 onCancel={closeSettings}
                 onLocationChange={onLocationChange}
               />
