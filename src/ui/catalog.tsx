@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from "react";
 import {
   Pane,
   Text,
@@ -9,161 +9,173 @@ import {
   BackButton,
   Spinner,
   Colors,
-  majorScale
-} from '@treygriffith/evergreen-ui'
-import { compareTwoStrings } from 'string-similarity'
-import CatalogThumb from './catalog-thumb'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
-import { toaster } from './toaster'
-import withXkit, { XkitConsumer } from './with-xkit'
-import PoweredBy from './powered-by'
-import { LocationListener } from './app'
+  majorScale,
+} from "@treygriffith/evergreen-ui";
+import { compareTwoStrings } from "string-similarity";
+import CatalogThumb from "./catalog-thumb";
+import { Connector } from "@xkit-co/xkit.js/lib/api/connector";
+import { Platform } from "@xkit-co/xkit.js/lib/api/platform";
+import { toaster } from "./toaster";
+import withXkit, { XkitConsumer } from "./with-xkit";
+import PoweredBy from "./powered-by";
+import { LocationListener } from "./app";
 
-export type CatalogFilter = (connector: Connector) => boolean
+export type CatalogFilter = (connector: Connector) => boolean;
 
 interface CatalogProps {
-  platform: Platform
-  showBackButton?: boolean
-  hideSearch?: boolean
-  connectorsPath: string
-  filter: CatalogFilter
-  onLocationChange: LocationListener
+  platform: Platform;
+  showBackButton?: boolean;
+  hideSearch?: boolean;
+  connectorsPath: string;
+  filter: CatalogFilter;
+  onLocationChange: LocationListener;
 }
 
 interface CatalogState {
-  connectors: Connector[]
-  loading: boolean
-  search: string
+  connectors: Connector[];
+  loading: boolean;
+  search: string;
 }
 
-const SIMILARITY_MIN = 0.75
+const SIMILARITY_MIN = 0.75;
 
-class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> {
-  constructor (props: XkitConsumer<CatalogProps>) {
-    super(props)
+class Catalog extends React.Component<
+  XkitConsumer<CatalogProps>,
+  CatalogState
+> {
+  constructor(props: XkitConsumer<CatalogProps>) {
+    super(props);
     this.state = {
       connectors: [],
       loading: true,
-      search: ''
-    }
+      search: "",
+    };
   }
 
-  componentDidMount (): void {
-    this.loadConnectors()
-    this.props.onLocationChange({ name: 'index' })
+  componentDidMount(): void {
+    this.loadConnectors();
+    this.props.onLocationChange({ name: "index" });
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>): void {
+  componentDidUpdate(prevProps: XkitConsumer<CatalogProps>): void {
     if (prevProps.xkit !== this.props.xkit) {
-      this.loadConnectors()
+      this.loadConnectors();
     }
   }
 
-  async loadConnectors (): Promise<void> {
-    this.setState({ loading: true })
+  async loadConnectors(): Promise<void> {
+    this.setState({ loading: true });
     try {
-      const connectors = await this.props.xkit.listConnectors()
-      this.setState({ connectors })
+      const connectors = await this.props.xkit.listConnectors();
+      this.setState({ connectors });
     } catch (e) {
-      toaster.danger(`Error while loading connectors: ${e.message}`)
+      toaster.danger(`Error while loading connectors: ${e.message}`);
     } finally {
-      this.setState({ loading: false })
+      this.setState({ loading: false });
     }
   }
 
-  renderBackButton (): React.ReactNode {
-    const { platform, showBackButton } = this.props
-    const shouldShowBack = platform && platform.website && showBackButton
+  renderBackButton(): React.ReactNode {
+    const { platform, showBackButton } = this.props;
+    const shouldShowBack = platform && platform.website && showBackButton;
 
-    if (!shouldShowBack && platform.remove_branding) return
+    if (!shouldShowBack && platform.remove_branding) return;
 
     return (
       <Pane
         marginTop={majorScale(3)}
         marginBottom={majorScale(3)}
-        display='flex'
-        justifyContent='space-between'
+        display="flex"
+        justifyContent="space-between"
       >
-        {shouldShowBack && <BackButton is='a' href={platform.website}>Back to {platform.name}</BackButton>}
+        {shouldShowBack && (
+          <BackButton is="a" href={platform.website}>
+            Back to {platform.name}
+          </BackButton>
+        )}
         <PoweredBy
           margin={0}
-          align='right'
+          align="right"
           removeBranding={platform.remove_branding}
-          campaign='catalog_footer'
+          campaign="catalog_footer"
         />
       </Pane>
-    )
+    );
   }
 
   searchFilter = (connector: Connector): boolean => {
-    const { search } = this.state
+    const { search } = this.state;
     if (!search.length) {
-      return true
+      return true;
     }
-    return connector.name.toLowerCase().includes(search.toLowerCase()) ||
-           (compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) > SIMILARITY_MIN)
-  }
+    return (
+      connector.name.toLowerCase().includes(search.toLowerCase()) ||
+      compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) >
+        SIMILARITY_MIN
+    );
+  };
 
-  renderConnectors (): React.ReactNode {
-    const {
-      connectorsPath,
-      filter
-    } = this.props
-    const { connectors, loading } = this.state
+  renderConnectors(): React.ReactNode {
+    const { connectorsPath, filter } = this.props;
+    const { connectors, loading } = this.state;
     if (loading) {
       return (
         <EmptyCatalog>
-          <Spinner margin='auto' size={majorScale(6)} />
+          <Spinner margin="auto" size={majorScale(6)} />
         </EmptyCatalog>
-      )
+      );
     }
 
-    const filteredConnectors = connectors.filter(filter).filter(this.searchFilter)
+    const filteredConnectors = connectors
+      .filter(filter)
+      .filter(this.searchFilter);
 
     if (filteredConnectors.length === 0) {
       return (
-        <EmptyCatalog background='tint1'>
-          <Heading size={600} textAlign='center'>
+        <EmptyCatalog background="tint1">
+          <Heading size={600} textAlign="center">
             <Text marginRight={majorScale(1)}>
               <InboxIcon />
             </Text>
             No Integrations Found
           </Heading>
         </EmptyCatalog>
-      )
+      );
     }
 
-    return filteredConnectors.map(connector => {
+    return filteredConnectors.map((connector) => {
       return (
         <CatalogThumb
           connector={connector}
           key={connector.slug}
           connectorsPath={connectorsPath}
         />
-      )
-    })
+      );
+    });
   }
 
-  render (): React.ReactElement {
-    const { hideSearch } = this.props
-    const { search } = this.state
+  render(): React.ReactElement {
+    const { hideSearch } = this.props;
+    const { search } = this.state;
     return (
       <Pane>
-        {!hideSearch &&
+        {!hideSearch && (
           <SearchInput
             marginTop={majorScale(2)}
-            placeholder='Search integrations...'
+            placeholder="Search integrations..."
             height={majorScale(6)}
-            width='100%'
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ search: e.target.value })}
+            width="100%"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              this.setState({ search: e.target.value })
+            }
             value={search}
-          />}
+          />
+        )}
         <Pane
           clearfix
           marginTop={majorScale(3)}
-          display='flex'
-          flexWrap='wrap'
+          display="flex"
+          flexWrap="wrap"
           marginRight={majorScale(-3)}
           marginBottom={majorScale(-3)}
         >
@@ -171,15 +183,18 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
         </Pane>
         {this.renderBackButton()}
       </Pane>
-    )
+    );
   }
 }
 
 interface EmptyCatalogProps {
-  background?: keyof Colors['background']
+  background?: keyof Colors["background"];
 }
 
-const EmptyCatalog: React.FC<EmptyCatalogProps> = ({ background, children }): React.ReactElement => {
+const EmptyCatalog: React.FC<EmptyCatalogProps> = ({
+  background,
+  children,
+}): React.ReactElement => {
   return (
     <Card
       flexGrow={1}
@@ -188,13 +203,13 @@ const EmptyCatalog: React.FC<EmptyCatalogProps> = ({ background, children }): Re
       background={background}
       padding={majorScale(2)}
       height={150}
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
     >
       {children}
     </Card>
-  )
-}
+  );
+};
 
-export default withXkit(Catalog)
+export default withXkit(Catalog);
