@@ -16,12 +16,12 @@ interface XkitState {
 // Wrap the Context Provider to provide custom listening behavior
 // for the Xkit library
 class SubscribedProvider extends React.Component<XkitProps, XkitState> {
-  constructor (props: XkitProps) {
+  constructor(props: XkitProps) {
     super(props)
     this.state = { xkit: this.props.value }
   }
 
-  componentDidMount (): void {
+  componentDidMount(): void {
     this.subscribe()
   }
 
@@ -32,19 +32,19 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
     this.setState({ xkit: Object.assign({}, xkit) })
   }
 
-  subscribe (): void {
+  subscribe(): void {
     const { value: xkit } = this.props
     xkit.on('config:update', this.onConfigUpdate)
   }
 
-  unsubscribe (): void {
+  unsubscribe(): void {
     const { value: xkit } = this.props
     try {
       xkit.off('config:update', this.onConfigUpdate)
     } catch {}
   }
 
-  componentDidUpdate (prevProps: XkitProps): void {
+  componentDidUpdate(prevProps: XkitProps): void {
     if (prevProps.value !== this.props.value) {
       this.unsubscribe()
       this.subscribe()
@@ -52,27 +52,19 @@ class SubscribedProvider extends React.Component<XkitProps, XkitState> {
     }
   }
 
-  componentWillUnmount (): void {
+  componentWillUnmount(): void {
     this.unsubscribe()
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { children } = this.props
     const { xkit } = this.state
-    return (
-      <Provider value={xkit}>
-        {children}
-      </Provider>
-    )
+    return <Provider value={xkit}>{children}</Provider>
   }
 }
 
-function useXkit (): XkitJs {
+function useXkit(): XkitJs {
   return React.useContext(XkitContext)
 }
 
-export {
-  SubscribedProvider as Provider,
-  Consumer,
-  useXkit
-}
+export { SubscribedProvider as Provider, Consumer, useXkit }

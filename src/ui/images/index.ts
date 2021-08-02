@@ -5,4 +5,7 @@ import { readFileSync } from 'fs'
 // eslint-disable-next-line node/no-path-concat
 export const logo = readFileSync(__dirname + '/xkit-logo-black.svg', 'utf8')
 // eslint-disable-next-line node/no-path-concat
-export const monoLogo = readFileSync(__dirname + '/xkit-logo-mono-black.svg', 'utf8')
+export const monoLogo = readFileSync(
+  __dirname + '/xkit-logo-mono-black.svg',
+  'utf8'
+)

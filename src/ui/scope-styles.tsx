@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
   // TODO: please fix following typescript error
-// @ts-expect-error
+  // @ts-expect-error
   plugins as untypedGlamorPlugins
 } from 'glamor'
 import {
@@ -28,10 +28,13 @@ const glamorPlugins = untypedGlamorPlugins as PluginSet
 const SCOPE_ID = 'xkit___embed'
 const PREFIX_CLASS = 'xkit-'
 
-function scopeSelector (selector: string): string {
-  return selector.split(',').map((part: string) => {
-    return `#${SCOPE_ID} ${part.trim()}`
-  }).join(',')
+function scopeSelector(selector: string): string {
+  return selector
+    .split(',')
+    .map((part: string) => {
+      return `#${SCOPE_ID} ${part.trim()}`
+    })
+    .join(',')
 }
 
 interface GlamorDefinition<T> {
@@ -44,11 +47,17 @@ interface UIBoxDefinition<T> {
   rules: T
 }
 
-function addGlamorScope<T> ({ selector, style }: GlamorDefinition<T>): GlamorDefinition<T> {
+function addGlamorScope<T>({
+  selector,
+  style
+}: GlamorDefinition<T>): GlamorDefinition<T> {
   return { selector: scopeSelector(selector), style }
 }
 
-function addUIBoxScope<T> ({ selector, rules }: UIBoxDefinition<T>): UIBoxDefinition<T> {
+function addUIBoxScope<T>({
+  selector,
+  rules
+}: UIBoxDefinition<T>): UIBoxDefinition<T> {
   return { selector: scopeSelector(selector), rules }
 }
 
@@ -65,23 +74,24 @@ interface StyledState {
 // the way you expect them to. This component both resets styles for the its children
 // and applies the scoping ID for stronger style rules.
 export class Styled extends React.Component<{}, StyledState> {
-  componentDidMount (): void {
-    this.setState({ cssTag: injectCSS(window.document, resetStyles.replace(/%\{SCOPE_ID\}/g, SCOPE_ID)) })
+  componentDidMount(): void {
+    this.setState({
+      cssTag: injectCSS(
+        window.document,
+        resetStyles.replace(/%\{SCOPE_ID\}/g, SCOPE_ID)
+      )
+    })
   }
 
-  componentWillUnmount (): void {
+  componentWillUnmount(): void {
     const { cssTag } = this.state
     if (cssTag) {
       removeCSS(window.document, cssTag)
     }
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { children } = this.props
-    return (
-      <div id={SCOPE_ID}>
-        {children}
-      </div>
-    )
+    return <div id={SCOPE_ID}>{children}</div>
   }
 }

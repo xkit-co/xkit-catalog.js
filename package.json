@@ -19,7 +19,10 @@
     "copy-images": "parcel build --no-cache src/ui/images/index.ts --out-dir lib/ui/images --no-source-maps && rm lib/ui/images/report.html",
     "repo": "echo $npm_package_repository_url",
     "lint": "eslint .",
-    "lint-fix": "npm run lint -- --fix"
+    "lint-fix": "npm run lint -- --fix",
+    "_prettier": "prettier 'src/**/*.{js,jsx,ts,tsx}'",
+    "format-check": "npm run _prettier -- --check",
+    "format-fix": "npm run _prettier -- --write"
   },
   "author": "Xkit <dev@xkit.co>",
   "license": "MIT",
@@ -46,7 +49,7 @@
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "parcel-plugin-css-to-string": "^2.5.0",
     "parcel-plugin-stdin": "^0.1.1",
-    "ts-standard": "^10.0.0",
+    "prettier": "^2.3.2",
     "typescript": "~3.9.5"
   },
   "dependencies": {

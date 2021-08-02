@@ -1,33 +1,30 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {
-  domReady,
-  sendToOpener
-} from './util'
+import { domReady, sendToOpener } from './util'
 import { Styled } from './ui/scope-styles'
-import {
-  Pane,
-  Heading
-} from '@treygriffith/evergreen-ui'
+import { Pane, Heading } from '@treygriffith/evergreen-ui'
 
-const renderError = (id: string, error: string, openerOrigin: string, validOrigins: string[]): void => {
+const renderError = (
+  id: string,
+  error: string,
+  openerOrigin: string,
+  validOrigins: string[]
+): void => {
   domReady(window.document, () => {
     ReactDOM.render(
-      (
-        <Styled>
-          <Pane
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
-            minHeight='100%'
-            width='100%'
-            position='absolute'
-          >
-            <Heading marginTop='default'>{error}</Heading>
-          </Pane>
-        </Styled>
-      ),
+      <Styled>
+        <Pane
+          display='flex'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          minHeight='100%'
+          width='100%'
+          position='absolute'
+        >
+          <Heading marginTop='default'>{error}</Heading>
+        </Pane>
+      </Styled>,
       document.getElementById(id)
     )
   })

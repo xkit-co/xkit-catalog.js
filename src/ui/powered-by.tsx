@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  Pane,
-  Text,
-  majorScale
-} from '@treygriffith/evergreen-ui'
+import { Pane, Text, majorScale } from '@treygriffith/evergreen-ui'
 import { logo, monoLogo } from './images'
 
 interface PoweredByProps {
@@ -13,7 +9,12 @@ interface PoweredByProps {
   align?: 'left' | 'right'
 }
 
-const PoweredBy: React.FC<PoweredByProps> = ({ removeBranding = false, margin = majorScale(4), align = 'left', campaign } = {}) => {
+const PoweredBy: React.FC<PoweredByProps> = ({
+  removeBranding = false,
+  margin = majorScale(4),
+  align = 'left',
+  campaign
+} = {}) => {
   const [hovered, setHovered] = React.useState(false)
 
   if (removeBranding) {

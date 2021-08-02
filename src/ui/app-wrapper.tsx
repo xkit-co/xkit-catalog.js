@@ -27,14 +27,14 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     theme: {}
   }
 
-  constructor (props: AppWrapperProps) {
+  constructor(props: AppWrapperProps) {
     super(props)
     this.state = {
       theme: buildTheme(this.props.theme)
     }
   }
 
-  componentDidUpdate (prevProps: AppWrapperProps): void {
+  componentDidUpdate(prevProps: AppWrapperProps): void {
     if (this.props.theme !== prevProps.theme) {
       this.setState({
         theme: buildTheme(this.props.theme)
@@ -42,11 +42,8 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
     }
   }
 
-  render (): React.ReactElement {
-    const {
-      xkit,
-      children
-    } = this.props
+  render(): React.ReactElement {
+    const { xkit, children } = this.props
     const { theme } = this.state
 
     return (
@@ -54,9 +51,7 @@ class AppWrapper extends React.Component<AppWrapperProps, AppWrapperState> {
         <Toaster>
           <Portal>
             <ThemeProvider value={theme}>
-              <XkitProvider value={xkit}>
-                {children}
-              </XkitProvider>
+              <XkitProvider value={xkit}>{children}</XkitProvider>
             </ThemeProvider>
           </Portal>
         </Toaster>

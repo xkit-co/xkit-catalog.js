@@ -1,11 +1,11 @@
-import {
-  CardProps,
-  CatalogTheme
-} from './catalog-theme'
+import { CardProps, CatalogTheme } from './catalog-theme'
 
 export type CustomCardProps = Partial<CardProps>
 
-export default function customizeCards (theme: CatalogTheme, props: CustomCardProps): CatalogTheme {
+export default function customizeCards(
+  theme: CatalogTheme,
+  props: CustomCardProps
+): CatalogTheme {
   return {
     ...theme,
     card: {

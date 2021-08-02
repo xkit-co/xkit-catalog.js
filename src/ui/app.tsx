@@ -2,10 +2,7 @@ import * as React from 'react'
 import { logger } from '../util'
 import AppWrapper from './app-wrapper'
 import { Pane } from '@treygriffith/evergreen-ui'
-import {
-  Route,
-  Router
-} from 'react-router-dom'
+import { Route, Router } from 'react-router-dom'
 import {
   createBrowserHistory,
   createMemoryHistory,
@@ -21,11 +18,11 @@ import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
 
 type routerType = 'browser' | 'hash' | 'memory'
 
-export function isRouterType (type: string | undefined): type is routerType {
+export function isRouterType(type: string | undefined): type is routerType {
   return ['memory', 'hash', 'browser'].includes(type)
 }
 
-export function createHistory (type: routerType, basename: string): History {
+export function createHistory(type: routerType, basename: string): History {
   if (type === 'memory') {
     return createMemoryHistory()
   }
@@ -37,7 +34,10 @@ export function createHistory (type: routerType, basename: string): History {
   return createBrowserHistory({ basename })
 }
 
-export type SettingsUpdate = (connection: Connection, fields?: SettingsField[]) => SettingsField[] | Promise<SettingsField[]>
+export type SettingsUpdate = (
+  connection: Connection,
+  fields?: SettingsField[]
+) => SettingsField[] | Promise<SettingsField[]>
 
 interface IndexLocation {
   name: 'index'
@@ -54,7 +54,9 @@ interface ConnectionLocation {
   connectionId: string
 }
 
-export type LocationListener = (location: IndexLocation | ConnectorLocation | ConnectionLocation) => void
+export type LocationListener = (
+  location: IndexLocation | ConnectorLocation | ConnectionLocation
+) => void
 
 export interface AppOptions {
   hideTitle?: boolean
@@ -90,29 +92,33 @@ class App extends React.Component<AppProps, AppState> {
     onLocationChange: (): void => {}
   }
 
-  createHistory (): History {
+  createHistory(): History {
     if (this.props.history) {
       return this.props.history
     }
     return createHistory(this.props.routerType, this.props.rootPath)
   }
 
-  constructor (props: AppProps) {
+  constructor(props: AppProps) {
     super(props)
     this.state = {
       history: this.createHistory()
     }
 
     if (!this.props.xkit) {
-      logger.error('An Xkit instance was not passed to the React App, it will fail to load.')
+      logger.error(
+        'An Xkit instance was not passed to the React App, it will fail to load.'
+      )
     }
 
     if (this.props.inheritRouter && this.props.history) {
-      logger.warn('You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.')
+      logger.warn(
+        'You set `inheritRouter` to true and passed a `history` object to the Xkit catalog. These are incompatible, `history` will be ignored.'
+      )
     }
   }
 
-  renderApp (): React.ReactElement {
+  renderApp(): React.ReactElement {
     const {
       title,
       hideTitle,
@@ -144,21 +150,15 @@ class App extends React.Component<AppProps, AppState> {
     )
   }
 
-  render (): React.ReactElement {
-    const {
-      inheritRouter
-    } = this.props
+  render(): React.ReactElement {
+    const { inheritRouter } = this.props
     const { history } = this.state
 
     if (inheritRouter) {
       return this.renderApp()
     }
 
-    return (
-      <Router history={history}>
-        {this.renderApp()}
-      </Router>
-    )
+    return <Router history={history}>{this.renderApp()}</Router>
   }
 }
 

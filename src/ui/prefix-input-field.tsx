@@ -9,19 +9,37 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 
-type PrefixInputFieldProps = TextInputProps & FormFieldProps & {
-  suffix: string
-}
+type PrefixInputFieldProps = TextInputProps &
+  FormFieldProps & {
+    suffix: string
+  }
 
 class PrefixInputField extends React.Component<PrefixInputFieldProps> {
   private readonly suffixPane = React.createRef<HTMLDivElement>()
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { suffix, ...restProps } = this.props
-    const { value, isInvalid, onChange, onKeyDown, placeholder, disabled, ...formFieldProps } = restProps
-    const inputProps = { value, isInvalid, onChange, onKeyDown, placeholder, disabled }
+    const {
+      value,
+      isInvalid,
+      onChange,
+      onKeyDown,
+      placeholder,
+      disabled,
+      ...formFieldProps
+    } = restProps
+    const inputProps = {
+      value,
+      isInvalid,
+      onChange,
+      onKeyDown,
+      placeholder,
+      disabled
+    }
 
-    const width = this.suffixPane.current ? this.suffixPane.current.offsetWidth : 75
+    const width = this.suffixPane.current
+      ? this.suffixPane.current.offsetWidth
+      : 75
 
     return (
       <FormField {...formFieldProps} marginBottom={majorScale(3)}>
@@ -34,7 +52,8 @@ class PrefixInputField extends React.Component<PrefixInputFieldProps> {
                 padding={6}
                 paddingRight={majorScale(1)}
                 color='muted'
-              >{suffix}
+              >
+                {suffix}
               </Text>
             </div>
           </Pane>

@@ -3,7 +3,7 @@ import { Tab as EgTab, TabOwnProps } from '@treygriffith/evergreen-ui'
 
 const Tab: React.FC<TabOwnProps> = ({
   isSelected = false,
-  onSelect = () => { },
+  onSelect = () => {},
   children,
   ...rest
 }) => {

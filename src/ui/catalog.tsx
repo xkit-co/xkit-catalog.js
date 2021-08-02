@@ -40,8 +40,11 @@ interface CatalogState {
 
 const SIMILARITY_MIN = 0.75
 
-class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> {
-  constructor (props: XkitConsumer<CatalogProps>) {
+class Catalog extends React.Component<
+  XkitConsumer<CatalogProps>,
+  CatalogState
+> {
+  constructor(props: XkitConsumer<CatalogProps>) {
     super(props)
     this.state = {
       connectors: [],
@@ -50,18 +53,18 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     }
   }
 
-  componentDidMount (): void {
+  componentDidMount(): void {
     void this.loadConnectors()
     this.props.onLocationChange({ name: 'index' })
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<CatalogProps>): void {
+  componentDidUpdate(prevProps: XkitConsumer<CatalogProps>): void {
     if (prevProps.xkit !== this.props.xkit) {
       void this.loadConnectors()
     }
   }
 
-  async loadConnectors (): Promise<void> {
+  async loadConnectors(): Promise<void> {
     this.setState({ loading: true })
     try {
       const connectors = await this.props.xkit.listConnectors()
@@ -73,7 +76,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     }
   }
 
-  renderBackButton (): React.ReactNode {
+  renderBackButton(): React.ReactNode {
     const { platform, showBackButton } = this.props
     const shouldShowBack = platform?.website && showBackButton
 
@@ -86,7 +89,11 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
         display='flex'
         justifyContent='space-between'
       >
-        {shouldShowBack && <BackButton is='a' href={platform.website}>Back to {platform.name}</BackButton>}
+        {shouldShowBack && (
+          <BackButton is='a' href={platform.website}>
+            Back to {platform.name}
+          </BackButton>
+        )}
         <PoweredBy
           margin={0}
           align='right'
@@ -102,15 +109,15 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     if (!search.length) {
       return true
     }
-    return connector.name.toLowerCase().includes(search.toLowerCase()) ||
-           (compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) > SIMILARITY_MIN)
+    return (
+      connector.name.toLowerCase().includes(search.toLowerCase()) ||
+      compareTwoStrings(connector.name.toLowerCase(), search.toLowerCase()) >
+        SIMILARITY_MIN
+    )
   }
 
-  renderConnectors (): React.ReactNode {
-    const {
-      connectorsPath,
-      filter
-    } = this.props
+  renderConnectors(): React.ReactNode {
+    const { connectorsPath, filter } = this.props
     const { connectors, loading } = this.state
     if (loading) {
       return (
@@ -120,7 +127,9 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       )
     }
 
-    const filteredConnectors = connectors.filter(filter).filter(this.searchFilter)
+    const filteredConnectors = connectors
+      .filter(filter)
+      .filter(this.searchFilter)
 
     if (filteredConnectors.length === 0) {
       return (
@@ -135,7 +144,7 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
       )
     }
 
-    return filteredConnectors.map(connector => {
+    return filteredConnectors.map((connector) => {
       return (
         <CatalogThumb
           connector={connector}
@@ -146,20 +155,23 @@ class Catalog extends React.Component<XkitConsumer<CatalogProps>, CatalogState> 
     })
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { hideSearch } = this.props
     const { search } = this.state
     return (
       <Pane>
-        {!hideSearch &&
+        {!hideSearch && (
           <SearchInput
             marginTop={majorScale(2)}
             placeholder='Search integrations...'
             height={majorScale(6)}
             width='100%'
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ search: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              this.setState({ search: e.target.value })
+            }
             value={search}
-          />}
+          />
+        )}
         <Pane
           clearfix
           marginTop={majorScale(3)}
@@ -180,7 +192,10 @@ interface EmptyCatalogProps {
   background?: keyof Colors['background']
 }
 
-const EmptyCatalog: React.FC<EmptyCatalogProps> = ({ background, children }): React.ReactElement => {
+const EmptyCatalog: React.FC<EmptyCatalogProps> = ({
+  background,
+  children
+}): React.ReactElement => {
   return (
     <Card
       flexGrow={1}

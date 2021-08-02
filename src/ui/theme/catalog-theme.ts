@@ -1,7 +1,4 @@
-import {
-  majorScale,
-  defaultTheme
-} from '@treygriffith/evergreen-ui'
+import { majorScale, defaultTheme } from '@treygriffith/evergreen-ui'
 import { Theme } from './evergreen'
 
 type CatalogPalette = typeof defaultTheme.palette & {
@@ -27,7 +24,10 @@ export interface CatalogTheme extends Omit<Theme, 'palette' | 'colors'> {
   card: CardProps
 }
 
-function keyAsValue (obj: { [index: string]: string }, keyValue: string): string {
+function keyAsValue(
+  obj: { [index: string]: string },
+  keyValue: string
+): string {
   if (Object.prototype.hasOwnProperty.call(obj, keyValue) === true) {
     return obj[keyValue]
   }
@@ -35,16 +35,16 @@ function keyAsValue (obj: { [index: string]: string }, keyValue: string): string
 }
 
 const ThemeHelpers: Partial<CatalogTheme> = {
-  getBackground (background: string): string {
+  getBackground(background: string): string {
     return keyAsValue(this.colors.background, background)
   },
-  getElevation (elevation: number): string {
+  getElevation(elevation: number): string {
     return this.elevations[elevation]
   },
-  getIconColor (color: string): string {
+  getIconColor(color: string): string {
     return keyAsValue(this.colors.icon, color)
   },
-  getHeadingStyle (size = 500) {
+  getHeadingStyle(size = 500) {
     // Heading styles get passed straight through without
     // using the helpers, so we fix that
     const style = this.typography.headings[String(size)]
@@ -56,16 +56,16 @@ const ThemeHelpers: Partial<CatalogTheme> = {
     }
     return style
   },
-  getTextStyle (size = 400) {
+  getTextStyle(size = 400) {
     return this.typography.text[String(size)]
   },
-  getParagraphStyle (size = 400) {
+  getParagraphStyle(size = 400) {
     return this.typography.paragraph[String(size)]
   },
-  getFontFamily (family: string) {
+  getFontFamily(family: string) {
     return keyAsValue(this.typography.fontFamilies, family)
   },
-  getTextColor (color: string) {
+  getTextColor(color: string) {
     return keyAsValue(this.colors.text, color)
   }
 }

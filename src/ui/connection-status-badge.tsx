@@ -18,7 +18,10 @@ interface ConnectionStatusBadgeProps {
   useTooltip: boolean
 }
 
-const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connections, useTooltip }) => {
+const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({
+  connections,
+  useTooltip
+}) => {
   let total = 0
   let hasDisconnected = false
 
@@ -56,14 +59,20 @@ const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({ connectio
 
   const badge = (
     <Badge color={badgeColor} display='flex' alignItems='center'>
-      {hasDisconnected && total > 1 && <WarningSignIcon size={minorScale(3)} style={{ marginRight: '3px' }} />}
+      {hasDisconnected && total > 1 && (
+        <WarningSignIcon size={minorScale(3)} style={{ marginRight: '3px' }} />
+      )}
       {badgeText}
     </Badge>
   )
 
-  return useTooltip
-    ? <Tooltip content={tooltipText} position={Position.TOP}>{badge}</Tooltip>
-    : badge
+  return useTooltip ? (
+    <Tooltip content={tooltipText} position={Position.TOP}>
+      {badge}
+    </Tooltip>
+  ) : (
+    badge
+  )
 }
 
 export default ConnectionStatusBadge

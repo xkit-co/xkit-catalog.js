@@ -7,7 +7,9 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 
-const SelectMenuField: React.FC<Omit<SwitchOwnProps & FormFieldProps, 'id'>> = (props) => {
+const SelectMenuField: React.FC<Omit<SwitchOwnProps & FormFieldProps, 'id'>> = (
+  props
+) => {
   const {
     name,
     value,
@@ -35,14 +37,12 @@ const SelectMenuField: React.FC<Omit<SwitchOwnProps & FormFieldProps, 'id'>> = (
     defaultChecked
   }
 
-  const [id] = React.useState(`switch-field-${Math.round(Math.random() * 10000)}`)
+  const [id] = React.useState(
+    `switch-field-${Math.round(Math.random() * 10000)}`
+  )
 
   return (
-    <FormField
-      marginBottom={majorScale(3)}
-      labelFor={id}
-      {...fieldProps}
-    >
+    <FormField marginBottom={majorScale(3)} labelFor={id} {...fieldProps}>
       <Switch id={id} {...switchProps} />
     </FormField>
   )

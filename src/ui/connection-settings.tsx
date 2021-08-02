@@ -22,7 +22,11 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({
     : `Configure settings for ${connector.name}`
 
   return (
-    <ConnectorHeader mark_url={connector.mark_url} title='Settings' subtitle={subtitle} />
+    <ConnectorHeader
+      mark_url={connector.mark_url}
+      title='Settings'
+      subtitle={subtitle}
+    />
   )
 }
 
@@ -46,7 +50,11 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
   onLocationChange
 }) => {
   useEffect(() => {
-    onLocationChange({ name: 'connectionSettings', connectorSlug: connector.slug, connectionId: connection.id })
+    onLocationChange({
+      name: 'connectionSettings',
+      connectorSlug: connector.slug,
+      connectionId: connection.id
+    })
   }, [onLocationChange, connection.id, connector.slug])
 
   return (
@@ -65,10 +73,7 @@ const ConnectionSettings: React.FC<ConnectionSettingsProps> = ({
         </Pane>
       </Pane>
       <Pane marginTop={majorScale(3)} marginBottom={majorScale(5)}>
-        <SettingsForm
-          fields={fields}
-          onChangeField={onChangeField}
-        />
+        <SettingsForm fields={fields} onChangeField={onChangeField} />
       </Pane>
     </Pane>
   )

@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  majorScale,
-  Button,
-  minorScale
-} from '@treygriffith/evergreen-ui'
+import { majorScale, Button, minorScale } from '@treygriffith/evergreen-ui'
 import useAsyncActionHandler from './async_action_handler'
 
 interface ConnectorActionButtonProps {

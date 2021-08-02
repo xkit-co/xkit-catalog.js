@@ -1,7 +1,5 @@
 import * as React from 'react'
-import {
-  toaster as defaultToaster
-} from '@treygriffith/evergreen-ui'
+import { toaster as defaultToaster } from '@treygriffith/evergreen-ui'
 import RehomeEvergreen from './rehome-evergreen'
 import { logger } from '../util'
 // TODO: allow customization / BYOToaster
@@ -32,5 +30,9 @@ export const toaster: typeof defaultToaster = {
 }
 
 export const Toaster: React.FC = ({ children }) => {
-  return <RehomeEvergreen components='data-xkit-toaster-container'>{children}</RehomeEvergreen>
+  return (
+    <RehomeEvergreen components='data-xkit-toaster-container'>
+      {children}
+    </RehomeEvergreen>
+  )
 }

@@ -10,12 +10,7 @@ const Instructions: React.FC<InstructionProps> = ({ text }) => {
   if (!text) return null
 
   return (
-    <Markdown
-      marginBottom={majorScale(3)}
-      copyableCode
-      newWindow
-      text={text}
-    />
+    <Markdown marginBottom={majorScale(3)} copyableCode newWindow text={text} />
   )
 }
 

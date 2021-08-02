@@ -16,7 +16,7 @@ interface VideoLinkState {
 }
 
 class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
-  constructor (props: VideoLinkProps) {
+  constructor(props: VideoLinkProps) {
     super(props)
     this.state = {
       isOpen: false
@@ -28,23 +28,20 @@ class VideoLink extends React.Component<VideoLinkProps, VideoLinkState> {
     this.setState({ isOpen: true })
   }
 
-  render (): React.ReactNode {
+  render(): React.ReactNode {
     const { videoUrl } = this.props
     const { isOpen } = this.state
 
     if (!videoUrl) return null
 
     return (
-      <Paragraph
-        color='muted'
-        marginTop={majorScale(2)}
-        textAlign='center'
-      >
+      <Paragraph color='muted' marginTop={majorScale(2)} textAlign='center'>
         Having trouble?{' '}
         <Link
           href={videoUrl}
           target='_blank'
-          onClick={this.handleOpenClick} rel='noreferrer'
+          onClick={this.handleOpenClick}
+          rel='noreferrer'
         >
           Watch a video guide
         </Link>

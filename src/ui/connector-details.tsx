@@ -19,10 +19,7 @@ import {
   BackButton
 } from '@treygriffith/evergreen-ui'
 import { friendlyMessage } from './errors'
-import {
-  SettingsUpdate,
-  LocationListener
-} from './app'
+import { SettingsUpdate, LocationListener } from './app'
 import { SettingsField } from './settings-form'
 import ConnectorInstallation from './connector-installation'
 import ConnectionSettings from './connection-settings'
@@ -56,9 +53,9 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
   const [settings, setSettings] = useState<Settings>({})
   const [fieldsChangeset, setFieldsChangeset] = useState<SettingsField[]>(null)
 
-
-
-  async function loadFields (connection: Connection): Promise<SettingsField[] | null> {
+  async function loadFields(
+    connection: Connection
+  ): Promise<SettingsField[] | null> {
     if (!settingsUpdate) return null
 
     try {
@@ -68,13 +65,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function addConnection (): Promise<void> {
+  async function addConnection(): Promise<void> {
     try {
       const connection = await xkit.addConnection(connector)
       const fields = await loadFields(connection)
       setConnections([...connections, connection])
       setSettings({ ...settings, [connection.id]: fields })
-      if (fields && (fields.length > 0)) {
+      if (fields && fields.length > 0) {
         openSettings(connection, fields)
       }
       toaster.success(`Installed ${connector.name}`)
@@ -83,10 +80,12 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function removeConnection (connection: Connection): Promise<void> {
+  async function removeConnection(connection: Connection): Promise<void> {
     try {
       await xkit.removeConnection({ id: connection.id })
-      const updatedConnections = connections.filter(conn => conn.id !== connection.id)
+      const updatedConnections = connections.filter(
+        (conn) => conn.id !== connection.id
+      )
       const { [connection.id]: fields, ...updatedSettings } = settings
       setConnections(updatedConnections)
       setSettings(updatedSettings)
@@ -96,18 +95,18 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  async function reconnect (connection: Connection): Promise<void> {
+  async function reconnect(connection: Connection): Promise<void> {
     try {
       const newConnection = await xkit.reconnect(connection)
       const fields = await loadFields(newConnection)
 
-      const updatedConnections = connections.map(conn => {
+      const updatedConnections = connections.map((conn) => {
         return conn.id === connection.id ? newConnection : conn
       })
       const updatedSettings = { ...settings, [connection.id]: fields }
       setConnections(updatedConnections)
       setSettings(updatedSettings)
-      if (fields && (fields.length > 0)) {
+      if (fields && fields.length > 0) {
         openSettings(newConnection, fields)
       }
       toaster.success(`Reconnected to ${connector.name}`)
@@ -116,12 +115,18 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function openSettings (connection: Connection, fields?: SettingsField[]): void {
+  function openSettings(
+    connection: Connection,
+    fields?: SettingsField[]
+  ): void {
     setFieldsChangeset(fields || settings[connection.id])
     history.push(`${url}/settings/${connection.id}`)
   }
 
-  function changeField (fieldName: string, value: string | string[] | boolean): void {
+  function changeField(
+    fieldName: string,
+    value: string | string[] | boolean
+  ): void {
     const changed = fieldsChangeset.map((field: SettingsField) => {
       if (field.name !== fieldName) return field
       return Object.assign({}, field, { value })
@@ -129,11 +134,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     setFieldsChangeset(changed)
   }
 
-  async function saveSettings (connection: Connection): Promise<void> {
+  async function saveSettings(connection: Connection): Promise<void> {
     try {
       const updatedFields = await settingsUpdate(connection, fieldsChangeset)
       setFieldsChangeset(updatedFields)
-      const hasValidationErrors = updatedFields.some(field => Boolean(field.validationMessage))
+      const hasValidationErrors = updatedFields.some((field) =>
+        Boolean(field.validationMessage)
+      )
       if (!hasValidationErrors) {
         setSettings({ ...settings, [connection.id]: updatedFields })
         closeSettings()
@@ -143,18 +150,18 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
     }
   }
 
-  function closeSettings (): void {
+  function closeSettings(): void {
     history.push(url)
     setFieldsChangeset(null)
   }
 
-  useEffect(() => { 
-    async function loadSettings (connections: Connection[]): Promise<void> {
+  useEffect(() => {
+    async function loadSettings(connections: Connection[]): Promise<void> {
       if (!settingsUpdate) return
 
       try {
         const fields = await Promise.all(
-          connections.map(connection => settingsUpdate(connection, undefined))
+          connections.map((connection) => settingsUpdate(connection, undefined))
         )
         const settings: Settings = {}
         connections.forEach((connection, index) => {
@@ -166,13 +173,15 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       }
     }
 
-    async function loadData (xkit: XkitJs, slug: string): Promise<void> {
+    async function loadData(xkit: XkitJs, slug: string): Promise<void> {
       setIsLoading(true)
       try {
         const connector = await xkit.getConnector(slug)
-        const connections = (connector.connections || []).map((connection: ConnectionOnly): Connection => {
-          return { ...connection, connector: connector }
-        })
+        const connections = (connector.connections || []).map(
+          (connection: ConnectionOnly): Connection => {
+            return { ...connection, connector: connector }
+          }
+        )
         setConnector(connector)
         setConnections(connections)
         await loadSettings(connections)
@@ -188,7 +197,12 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
 
   if (isLoading) {
     return (
-      <Pane display='flex' alignItems='center' justifyContent='center' height={150}>
+      <Pane
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        height={150}
+      >
         <Spinner size={majorScale(6)} />
       </Pane>
     )
@@ -204,9 +218,13 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
       <Switch>
         <Route
           path={`${path}/settings/:connectionId`}
-          render={({ match }: RouteComponentProps<{ connectionId: string }>) => {
+          render={({
+            match
+          }: RouteComponentProps<{ connectionId: string }>) => {
             const connectionId = match.params.connectionId
-            const connection = connections.find(conn => conn.id === connectionId)
+            const connection = connections.find(
+              (conn) => conn.id === connectionId
+            )
 
             if (!connection || !fieldsChangeset) {
               return <Redirect to={url} />
@@ -229,7 +247,9 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
           <ConnectorInstallation
             connector={connector}
             connections={connections}
-            hasSettings={(connection) => settings[connection.id] && settings[connection.id].length > 0}
+            hasSettings={(connection) =>
+              settings[connection.id] && settings[connection.id].length > 0
+            }
             onAddConnection={addConnection}
             onOpenSettings={openSettings}
             onReconnect={reconnect}
@@ -239,7 +259,11 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
         </Route>
       </Switch>
 
-      <Pane marginTop={majorScale(3)} display='flex' justifyContent='space-between'>
+      <Pane
+        marginTop={majorScale(3)}
+        display='flex'
+        justifyContent='space-between'
+      >
         <BackButton is={Link} to='/'>
           Back to Catalog
         </BackButton>
