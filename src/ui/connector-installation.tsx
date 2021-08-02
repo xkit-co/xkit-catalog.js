@@ -2,12 +2,11 @@ import React, {
   useState,
   useEffect
 } from 'react'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
 import {
+  Connector,
   Connection,
-  ConnectionStatus,
-  connectionStatus
-} from '@xkit-co/xkit.js/lib/api/connection'
+  ConnectionStatus
+} from '@xkit-co/xkit.js'
 import {
   AddIcon,
   Pane,
@@ -23,6 +22,7 @@ import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
 import ConnectionsTable from './connections-table'
 import Tab from './tab'
+import { connectionStatus } from '../connection'
 import { LocationListener } from './app'
 
 interface InstallationHeaderProps {
