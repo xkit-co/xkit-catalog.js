@@ -7,9 +7,7 @@ import {
   Link,
   useHistory
 } from 'react-router-dom'
-import { XkitJs } from '@xkit-co/xkit.js'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Connection, ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
+import { XkitJs, Connector, Connection, ConnectionOnly } from '@xkit-co/xkit.js'
 import { useXkit } from './xkit-context'
 import { toaster } from './toaster'
 import {
@@ -215,7 +213,7 @@ const ConnectorDetails: React.FC<ConnectorDetailsProps> = ({
                 connection={connection}
                 fields={fieldsChangeset}
                 onChangeField={changeField}
-                onSave={() => saveSettings(connection)}
+                onSave={async () => await saveSettings(connection)}
                 onCancel={closeSettings}
                 onLocationChange={onLocationChange}
               />

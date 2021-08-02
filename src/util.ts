@@ -12,7 +12,11 @@ export function domReady (document: Document, fn: Function): void {
   document.addEventListener('DOMContentLoaded', listener)
 }
 
-export function sendToOpener (message: unknown, openerOrigin: string, validOrigins: string[]): void {
+export function sendToOpener (
+  message: unknown,
+  openerOrigin: string,
+  validOrigins: string[]
+): void {
   const opener = window.opener
 
   if (!opener || opener.closed) {
@@ -27,7 +31,9 @@ export function sendToOpener (message: unknown, openerOrigin: string, validOrigi
       if (validOrigins.includes(opener.location.origin)) {
         opener.postMessage(message, opener.location.origin)
       } else {
-        logger.error(`Could not find valid origin to notify: ${opener.location.origin}`)
+        logger.error(
+          `Could not find valid origin to notify: ${opener.location.origin}`
+        )
       }
     }
   } catch (e) {
@@ -40,14 +46,22 @@ export function sendToOpener (message: unknown, openerOrigin: string, validOrigi
   }
 }
 
-export function listenToOpener (fn: (msg: unknown) => void, openerOrigin: string, validOrigins: string[]): void {
+export function listenToOpener (
+  fn: (msg: unknown) => void,
+  openerOrigin: string,
+  validOrigins: string[]
+): void {
   window.addEventListener('message', (event) => {
-    const isValidOrigin = event.origin === openerOrigin || validOrigins.includes(event.origin)
+    const isValidOrigin =
+      event.origin === openerOrigin || validOrigins.includes(event.origin)
 
     // Electron breaks the connection between event.source and window.opener
     // and we may not have access to the `location` property, so we skip
     // this check and rely on the origin if we're in Electron.
-    if (isValidOrigin && (event.source === window.opener || /electron/i.test(navigator.userAgent))) {
+    if (
+      isValidOrigin &&
+      (event.source === window.opener || /electron/i.test(navigator.userAgent))
+    ) {
       fn(event.data)
     }
   })
@@ -70,5 +84,16 @@ export const logger = {
   info: console.log.bind(console, 'Xkit:'),
   error: console.error.bind(console, 'Xkit:'),
   warn: console.warn.bind(console, 'Xkit:'),
-  debug: process.env.NODE_ENV === 'development' ? console.debug.bind(console, 'Xkit:') : noop
+  debug:
+    process.env.NODE_ENV === 'development'
+      ? console.debug.bind(console, 'Xkit:')
+      : noop
+}
+
+// thx: https://fettblog.eu/typescript-hasownproperty/
+export function hasOwnProperty<X extends {}, Y extends PropertyKey> (
+  obj: X,
+  prop: Y
+): obj is X & Record<Y, unknown> {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
 }

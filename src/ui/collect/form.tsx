@@ -5,7 +5,7 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import PrefixInputField from '../prefix-input-field'
-import { Authorization, CollectField } from '@xkit-co/xkit.js/lib/api/authorization'
+import { Authorization, CollectField } from '@xkit-co/xkit.js'
 import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
 
@@ -128,7 +128,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
         validationMessage: validationMessage ? `${collectField.label} ${validationMessage}` : undefined,
         disabled: saving,
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ values: { ...values, [name]: e.target.value } }),
-        onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? this.handleSave(e) : null
+        onKeyDown: async (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? await this.handleSave(e) : null
       }
 
       if (collectField.suffix) {
