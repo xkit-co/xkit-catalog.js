@@ -1,10 +1,9 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { domReady, sendToOpener, listenToOpener } from './util'
+import { domReady, sendToOpener, listenToOpener, hasOwnProperty } from './util'
 import { Styled } from './ui/scope-styles'
 import PoweredBy from './ui/powered-by'
 import { Pane, Spinner, Heading } from '@treygriffith/evergreen-ui'
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
 
 const renderLoading = (
   id: string,

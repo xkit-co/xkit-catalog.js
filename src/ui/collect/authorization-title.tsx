@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Pane, Heading, majorScale } from '@treygriffith/evergreen-ui'
-import { Authorization } from '@xkit-co/xkit.js/lib/api/authorization'
+import { Authorization } from '@xkit-co/xkit.js'
 import ConnectorMark from '../connector-mark'
 
 interface AuthorizationMarkProps {

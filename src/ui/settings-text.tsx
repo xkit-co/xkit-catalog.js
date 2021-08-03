@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { TextInputField } from '@treygriffith/evergreen-ui'
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
+import { hasOwnProperty } from '../util'
 
 export interface SettingsTextField {
   type: 'text'

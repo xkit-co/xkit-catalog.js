@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  Connection,
-  ConnectionStatus,
-  connectionStatus
-} from '@xkit-co/xkit.js/lib/api/connection'
+import { Connection, ConnectionStatus } from '@xkit-co/xkit.js'
 import {
   CogIcon,
   IconButton,
@@ -17,7 +13,7 @@ import {
   TrashIcon
 } from '@treygriffith/evergreen-ui'
 import ConnectionStatusBadge from './connection-status-badge'
-import connectionName from './connection_name'
+import { connectionStatus, connectionName } from '../connection'
 import useAsyncActionHandler from './async_action_handler'
 
 interface MenuItemProps {

@@ -32,8 +32,8 @@ export function sendToOpener(
         opener.postMessage(message, opener.location.origin)
       } else {
         logger.error(
-          `Could not find valid origin to notify: ${opener.location.origin}`
-        ) // eslint-disable-line @typescript-eslint/restrict-template-expressions
+          `Could not find valid origin to notify: ${opener.location.origin}` // eslint-disable-line @typescript-eslint/restrict-template-expressions
+        )
       }
     }
   } catch (e) {
@@ -88,6 +88,14 @@ export const logger = {
     process.env.NODE_ENV === 'development'
       ? console.debug.bind(console, 'Xkit:')
       : noop
+}
+
+// thx: https://fettblog.eu/typescript-hasownproperty/
+export function hasOwnProperty<X extends {}, Y extends PropertyKey>(
+  obj: X,
+  prop: Y
+): obj is X & Record<Y, unknown> {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
 }
 
 export function errorMessage(e: any): string {

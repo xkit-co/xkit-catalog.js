@@ -1,4 +1,4 @@
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
+import { hasOwnProperty } from '../util'
 
 const INTERNAL_ERROR = 'We encountered an unexpected error during installation'
 

@@ -1,11 +1,7 @@
 import * as React from 'react'
 import AppWrapper from '../app-wrapper'
 import { Card, Pane, majorScale } from '@treygriffith/evergreen-ui'
-import { XkitJs } from '@xkit-co/xkit.js'
-import {
-  Authorization,
-  AuthorizationStatus
-} from '@xkit-co/xkit.js/lib/api/authorization'
+import { XkitJs, Authorization, AuthorizationStatus } from '@xkit-co/xkit.js'
 import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'

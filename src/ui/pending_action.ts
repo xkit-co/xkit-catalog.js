@@ -1,4 +1,4 @@
-import { ConnectionOnly } from '@xkit-co/xkit.js/lib/api/connection'
+import { ConnectionOnly } from '@xkit-co/xkit.js'
 
 export enum ActionType {
   None = 0,
