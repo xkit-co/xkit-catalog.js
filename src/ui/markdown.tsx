@@ -40,102 +40,129 @@ const CopyCode = (props: React.PropsWithChildren<{}>): React.ReactElement => {
 
 const mediumComponents: RemarkComponents = {
   code: Code,
+  // eslint-disable-next-line react/display-name
   p: (props: React.PropsWithChildren<{}>) => (
     <Paragraph marginTop='default' {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
   ul: UnorderedList,
   ol: OrderedList,
   li: ListItem,
   a: Link,
   strong: Strong,
+  // eslint-disable-next-line react/display-name
   h1: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={800} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h2: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={700} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h3: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={600} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h4: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h5: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={400} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h6: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={300} {...props} />
-  ) // eslint-disable-line react/display-name
+  )
 }
 
 const largeComponents: RemarkComponents = Object.assign({}, mediumComponents, {
   code: (props: React.PropsWithChildren<{}>) => <Code size={500} {...props} />, // eslint-disable-line react/display-name
+  // eslint-disable-next-line react/display-name
   p: (props: React.PropsWithChildren<{}>) => (
     <Paragraph marginTop='default' size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   ul: (props: React.PropsWithChildren<{}>) => (
     <UnorderedList size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   ol: (props: React.PropsWithChildren<{}>) => (
     <OrderedList size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
   a: (props: React.PropsWithChildren<{}>) => <Link size={500} {...props} />, // eslint-disable-line react/display-name
+  // eslint-disable-next-line react/display-name
   strong: (props: React.PropsWithChildren<{}>) => (
     <Strong size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h1: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={900} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h2: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={800} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h3: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={700} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h4: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={600} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h5: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h6: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={400} {...props} />
-  ) // eslint-disable-line react/display-name
+  )
 })
 
 const smallComponents: RemarkComponents = Object.assign({}, mediumComponents, {
   code: (props: React.PropsWithChildren<{}>) => <Code size={300} {...props} />, // eslint-disable-line react/display-name
+  // eslint-disable-next-line react/display-name
   p: (props: React.PropsWithChildren<{}>) => (
     <Paragraph marginTop='default' size={300} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   ul: (props: React.PropsWithChildren<{}>) => (
     <UnorderedList size={300} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   ol: (props: React.PropsWithChildren<{}>) => (
     <OrderedList size={300} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
   a: (props: React.PropsWithChildren<{}>) => <Link size={300} {...props} />, // eslint-disable-line react/display-name
+  // eslint-disable-next-line react/display-name
   strong: (props: React.PropsWithChildren<{}>) => (
     <Strong size={300} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h1: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={600} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h2: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={500} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h3: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={400} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h4: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={300} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h5: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={200} {...props} />
-  ), // eslint-disable-line react/display-name
+  ),
+  // eslint-disable-next-line react/display-name
   h6: (props: React.PropsWithChildren<{}>) => (
     <Heading marginTop='default' size={100} {...props} />
-  ) // eslint-disable-line react/display-name
+  )
 })
 
 enum Sizes {
