@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  Pane,
-  Heading,
-  majorScale
-} from '@treygriffith/evergreen-ui'
+import { Pane, Heading, majorScale } from '@treygriffith/evergreen-ui'
 import { Authorization } from '@xkit-co/xkit.js'
 import ConnectorMark from '../connector-mark'
 
@@ -12,7 +8,7 @@ interface AuthorizationMarkProps {
 }
 
 class AuthorizationMark extends React.Component<AuthorizationMarkProps> {
-  render (): React.ReactNode {
+  render(): React.ReactNode {
     if (!this.props.markUrl) {
       return null
     }
@@ -46,10 +42,12 @@ interface AuthorizationTitleProps {
 }
 
 class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { authorization } = this.props
     const markUrl = authorization.initiating_connector?.mark_url
-    const name = authorization.initiating_connector?.name || authorization.authorizer.prototype.name
+    const name =
+      authorization.initiating_connector?.name ||
+      authorization.authorizer.prototype.name
 
     return (
       <Pane
@@ -59,7 +57,11 @@ class AuthorizationTitle extends React.Component<AuthorizationTitleProps> {
         position='relative'
       >
         <AuthorizationMark markUrl={markUrl} />
-        <Heading size={700} marginTop={majorScale(5)} marginBottom={majorScale(4)}>
+        <Heading
+          size={700}
+          marginTop={majorScale(5)}
+          marginBottom={majorScale(4)}
+        >
           Connect to {name}
         </Heading>
       </Pane>

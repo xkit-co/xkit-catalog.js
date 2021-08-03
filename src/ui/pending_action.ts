@@ -13,6 +13,12 @@ export interface PendingAction {
   connectionId?: string
 }
 
-export function isPending (pendingAction: PendingAction, type: ActionType, connection?: ConnectionOnly): boolean {
-  return pendingAction.type === type && pendingAction.connectionId === connection?.id
+export function isPending(
+  pendingAction: PendingAction,
+  type: ActionType,
+  connection?: ConnectionOnly
+): boolean {
+  return (
+    pendingAction.type === type && pendingAction.connectionId === connection?.id
+  )
 }

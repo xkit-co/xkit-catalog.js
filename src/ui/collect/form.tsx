@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  Button,
-  TextInputField,
-  majorScale
-} from '@treygriffith/evergreen-ui'
+import { Button, TextInputField, majorScale } from '@treygriffith/evergreen-ui'
 import PrefixInputField from '../prefix-input-field'
 import { Authorization, CollectField } from '@xkit-co/xkit.js'
 import withXkit, { XkitConsumer } from '../with-xkit'
@@ -22,7 +18,7 @@ interface FormState {
 }
 
 class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
-  constructor (props: XkitConsumer<FormProps>) {
+  constructor(props: XkitConsumer<FormProps>) {
     super(props)
 
     this.state = {
@@ -32,8 +28,12 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
-  private collectFields (): CollectField[] {
-    const { authorization: { authorizer: { prototype } } } = this.props
+  private collectFields(): CollectField[] {
+    const {
+      authorization: {
+        authorizer: { prototype }
+      }
+    } = this.props
 
     if ((prototype.collect_fields || []).length > 0) {
       return prototype.collect_fields
@@ -48,16 +48,16 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     }
   }
 
-  private saveLabel (): string {
+  private saveLabel(): string {
     return this.props.authorization.authorizer.prototype.collect_save || 'Save'
   }
 
-  private validateFields (): boolean {
+  private validateFields(): boolean {
     const { values, validationMessages } = this.state
 
     let validationSuccess = true
 
-    this.collectFields().forEach(field => {
+    this.collectFields().forEach((field) => {
       const value = values[field.name]
       if (value) {
         validationMessages[field.name] = null
@@ -73,11 +73,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
   }
 
   handleSave = async (e: React.SyntheticEvent<HTMLElement>): Promise<void> => {
-    const {
-      xkit,
-      authorization,
-      onComplete
-    } = this.props
+    const { xkit, authorization, onComplete } = this.props
     const { values } = this.state
     e.preventDefault()
 
@@ -91,34 +87,34 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
       const {
         state,
         authorizer: {
-          prototype: {
-            slug,
-            collect_field: collectField
-          }
+          prototype: { slug, collect_field: collectField }
         }
       } = authorization
 
       if (!state || !collectField) {
         throw new Error('Authorization not yet loaded')
       }
-      const updatedAuthorization = await xkit.setAuthorizationFields(slug, state, values)
+      const updatedAuthorization = await xkit.setAuthorizationFields(
+        slug,
+        state,
+        values
+      )
       onComplete(updatedAuthorization)
     } catch (e) {
       const collectFields = this.collectFields()
-      const error = collectFields.length > 1 || !collectFields[0].label ? '' : ' ' + collectFields[0].label
+      const error =
+        collectFields.length > 1 || !collectFields[0].label
+          ? ''
+          : ' ' + collectFields[0].label
       toaster.danger(`Error while saving${error}: ${errorMessage(e)}`)
       this.setState({ saving: false })
     }
   }
 
-  renderFields (): React.ReactNode {
-    const {
-      saving,
-      values,
-      validationMessages
-    } = this.state
+  renderFields(): React.ReactNode {
+    const { saving, values, validationMessages } = this.state
 
-    return this.collectFields().map(collectField => {
+    return this.collectFields().map((collectField) => {
       const name = collectField.name
       const validationMessage = validationMessages[name]
 
@@ -126,10 +122,14 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
         label: collectField.label,
         value: values[name] || '',
         isInvalid: Boolean(validationMessage),
-        validationMessage: validationMessage ? `${collectField.label} ${validationMessage}` : undefined,
+        validationMessage: validationMessage
+          ? `${collectField.label} ${validationMessage}`
+          : undefined,
         disabled: saving,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ values: { ...values, [name]: e.target.value } }),
-        onKeyDown: async (e: React.KeyboardEvent<HTMLInputElement>) => e.keyCode === 13 ? await this.handleSave(e) : null
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          this.setState({ values: { ...values, [name]: e.target.value } }),
+        onKeyDown: async (e: React.KeyboardEvent<HTMLInputElement>) =>
+          e.keyCode === 13 ? await this.handleSave(e) : null
       }
 
       if (collectField.suffix) {
@@ -146,7 +146,7 @@ class Form extends React.Component<XkitConsumer<FormProps>, FormState> {
     })
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const { saving } = this.state
 
     return (

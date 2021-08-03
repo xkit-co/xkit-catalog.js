@@ -13,7 +13,9 @@ export interface SettingsSwitchField {
   [key: string]: string | boolean
 }
 
-export function isSettingsSwitchField (field: Record<string, unknown>): field is SettingsSwitchField {
+export function isSettingsSwitchField(
+  field: Record<string, unknown>
+): field is SettingsSwitchField {
   return hasOwnProperty(field, 'type') && field.type === 'switch'
 }
 
@@ -28,7 +30,9 @@ const SettingsSwitch: React.FC<SettingsSwitchProps> = ({ onChange, field }) => {
   return (
     <SwitchField
       {...fieldProps}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked)}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange(e.target.checked)
+      }
       isInvalid={Boolean(fieldProps.validationMessage)}
       value={name}
       checked={value}

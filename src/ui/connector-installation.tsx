@@ -1,12 +1,5 @@
-import React, {
-  useState,
-  useEffect
-} from 'react'
-import {
-  Connector,
-  Connection,
-  ConnectionStatus
-} from '@xkit-co/xkit.js'
+import React, { useState, useEffect } from 'react'
+import { Connector, Connection, ConnectionStatus } from '@xkit-co/xkit.js'
 import {
   AddIcon,
   Pane,
@@ -31,14 +24,20 @@ interface InstallationHeaderProps {
   showBadge: boolean
 }
 
-const InstallationHeader: React.FC<InstallationHeaderProps> = ({ connector, connections, showBadge }) => {
+const InstallationHeader: React.FC<InstallationHeaderProps> = ({
+  connector,
+  connections,
+  showBadge
+}) => {
   return (
     <ConnectorHeader
       mark_url={connector.mark_url}
       title={connector.name}
       subtitle={connector.short_description}
     >
-      {showBadge && <ConnectionStatusBadge useTooltip={false} connections={connections} />}
+      {showBadge && (
+        <ConnectionStatusBadge useTooltip={false} connections={connections} />
+      )}
     </ConnectorHeader>
   )
 }
@@ -65,8 +64,10 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
   onLocationChange
 }) => {
   const [currentTab, setCurrentTab] = useState('connections')
-  const multipleConnections = connector.supports_multiple_connections || connections.length > 1
-  const computedTab = !multipleConnections || connections.length === 0 ? 'about' : currentTab
+  const multipleConnections =
+    connector.supports_multiple_connections || connections.length > 1
+  const computedTab =
+    !multipleConnections || connections.length === 0 ? 'about' : currentTab
 
   useEffect(() => {
     onLocationChange({ name: 'connector', connectorSlug: connector.slug })
@@ -74,13 +75,16 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
 
   return (
     <Pane>
-      {!multipleConnections && connections.length === 1 && connectionStatus(connections[0]) === ConnectionStatus.Error &&
-        <Pane marginBottom={majorScale(3)}>
-          <ConnectionAuthAlert
-            connector={connector}
-            onReconnect={() => onReconnect(connections[0])}
-          />
-        </Pane>}
+      {!multipleConnections &&
+        connections.length === 1 &&
+        connectionStatus(connections[0]) === ConnectionStatus.Error && (
+          <Pane marginBottom={majorScale(3)}>
+            <ConnectionAuthAlert
+              connector={connector}
+              onReconnect={() => onReconnect(connections[0])}
+            />
+          </Pane>
+        )}
       <Pane display='flex'>
         <Pane flexGrow={1}>
           <InstallationHeader
@@ -90,24 +94,26 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           />
         </Pane>
         <Pane>
-          {connections.length === 0 &&
+          {connections.length === 0 && (
             <ConnectorActionButton
               iconBefore={AddIcon}
               appearance='primary'
               onClick={onAddConnection}
             >
               Install
-            </ConnectorActionButton>}
+            </ConnectorActionButton>
+          )}
 
-          {multipleConnections && connections.length > 0 &&
+          {multipleConnections && connections.length > 0 && (
             <ConnectorActionButton
               iconBefore={AddIcon}
               onClick={onAddConnection}
             >
               Add Connection
-            </ConnectorActionButton>}
+            </ConnectorActionButton>
+          )}
 
-          {!multipleConnections && connections.length === 1 &&
+          {!multipleConnections && connections.length === 1 && (
             <>
               <ConnectorActionButton
                 iconBefore={TrashIcon}
@@ -115,18 +121,20 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
               >
                 Remove
               </ConnectorActionButton>
-              {hasSettings(connections[0]) &&
+              {hasSettings(connections[0]) && (
                 <ConnectorActionButton
                   iconBefore={CogIcon}
                   onClick={() => onOpenSettings(connections[0])}
                 >
                   Configure
-                </ConnectorActionButton>}
-            </>}
+                </ConnectorActionButton>
+              )}
+            </>
+          )}
         </Pane>
       </Pane>
 
-      {multipleConnections && connections.length > 0 &&
+      {multipleConnections && connections.length > 0 && (
         <Tablist marginBottom={majorScale(2)} marginTop={majorScale(2)}>
           <Tab
             key='connections'
@@ -142,7 +150,8 @@ const ConnectorInstallation: React.FC<ConnectorInstallationProps> = ({
           >
             About
           </Tab>
-        </Tablist>}
+        </Tablist>
+      )}
 
       <Pane marginTop={majorScale(2)} marginBottom={majorScale(4)}>
         <Pane display={computedTab === 'connections' ? 'block' : 'none'}>

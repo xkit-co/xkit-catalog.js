@@ -1,23 +1,12 @@
 import * as React from 'react'
-import {
-  Switch,
-  Route,
-  RouteComponentProps
-} from 'react-router-dom'
-import {
-  Heading,
-  Spinner,
-  majorScale
-} from '@treygriffith/evergreen-ui'
+import { Switch, Route, RouteComponentProps } from 'react-router-dom'
+import { Heading, Spinner, majorScale } from '@treygriffith/evergreen-ui'
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
 import ConnectorDetails from './connector-details'
 import { Platform } from '@xkit-co/xkit.js'
 import withXkit, { XkitConsumer } from './with-xkit'
-import {
-  SettingsUpdate,
-  LocationListener
-} from './app'
+import { SettingsUpdate, LocationListener } from './app'
 import { errorMessage } from '../util'
 
 interface HomeProps {
@@ -36,21 +25,24 @@ interface HomeState {
 }
 
 class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
-  constructor (props: XkitConsumer<HomeProps>) {
+  constructor(props: XkitConsumer<HomeProps>) {
     super(props)
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount (): void {
+  componentDidMount(): void {
     void this.loadPlatform()
     if (!this.props.hideTitle) {
       document.title = this.title()
     }
   }
 
-  componentDidUpdate (prevProps: XkitConsumer<HomeProps>, prevState: HomeState): void {
+  componentDidUpdate(
+    prevProps: XkitConsumer<HomeProps>,
+    prevState: HomeState
+  ): void {
     if (prevProps.hideTitle !== this.props.hideTitle) {
       if (!this.props.hideTitle) {
         document.title = this.title()
@@ -66,10 +58,8 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
   }
 
-  async loadPlatform (): Promise<void> {
-    const {
-      xkit
-    } = this.props
+  async loadPlatform(): Promise<void> {
+    const { xkit } = this.props
     this.setState({ loading: true })
     try {
       const platform = await xkit.getPlatform()
@@ -81,13 +71,9 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     }
   }
 
-  title (): string {
-    const {
-      title
-    } = this.props
-    const {
-      platform
-    } = this.state
+  title(): string {
+    const { title } = this.props
+    const { platform } = this.state
 
     if (title) {
       return title
@@ -100,7 +86,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
     return 'Loading...'
   }
 
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const {
       hideTitle,
       hideSearch,
@@ -109,10 +95,7 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
       updateSettings,
       onLocationChange
     } = this.props
-    const {
-      platform,
-      loading
-    } = this.state
+    const { platform, loading } = this.state
 
     if (loading) {
       return <Spinner marginX='auto' marginY={150} size={majorScale(6)} />
@@ -120,7 +103,13 @@ class Home extends React.Component<XkitConsumer<HomeProps>, HomeState> {
 
     return (
       <>
-        {hideTitle ? '' : <Heading size={800} marginBottom={majorScale(2)}>{this.title()}</Heading>}
+        {hideTitle ? (
+          ''
+        ) : (
+          <Heading size={800} marginBottom={majorScale(2)}>
+            {this.title()}
+          </Heading>
+        )}
         <Switch>
           <Route path={['/', connectorsPath]} exact>
             <Catalog

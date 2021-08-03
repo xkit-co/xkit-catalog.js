@@ -23,7 +23,7 @@ declare module 'remark-react' {
     remarkReactComponents: components
   }
 
-  function remark2react<P> (this: Processor<P>, settings: options): Transformer
+  function remark2react<P>(this: Processor<P>, settings: options): Transformer
 
   export default remark2react
 }

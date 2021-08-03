@@ -1,8 +1,4 @@
-import {
-  ThemeProvider,
-  withTheme,
-  useTheme
-} from './evergreen'
+import { ThemeProvider, withTheme, useTheme } from './evergreen'
 import {
   defaultCatalogTheme,
   ThemeConsumer,
@@ -20,7 +16,7 @@ type CatalogThemeProps = Partial<{
   tab: CustomTabProps
 }>
 
-function buildTheme (props: CatalogThemeProps): CatalogTheme {
+function buildTheme(props: CatalogThemeProps): CatalogTheme {
   let theme = defaultCatalogTheme
 
   if (props.card) {

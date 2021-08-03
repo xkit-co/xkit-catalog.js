@@ -1,6 +1,6 @@
-function noop (): void {}
+function noop(): void {}
 
-export function domReady (document: Document, fn: Function): void {
+export function domReady(document: Document, fn: Function): void {
   if (document.readyState !== 'loading') {
     fn()
     return
@@ -12,7 +12,7 @@ export function domReady (document: Document, fn: Function): void {
   document.addEventListener('DOMContentLoaded', listener)
 }
 
-export function sendToOpener (
+export function sendToOpener(
   message: unknown,
   openerOrigin: string,
   validOrigins: string[]
@@ -32,7 +32,7 @@ export function sendToOpener (
         opener.postMessage(message, opener.location.origin)
       } else {
         logger.error(
-          `Could not find valid origin to notify: ${opener.location.origin}`// eslint-disable-line @typescript-eslint/restrict-template-expressions
+          `Could not find valid origin to notify: ${opener.location.origin}` // eslint-disable-line @typescript-eslint/restrict-template-expressions
         )
       }
     }
@@ -46,7 +46,7 @@ export function sendToOpener (
   }
 }
 
-export function listenToOpener (
+export function listenToOpener(
   fn: (msg: unknown) => void,
   openerOrigin: string,
   validOrigins: string[]
@@ -67,7 +67,7 @@ export function listenToOpener (
   })
 }
 
-export function injectCSS (document: Document, css: string): HTMLElement {
+export function injectCSS(document: Document, css: string): HTMLElement {
   const styleTag = document.createElement('style')
   styleTag.type = 'text/css'
   styleTag.setAttribute('data-xkit', '')
@@ -76,7 +76,7 @@ export function injectCSS (document: Document, css: string): HTMLElement {
   return styleTag
 }
 
-export function removeCSS (document: Document, el: HTMLElement): void {
+export function removeCSS(document: Document, el: HTMLElement): void {
   domReady(document, () => el.remove())
 }
 
@@ -91,7 +91,7 @@ export const logger = {
 }
 
 // thx: https://fettblog.eu/typescript-hasownproperty/
-export function hasOwnProperty<X extends {}, Y extends PropertyKey> (
+export function hasOwnProperty<X extends {}, Y extends PropertyKey>(
   obj: X,
   prop: Y
 ): obj is X & Record<Y, unknown> {

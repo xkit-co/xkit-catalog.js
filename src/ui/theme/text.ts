@@ -7,15 +7,15 @@ type TextSizes = 300 | 400 | 500 | 600
 type ParagraphSizes = 300 | 400 | 500
 type AllTextSizes = HeadingSizes | TextSizes | ParagraphSizes
 
-function isHeadingSize (size: number): size is HeadingSizes {
+function isHeadingSize(size: number): size is HeadingSizes {
   return size in [100, 200, 300, 400, 500, 600, 700, 800, 900]
 }
 
-function isTextSize (size: number): size is TextSizes {
+function isTextSize(size: number): size is TextSizes {
   return isHeadingSize(size) && size > 200 && size < 700
 }
 
-function isParagraphSize (size: number): size is ParagraphSizes {
+function isParagraphSize(size: number): size is ParagraphSizes {
   return isTextSize(size) && size < 600
 }
 
@@ -25,7 +25,10 @@ export type CustomTextProps = Partial<{
   sizes: Partial<Record<AllTextSizes, number>>
 }>
 
-export default function customizeText (originalTheme: CatalogTheme, props: CustomTextProps): CatalogTheme {
+export default function customizeText(
+  originalTheme: CatalogTheme,
+  props: CustomTextProps
+): CatalogTheme {
   const theme = cloneTheme(originalTheme)
   if (props.fonts) {
     Object.assign(theme.typography.fontFamilies, props.fonts)

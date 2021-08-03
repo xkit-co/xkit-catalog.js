@@ -7,7 +7,9 @@ interface ConnectorDescriptionProps {
   connector: Connector
 }
 
-const ConnectorDescription: React.FC<ConnectorDescriptionProps> = ({ connector }) => {
+const ConnectorDescription: React.FC<ConnectorDescriptionProps> = ({
+  connector
+}) => {
   if (!connector.description) {
     return <Markdown size='large' text={connector.about} />
   }

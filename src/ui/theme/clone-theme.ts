@@ -1,6 +1,6 @@
 import { CatalogTheme } from './catalog-theme'
 
-export default function cloneTheme (theme: CatalogTheme): CatalogTheme {
+export default function cloneTheme(theme: CatalogTheme): CatalogTheme {
   return {
     ...theme,
     card: { ...theme.card },

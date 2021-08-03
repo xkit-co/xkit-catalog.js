@@ -14,14 +14,20 @@ import SettingsSwitch, {
 } from './settings-switch'
 import { logger } from '../util'
 
-export type SettingsField = SettingsTextField | SettingsSelectField | SettingsSwitchField
+export type SettingsField =
+  | SettingsTextField
+  | SettingsSelectField
+  | SettingsSwitchField
 
 interface SettingsFieldInputProps {
   field: SettingsField
   onChange: (value: string | string[] | boolean) => void
 }
 
-const SettingsFieldInput: React.FC<SettingsFieldInputProps> = ({ field, onChange }) => {
+const SettingsFieldInput: React.FC<SettingsFieldInputProps> = ({
+  field,
+  onChange
+}) => {
   if (isSettingsTextField(field)) {
     return <SettingsText field={field} onChange={onChange} />
   }
@@ -43,18 +49,19 @@ interface SettingsFormProps {
   onChangeField: (fieldName: string, value: string | string[] | boolean) => void
 }
 
-const SettingsForm: React.FC<SettingsFormProps> = ({ fields, onChangeField }) => {
+const SettingsForm: React.FC<SettingsFormProps> = ({
+  fields,
+  onChangeField
+}) => {
   return (
     <Pane maxWidth={400}>
-      {
-        fields.map(field =>
-          <SettingsFieldInput
-            key={field.name}
-            field={field}
-            onChange={value => onChangeField(field.name, value)}
-          />
-        )
-      }
+      {fields.map((field) => (
+        <SettingsFieldInput
+          key={field.name}
+          field={field}
+          onChange={(value) => onChangeField(field.name, value)}
+        />
+      ))}
     </Pane>
   )
 }

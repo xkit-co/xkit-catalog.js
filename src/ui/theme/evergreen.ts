@@ -28,11 +28,16 @@ declare module '@treygriffith/evergreen-ui' {
   type TabAppearance = DefaultAppearance | 'minimal'
 
   interface Theme {
-    getButtonClassName: (appearance: ButtonAppearance, intent: IntentTypes) => string
+    getButtonClassName: (
+      appearance: ButtonAppearance,
+      intent: IntentTypes
+    ) => string
     getBackground: (background: string) => string
     getElevation: (elevation: number) => string
     getIconColor: (color: string) => string
-    getHeadingStyle: (size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) => TypographyStyle
+    getHeadingStyle: (
+      size?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+    ) => TypographyStyle
     getTextStyle: (size?: 300 | 400 | 500 | 600) => TypographyStyle
     getParagraphStyle: (size?: 300 | 400 | 500) => TypographyStyle
     getFontFamily: (family: string) => string
@@ -84,7 +89,9 @@ const Themer = UntypedThemer as ThemerType
 // ThemeProvider is not in the index.d.ts for evergreen
 const ThemeProvider = UntypedProvider
 
-type ThemeHOC = <Props extends {}>(WrappedComponent: React.ComponentType<Props>) => React.ComponentType<Omit<Props, 'theme'>>
+type ThemeHOC = <Props extends {}>(
+  WrappedComponent: React.ComponentType<Props>
+) => React.ComponentType<Omit<Props, 'theme'>>
 
 // withTheme is not in the index.d.ts for evergreen
 const withTheme: ThemeHOC = untypedWithTheme as ThemeHOC
@@ -93,10 +100,4 @@ type themeHook = () => typeof defaultTheme
 
 const useTheme: themeHook = UntypedUseTheme as themeHook
 
-export {
-  Theme,
-  Themer,
-  ThemeProvider,
-  withTheme,
-  useTheme
-}
+export { Theme, Themer, ThemeProvider, withTheme, useTheme }

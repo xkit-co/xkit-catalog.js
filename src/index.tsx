@@ -5,7 +5,8 @@ import App, { createHistory, AppOptions, isRouterType } from './ui/app'
 import createXkit, { XkitJs } from '@xkit-co/xkit.js'
 export { App, createXkit }
 
-export interface CatalogOptions extends Omit<AppOptions, 'inheritRouter' | 'routerType' | 'history'> {
+export interface CatalogOptions
+  extends Omit<AppOptions, 'inheritRouter' | 'routerType' | 'history'> {
   routerType?: string
 }
 
@@ -19,7 +20,11 @@ interface Catalog {
   pushHistory: (path: string) => void
 }
 
-function renderCatalog (xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {}): Catalog {
+function renderCatalog(
+  xkit: XkitJs,
+  el: HTMLElement,
+  opts: CatalogOptions = {}
+): Catalog {
   const history = createHistory(
     isRouterType(opts.routerType) ? opts.routerType : undefined,
     opts.rootPath
@@ -27,28 +32,21 @@ function renderCatalog (xkit: XkitJs, el: HTMLElement, opts: CatalogOptions = {}
 
   const { routerType, ...appOpts } = opts
 
-  ReactDOM.render(
-    <App
-      {...appOpts}
-      xkit={xkit}
-      history={history}
-    />,
-    el
-  )
+  ReactDOM.render(<App {...appOpts} xkit={xkit} history={history} />, el)
 
   return {
     el,
-    pushHistory (path: string) {
+    pushHistory(path: string) {
       history.push(path)
     }
   }
 }
 
-function unmountCatalog (el: HTMLElement): boolean {
+function unmountCatalog(el: HTMLElement): boolean {
   return ReactDOM.unmountComponentAtNode(el)
 }
 
-function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
+function renderCatalogDefault(xkit: XkitJs, elemId = 'xkit-app'): void {
   domReady(document, () => {
     const domRoot = document.getElementById(elemId)
 
@@ -78,7 +76,11 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
     // we're using a memory router, or if we are on the correct path. This allows
     // a developer to include this script in every page and only have it render on the
     // correct page.
-    if (!rootPath || routerType === 'memory' || window.location.pathname.startsWith(rootPath)) {
+    if (
+      !rootPath ||
+      routerType === 'memory' ||
+      window.location.pathname.startsWith(rootPath)
+    ) {
       renderCatalog(xkit, domRoot, {
         rootPath,
         routerType,
@@ -91,7 +93,7 @@ function renderCatalogDefault (xkit: XkitJs, elemId = 'xkit-app'): void {
   })
 }
 
-function createXkitWithCatalog (domain: string): XkitCatalog {
+function createXkitWithCatalog(domain: string): XkitCatalog {
   const xkit = createXkit(domain)
   const xkitCatalog = Object.assign({}, xkit, {
     renderCatalog: renderCatalog.bind(null, xkit),

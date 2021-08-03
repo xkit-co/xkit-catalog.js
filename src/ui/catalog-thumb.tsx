@@ -18,7 +18,7 @@ interface CatalogThumbProps {
 }
 
 class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
-  render (): React.ReactElement {
+  render(): React.ReactElement {
     const {
       connectorsPath,
       connector: {
@@ -54,7 +54,9 @@ class CatalogThumb extends React.Component<ThemeConsumer<CatalogThumbProps>> {
           </Pane>
           <ConnectionStatusBadge useTooltip connections={connections || []} />
         </Pane>
-        <Heading size={600} marginTop={majorScale(2)}>{name}</Heading>
+        <Heading size={600} marginTop={majorScale(2)}>
+          {name}
+        </Heading>
         <Paragraph size={300} marginTop={majorScale(1)}>
           {shortDescription}
         </Paragraph>

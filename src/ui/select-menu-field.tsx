@@ -53,9 +53,7 @@ const SelectMenuField: React.FC<SelectMenuProps & FormFieldProps> = (props) => {
 
   return (
     <FormField marginBottom={majorScale(3)} {...fieldProps}>
-      <SelectMenu {...selectProps}>
-        {props.children}
-      </SelectMenu>
+      <SelectMenu {...selectProps}>{props.children}</SelectMenu>
     </FormField>
   )
 }

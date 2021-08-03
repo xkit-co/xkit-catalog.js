@@ -1,15 +1,7 @@
 import * as React from 'react'
 import AppWrapper from '../app-wrapper'
-import {
-  Card,
-  Pane,
-  majorScale
-} from '@treygriffith/evergreen-ui'
-import {
-  XkitJs,
-  Authorization,
-  AuthorizationStatus
-} from '@xkit-co/xkit.js'
+import { Card, Pane, majorScale } from '@treygriffith/evergreen-ui'
+import { XkitJs, Authorization, AuthorizationStatus } from '@xkit-co/xkit.js'
 import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'
@@ -33,10 +25,12 @@ class App extends React.Component<AppProps> {
     // just finishing
     // TODO: should we have a separate status indicating this instead
     // of relying on a change in the authorize_url?
-    if (authorization.status !== AuthorizationStatus.error &&
-        authorization.authorize_url &&
-        // Note: if the state parameter changes, this will always be true
-        authorization.authorize_url !== window.location.href) {
+    if (
+      authorization.status !== AuthorizationStatus.error &&
+      authorization.authorize_url &&
+      // Note: if the state parameter changes, this will always be true
+      authorization.authorize_url !== window.location.href
+    ) {
       window.location.href = authorization.authorize_url
       return
     }
@@ -48,11 +42,8 @@ class App extends React.Component<AppProps> {
     window.close()
   }
 
-  render (): React.ReactElement {
-    const {
-      authorization,
-      removeBranding
-    } = this.props
+  render(): React.ReactElement {
+    const { authorization, removeBranding } = this.props
 
     const {
       collect_video_url: collectVideoUrl,
@@ -81,10 +72,16 @@ class App extends React.Component<AppProps> {
             >
               <AuthorizationTitle authorization={authorization} />
               <Instructions text={collectInstructions} />
-              <Form authorization={authorization} onComplete={this.handleFormComplete} />
+              <Form
+                authorization={authorization}
+                onComplete={this.handleFormComplete}
+              />
               <VideoLink videoUrl={collectVideoUrl} />
             </Card>
-            <PoweredBy removeBranding={removeBranding} campaign='collect_popup' />
+            <PoweredBy
+              removeBranding={removeBranding}
+              campaign='collect_popup'
+            />
           </Pane>
         </Pane>
       </AppWrapper>

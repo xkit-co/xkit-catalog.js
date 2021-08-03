@@ -1,5 +1,11 @@
 import React from 'react'
-import { Alert, Button, RefreshIcon, Text, majorScale } from '@treygriffith/evergreen-ui'
+import {
+  Alert,
+  Button,
+  RefreshIcon,
+  Text,
+  majorScale
+} from '@treygriffith/evergreen-ui'
 import { Connector } from '@xkit-co/xkit.js'
 import useAsyncActionHandler from './async_action_handler'
 
@@ -36,7 +42,8 @@ const ConnectionAuthAlert: React.FC<ConnectionAuthAlertProps> = ({
       }
     >
       <Text size={400} color='muted'>
-        Your connection to {connector.name} is inactive. Reconnect to continue using this integration.
+        Your connection to {connector.name} is inactive. Reconnect to continue
+        using this integration.
       </Text>
     </Alert>
   )
