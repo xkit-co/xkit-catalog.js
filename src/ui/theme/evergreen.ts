@@ -4,7 +4,7 @@ import {
   defaultTheme,
   Theme,
   // TODO: please fix following typescript error
-// @ts-expect-error
+  // @ts-expect-error
   withTheme as untypedWithTheme,
   ThemeProvider as UntypedProvider,
   useTheme as UntypedUseTheme

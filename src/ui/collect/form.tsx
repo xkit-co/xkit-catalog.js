@@ -5,7 +5,7 @@ import {
   majorScale
 } from '@treygriffith/evergreen-ui'
 import PrefixInputField from '../prefix-input-field'
-import { Authorization, CollectField } from '@xkit-co/xkit.js/lib/api/authorization'
+import { Authorization, CollectField } from '@xkit-co/xkit.js'
 import withXkit, { XkitConsumer } from '../with-xkit'
 import { toaster } from '../toaster'
 import { errorMessage } from '../../util'

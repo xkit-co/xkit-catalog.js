@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { majorScale, Pane } from '@treygriffith/evergreen-ui'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
-import { Connection } from '@xkit-co/xkit.js/lib/api/connection'
+import { Connector, Connection } from '@xkit-co/xkit.js'
 import SettingsForm, { SettingsField } from './settings-form'
 import ConnectorHeader from './connector-header'
 import ConnectorActionButton from './connector-action-button'
-import connectionName from './connection_name'
+import { connectionName } from '../connection'
 import { LocationListener } from './app'
 
 interface SettingsHeaderProps {

@@ -168,7 +168,7 @@ You have provided both. The \`children\` will be ignored and only the \`text\` w
     const processor = this.getProcessor()
     // type waiting on https://github.com/vfile/vfile/pull/53
     // TODO: please fix following typescript error
-// @ts-expect-error
+    // @ts-expect-error
     const contents = processor.processSync(markdownSrc).result
 
     return (

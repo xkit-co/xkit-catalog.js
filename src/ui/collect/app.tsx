@@ -5,11 +5,11 @@ import {
   Pane,
   majorScale
 } from '@treygriffith/evergreen-ui'
-import { XkitJs } from '@xkit-co/xkit.js'
 import {
+  XkitJs,
   Authorization,
   AuthorizationStatus
-} from '@xkit-co/xkit.js/lib/api/authorization'
+} from '@xkit-co/xkit.js'
 import Form from './form'
 import AuthorizationTitle from './authorization-title'
 import Instructions from './instructions'

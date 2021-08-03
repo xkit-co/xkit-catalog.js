@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Connector } from '@xkit-co/xkit.js/lib/api/connector'
+import { Connector } from '@xkit-co/xkit.js'
 import { Heading } from '@treygriffith/evergreen-ui'
 import Markdown from './markdown'
 

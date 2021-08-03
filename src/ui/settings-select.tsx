@@ -4,7 +4,7 @@ import {
   Button,
   majorScale
 } from '@treygriffith/evergreen-ui'
-import { hasOwnProperty } from '@xkit-co/xkit.js/lib/util'
+import { hasOwnProperty } from '../util'
 
 interface SelectOptionObj {
   value: string

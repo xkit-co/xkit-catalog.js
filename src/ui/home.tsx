@@ -12,7 +12,7 @@ import {
 import { toaster } from './toaster'
 import Catalog, { CatalogFilter } from './catalog'
 import ConnectorDetails from './connector-details'
-import { Platform } from '@xkit-co/xkit.js/lib/api/platform'
+import { Platform } from '@xkit-co/xkit.js'
 import withXkit, { XkitConsumer } from './with-xkit'
 import {
   SettingsUpdate,
