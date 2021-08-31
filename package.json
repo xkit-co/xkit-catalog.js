@@ -1,6 +1,6 @@
 {
   "name": "@xkit-co/xkit-catalog.js",
-  "version": "8.17.0",
+  "version": "8.17.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkit-co/xkit-catalog.js.git"
@@ -41,7 +41,7 @@
     "typescript": "~3.9.5"
   },
   "dependencies": {
-    "@xkit-co/xkit-catalog-react.js": "^1.1.0",
+    "@xkit-co/xkit-catalog-react.js": "^1.1.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0"
   }
